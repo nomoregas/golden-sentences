@@ -309,7 +309,11 @@ const $ = (sel, el = document) => el.querySelector(sel);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pad = n => String(n).padStart(2, "0");
 
-/* ---------- Audio (browser text-to-speech) ---------- */
+/* ---------- Audio ---------- */
+// Recorded clips (embedded by build.js) come first; the browser's speech voice is only a fallback.
+const AUDIO = /*__AUDIO__*/{ sentences: {}, words: {} };
+const hasClips = Object.keys(AUDIO.sentences).length > 0;
+const player = new Audio();
 const tts = "speechSynthesis" in window ? window.speechSynthesis : null;
 let deVoice = null;
 function pickVoice() {
@@ -321,7 +325,18 @@ function pickVoice() {
 }
 if (tts) { pickVoice(); tts.onvoiceschanged = pickVoice; }
 function speak(text) {
-  if (!tts || !text) return;
+  if (!text) return;
+  const clip = AUDIO.sentences[text] || AUDIO.words[text];
+  if (clip) {
+    if (tts) tts.cancel();
+    player.pause();
+    player.src = clip;
+    player.preservesPitch = true;
+    player.playbackRate = state.slow ? 0.7 : 1;
+    player.play().catch(() => {});
+    return;
+  }
+  if (!tts) return;
   tts.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "de-DE";
@@ -329,7 +344,7 @@ function speak(text) {
   u.rate = state.slow ? 0.65 : 0.92;
   tts.speak(u);
 }
-const audioControls = () => tts ? `
+const audioControls = () => (hasClips || tts) ? `
   <button class="btn icon" data-act="speak" title="Play (space)">▶ Hören</button>
   <button class="btn icon" data-act="slow" aria-pressed="${state.slow}">${state.slow ? "Slow ✓" : "Slow"}</button>` : "";
 
