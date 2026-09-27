@@ -219,6 +219,11 @@ input[type="text"] {
 .kasten { display: grid; gap: 12px; }
 .kasten-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
 .kasten-head h2 { font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); margin: 0; }
+.kasten-head h2 span { color: var(--margin); }
+.kasten-tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+.btn.mini { font-size: .85rem; padding: 3px 10px; border-width: 1.5px; }
+.btn.mini.armed { background: var(--bad); border-color: var(--bad); color: var(--card); }
+.btn small { display: block; font-family: var(--mono); font-size: .68rem; font-weight: 400; letter-spacing: 0; text-transform: none; opacity: .8; }
 .setgroup { display: grid; gap: 6px; }
 .setgroup h3 { margin: 0; font-family: var(--display); font-weight: 600; font-size: .9rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 5px; }
@@ -280,8 +285,11 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
 
   <section class="kasten" aria-label="Progress">
     <div class="kasten-head">
-      <h2>Karteikasten</h2>
-      <span class="hint" id="summary"></span>
+      <h2>Karteikasten · <span id="deckname"></span></h2>
+      <div class="kasten-tools">
+        <span class="hint" id="summary"></span>
+        <button class="btn mini bad" id="clear" type="button">Clear</button>
+      </div>
     </div>
     <div id="groups" class="kasten"></div>
     <div class="legend">
@@ -296,7 +304,7 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
 
   <footer>
     <span>Tim Ferriss's 13 deconstruction sentences, the Golden 41 expansion, and gap fillers.</span>
-    <button class="linkish" id="reset" type="button">Reset progress</button>
+    <button class="linkish" id="reset" type="button">Reset all progress</button>
   </footer>
 </div>
 
@@ -322,16 +330,20 @@ const saved = store.load();
 const state = {
   view: saved.view || "learn",
   idx: Number.isInteger(saved.idx) && saved.idx < TOTAL ? saved.idx : 0,
-  cards: saved.cards || {},          // sentence key -> { box, due }
+  // Progress is kept separately per practice type: sentence key -> { box, due }.
+  // Older saves had one shared record; it becomes the EN → DE deck.
+  progress: Object.assign({ en: {}, de: {}, listen: {}, type: {} }, saved.progress || (saved.cards ? { en: saved.cards } : {})),
   slow: !!saved.slow,
   word: null,                        // selected token index on the current card
   pmode: saved.pmode === "type" ? "type" : "cards", // practice style: flash cards or typing
   pdir: ["en", "de", "listen"].includes(saved.pdir) ? saved.pdir : "en", // flash card front: English, German or audio only
   order: saved.order === "seq" ? "seq" : "shuffle", // which sentence comes next in Practice and Build
-  confirmReset: false
 };
-const persist = () => store.save({ view: state.view, idx: state.idx, cards: state.cards, slow: state.slow, pmode: state.pmode, pdir: state.pdir, order: state.order });
-const card = s => state.cards[s.key] || { box: 0, due: 0 };
+const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, pmode: state.pmode, pdir: state.pdir, order: state.order });
+const DECK_NAME = { en: "EN → DE", de: "DE → EN", listen: "Listen", type: "Type it" };
+const deck = () => state.pmode === "type" ? "type" : state.pdir;   // the practice type currently chosen
+const cards = () => state.progress[deck()];
+const card = s => cards()[s.key] || { box: 0, due: 0 };
 const byId = id => SENTENCES.find(s => s.id === id);
 
 const $ = (sel, el = document) => el.querySelector(sel);
@@ -515,12 +527,21 @@ function practiceModes() {
     ${state.pmode === "cards" ? `<div class="seg" role="group" aria-label="Card front">${seg("pdir", "en", "EN → DE")}${seg("pdir", "de", "DE → EN")}${seg("pdir", "listen", "Listen")}</div>` : ""}
   </div>`;
 }
+// Box a grade would move the current card to, and how long until it comes back.
+function nextBox(c, g) { return g === "again" ? 1 : g === "good" ? Math.min(5, Math.max(1, c.box + 1)) : Math.min(5, c.box + 2); }
+function waitLabel(c, g) {
+  const ms = g === "again" ? MIN : INTERVAL[nextBox(c, g)];
+  if (ms < 60 * MIN) return `${Math.round(ms / MIN)} min`;
+  const d = Math.round(ms / DAY);
+  return d % 7 === 0 ? `${d / 7} week${d === 7 ? "" : "s"}` : `${d} day${d === 1 ? "" : "s"}`;
+}
 function gradeButtons() {
+  const c = card(byId(pr.id));
   return `<p class="eyebrow">How did that go?</p>
     <div class="row">
-      <button class="btn bad" data-grade="again">1 · Again</button>
-      <button class="btn" data-grade="good">2 · Got it</button>
-      <button class="btn good" data-grade="easy">3 · Easy</button>
+      <button class="btn bad" data-grade="again">1 · Again<small>${waitLabel(c, "again")}</small></button>
+      <button class="btn" data-grade="good">2 · Got it<small>${waitLabel(c, "good")}</small></button>
+      <button class="btn good" data-grade="easy">3 · Easy<small>${waitLabel(c, "easy")}</small></button>
     </div>`;
 }
 function flashFront(s) {
@@ -609,11 +630,8 @@ function autoplayListen() {
 }
 function grade(g) {
   const s = byId(pr.id), c = card(s);
-  let box;
-  if (g === "again") box = 1;
-  else if (g === "good") box = Math.min(5, Math.max(1, c.box + 1));
-  else box = Math.min(5, c.box + 2);
-  state.cards[s.key] = { box, due: Date.now() + (g === "again" ? MIN : INTERVAL[box]) };
+  const box = nextBox(c, g);
+  cards()[s.key] = { box, due: Date.now() + (g === "again" ? MIN : INTERVAL[box]) };
   persist();
   pr = { id: null, ahead: pr.ahead, last: s.id };
   state.word = null;
@@ -622,14 +640,14 @@ function grade(g) {
 
 /* ---------- Build (word order) ---------- */
 let bd = null; // { id, target, bank, placed, punct, checked, ok }
-let deck = [];  // shuffled sentence ids still to come in Build, so each appears once per round
+let buildDeck = [];  // shuffled sentence ids still to come in Build, so each appears once per round
 function dealBuild(lastId) {
-  if (!deck.length) {
-    deck = SENTENCES.map(s => s.id);
-    for (let i = deck.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [deck[i], deck[j]] = [deck[j], deck[i]]; }
-    if (deck.length > 1 && deck[deck.length - 1] === lastId) deck.unshift(deck.pop()); // no repeat across rounds
+  if (!buildDeck.length) {
+    buildDeck = SENTENCES.map(s => s.id);
+    for (let i = buildDeck.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [buildDeck[i], buildDeck[j]] = [buildDeck[j], buildDeck[i]]; }
+    if (buildDeck.length > 1 && buildDeck[buildDeck.length - 1] === lastId) buildDeck.unshift(buildDeck.pop()); // no repeat across rounds
   }
-  return deck.pop();
+  return buildDeck.pop();
 }
 function tokens(de) {
   const m = de.match(/^(.*?)([.?!])$/);
@@ -704,6 +722,7 @@ function renderCells() {
   const started = SENTENCES.filter(s => card(s).box > 0).length;
   const solid = SENTENCES.filter(s => card(s).box >= 3).length;
   const due = SENTENCES.filter(s => { const c = card(s); return c.box > 0 && c.due <= now; }).length;
+  $("#deckname").textContent = DECK_NAME[deck()];
   $("#summary").textContent = `${started}/${TOTAL} started · ${solid} solid · ${due} due now`;
 }
 function render() {
@@ -740,9 +759,9 @@ document.addEventListener("click", e => {
     persist(); render(); autoplayListen(); return;
   }
   if (t.dataset.grade) { grade(t.dataset.grade); autoplayListen(); return; }
-  if (t.dataset.pmode) { state.pmode = t.dataset.pmode; if (pr) { pr.revealed = false; pr.hinted = false; } persist(); render(); return; }
+  if (t.dataset.pmode) { state.pmode = t.dataset.pmode; pr = null; persist(); render(); autoplayListen(); return; }
   if (t.dataset.order) { state.order = t.dataset.order; persist(); render(); return; }
-  if (t.dataset.pdir) { state.pdir = t.dataset.pdir; if (pr) { pr.revealed = false; pr.hinted = false; } persist(); render(); autoplayListen(); return; }
+  if (t.dataset.pdir) { state.pdir = t.dataset.pdir; pr = null; persist(); render(); autoplayListen(); return; }
   if (t.dataset.bank != null) { const [tile] = bd.bank.splice(+t.dataset.bank, 1); bd.placed.push(tile); render(); return; }
   if (t.dataset.slot != null && !bd.checked) { const [tile] = bd.placed.splice(+t.dataset.slot, 1); bd.bank.push(tile); render(); return; }
   switch (t.dataset.act) {
@@ -780,16 +799,23 @@ document.addEventListener("keydown", e => {
   }
 });
 
-$("#reset").addEventListener("click", () => {
-  const b = $("#reset");
-  if (!state.confirmReset) {
-    state.confirmReset = true; b.textContent = "Click again to erase all progress";
-    setTimeout(() => { state.confirmReset = false; b.textContent = "Reset progress"; }, 4000);
+// Destructive buttons need a second tap within 4 seconds.
+function confirmTap(b, idle, armedText, doneText, action) {
+  if (!b.classList.contains("armed")) {
+    b.classList.add("armed"); b.textContent = armedText;
+    b._t = setTimeout(() => { b.classList.remove("armed"); b.textContent = idle(); }, 4000);
     return;
   }
-  state.confirmReset = false; state.cards = {}; pr = null; persist(); b.textContent = "Progress erased"; render();
-  setTimeout(() => { b.textContent = "Reset progress"; }, 2000);
-});
+  clearTimeout(b._t); b.classList.remove("armed");
+  action(); pr = null; persist(); render();
+  b.textContent = doneText;
+  setTimeout(() => { b.textContent = idle(); }, 2000);
+}
+$("#clear").addEventListener("click", e => confirmTap(e.currentTarget, () => "Clear",
+  `Tap again to clear ${DECK_NAME[deck()]}`, "Cleared", () => { state.progress[deck()] = {}; }));
+$("#reset").addEventListener("click", e => confirmTap(e.currentTarget, () => "Reset all progress",
+  "Tap again to erase progress for every practice type", "All progress erased",
+  () => { state.progress = { en: {}, de: {}, listen: {}, type: {} }; }));
 
 render();
 </script>
