@@ -1,14 +1,23 @@
-// Inlines data/sentences.json into src/app.html.
+// Inlines data/sentences.json and data/topics.json into src/app.html.
 //   dist/index.html    – standalone page (open directly in a browser, or host anywhere)
 //   dist/fragment.html – body-only version for hosts that supply their own <html> shell
 const fs = require("fs");
 const path = require("path");
 
 const root = __dirname;
-const sentences = JSON.parse(fs.readFileSync(path.join(root, "data/sentences.json"), "utf8"));
-const app = fs.readFileSync(path.join(root, "src/app.html"), "utf8");
-const fragment = app.replace("/*__SENTENCES__*/[]", JSON.stringify(sentences));
-if (fragment === app) throw new Error("Data placeholder not found in src/app.html");
+const read = f => fs.readFileSync(path.join(root, f), "utf8");
+const data = JSON.parse(read("data/sentences.json"));
+const topics = JSON.parse(read("data/topics.json"));
+const app = read("src/app.html");
+
+let fragment = app;
+for (const [placeholder, value] of [
+  ["/*__SENTENCES__*/{ sets: {}, sentences: [] }", data],
+  ["/*__TOPICS__*/{}", topics],
+]) {
+  if (!fragment.includes(placeholder)) throw new Error(`Placeholder ${placeholder} not found in src/app.html`);
+  fragment = fragment.replace(placeholder, () => JSON.stringify(value));
+}
 
 const page = `<!doctype html>
 <html lang="en">
@@ -26,4 +35,4 @@ ${fragment}
 fs.mkdirSync(path.join(root, "dist"), { recursive: true });
 fs.writeFileSync(path.join(root, "dist/index.html"), page);
 fs.writeFileSync(path.join(root, "dist/fragment.html"), fragment);
-console.log(`Built ${sentences.length} sentences → dist/index.html, dist/fragment.html`);
+console.log(`Built ${data.sentences.length} sentences, ${Object.keys(topics).length} topics → dist/index.html, dist/fragment.html`);

@@ -12,11 +12,13 @@
   --muted: #5C6A84;
   --line: #CBD5E4;
   --margin: #D2453A;
-  --margin-soft: #F7DCD8;
   --good: #2E7A4E;
   --good-soft: #DCEFE3;
   --bad: #B8352B;
   --bad-soft: #F8DEDA;
+  --tint: #EEF2F8;
+  /* case colours: Nominativ, Akkusativ, Dativ, Genitiv */
+  --cN: #2F5FC4; --cA: #D2453A; --cD: #2E8B57; --cG: #C0850F;
   --b1: #D2453A; --b2: #DE9A2E; --b3: #A6B83F; --b4: #4C9A5F; --b5: #1B2F5E;
   --shadow: 0 1px 0 rgba(27,47,94,.06), 0 8px 24px -12px rgba(27,47,94,.25);
   --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
@@ -27,8 +29,9 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --paper: #0F141D; --grid: #182131; --card: #151C29; --ink: #C9D8F5; --text: #E3E8F2;
-    --muted: #8F9CB4; --line: #2A3549; --margin: #F0695B; --margin-soft: #3A1F1F;
+    --muted: #8F9CB4; --line: #2A3549; --margin: #F0695B; --tint: #1B2433;
     --good: #62C08A; --good-soft: #17301F; --bad: #F0695B; --bad-soft: #3A1F1F;
+    --cN: #7EA6F2; --cA: #F0695B; --cD: #5FC08A; --cG: #E8B04A;
     --b1: #F0695B; --b2: #E8AC45; --b3: #B5C954; --b4: #5FB574; --b5: #C9D8F5;
     --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
   }
@@ -36,8 +39,9 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
   --paper: #0F141D; --grid: #182131; --card: #151C29; --ink: #C9D8F5; --text: #E3E8F2;
-  --muted: #8F9CB4; --line: #2A3549; --margin: #F0695B; --margin-soft: #3A1F1F;
+  --muted: #8F9CB4; --line: #2A3549; --margin: #F0695B; --tint: #1B2433;
   --good: #62C08A; --good-soft: #17301F; --bad: #F0695B; --bad-soft: #3A1F1F;
+  --cN: #7EA6F2; --cA: #F0695B; --cD: #5FC08A; --cG: #E8B04A;
   --b1: #F0695B; --b2: #E8AC45; --b3: #B5C954; --b4: #5FB574; --b5: #C9D8F5;
   --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
 }
@@ -72,7 +76,7 @@ nav.tabs button {
 nav.tabs button[aria-selected="true"] { background: var(--ink); color: var(--card); }
 
 button { font: inherit; }
-button:focus-visible, input:focus-visible { outline: 2px solid var(--margin); outline-offset: 2px; }
+button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--margin); outline-offset: 2px; }
 
 /* The notebook page: red margin line on the left, like a German Schulheft */
 .page {
@@ -83,10 +87,56 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--margin); ou
 .num { position: absolute; left: 6px; top: 22px; width: 30px; text-align: center; font-family: var(--mono); font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .eyebrow { font-family: var(--display); font-weight: 600; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.eyebrow b { color: var(--margin); font-weight: 600; }
 .en { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--muted); margin: 0; }
-.de { font-family: var(--serif); font-weight: 600; font-size: clamp(1.55rem, 4.6vw, 2.1rem); line-height: 1.25; color: var(--ink); margin: 0; text-wrap: balance; }
-.tag { justify-self: start; font-family: var(--display); font-weight: 600; font-size: .9rem; letter-spacing: .05em; text-transform: uppercase; color: var(--margin); border: 1.5px solid var(--margin); border-radius: 999px; padding: 1px 10px; }
+.de { font-family: var(--serif); font-weight: 600; font-size: clamp(1.55rem, 4.6vw, 2.1rem); line-height: 1.35; color: var(--ink); margin: 0; text-wrap: balance; }
 .note { margin: 0; max-width: 62ch; font-size: .98rem; }
+.literal { margin: -8px 0 0; font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+.literal span { color: var(--text); }
+
+/* Tappable, case-coloured words */
+.de .w {
+  font: inherit; color: inherit; background: none; border: 0; padding: 0 1px; margin: 0; cursor: pointer;
+  border-bottom: 3px solid transparent; border-radius: 0; line-height: 1.2;
+}
+.de .w.c-N { border-bottom-color: var(--cN); }
+.de .w.c-A { border-bottom-color: var(--cA); }
+.de .w.c-D { border-bottom-color: var(--cD); }
+.de .w.c-G { border-bottom-color: var(--cG); }
+.de .w.c-v { border-bottom: 3px dotted var(--muted); }
+.de .w.on { background: var(--tint); }
+.gloss { min-height: 1.6em; font-family: var(--mono); font-size: .82rem; color: var(--muted); margin: -6px 0 0; }
+.gloss b { font-family: var(--serif); font-size: 1rem; color: var(--ink); }
+.caselegend { display: flex; flex-wrap: wrap; gap: 2px 14px; font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+.caselegend span::before { content: ""; display: inline-block; width: 14px; height: 0; border-bottom: 3px solid; margin-right: 5px; vertical-align: 3px; }
+.caselegend .c-N::before { border-color: var(--cN); }
+.caselegend .c-A::before { border-color: var(--cA); }
+.caselegend .c-D::before { border-color: var(--cD); }
+.caselegend .c-G::before { border-color: var(--cG); }
+.caselegend .c-v::before { border-bottom-style: dotted; border-color: var(--muted); }
+
+/* Grammar topics */
+.topics { display: grid; gap: 6px; }
+.topic { border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
+.topic summary {
+  list-style: none; cursor: pointer; padding: 8px 12px; display: grid; gap: 1px;
+}
+.topic summary::-webkit-details-marker { display: none; }
+.topic summary .t { font-family: var(--display); font-weight: 600; font-size: 1.05rem; letter-spacing: .04em; text-transform: uppercase; color: var(--margin); }
+.topic summary .t::after { content: " +"; color: var(--muted); }
+.topic[open] summary .t::after { content: " −"; }
+.topic summary .s { font-size: .95rem; }
+.topic .body { padding: 0 12px 12px; display: grid; gap: 10px; font-size: .95rem; }
+.topic .body p { margin: 0; max-width: 62ch; }
+.tablewrap { overflow-x: auto; }
+table.decl { border-collapse: collapse; font-family: var(--mono); font-size: .78rem; font-variant-numeric: tabular-nums; }
+table.decl th, table.decl td { border: 1px solid var(--line); padding: 4px 8px; text-align: left; white-space: nowrap; }
+table.decl th { background: var(--tint); color: var(--muted); font-weight: 500; }
+
+.mistake { display: grid; gap: 2px; padding: 10px 12px; border-radius: 8px; background: var(--bad-soft); }
+.mistake .x { font-family: var(--serif); color: var(--bad); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.mistake .why { font-size: .93rem; }
+.hintbox { padding: 8px 12px; border-left: 3px solid var(--cG); background: var(--tint); font-size: .98rem; }
 
 .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .row.spread { justify-content: space-between; }
@@ -126,13 +176,25 @@ input[type="text"] {
 .verdict.ok { color: var(--good); }
 .verdict.no { color: var(--bad); }
 
-.empty { text-align: left; }
+/* Sentence frame (Satzklammer) diagram */
+.frame { overflow-x: auto; }
+.frame-grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max-content, auto); border: 1px solid var(--line); border-radius: 8px; width: max-content; min-width: 100%; }
+.fcol { display: grid; grid-template-rows: auto 1fr; border-right: 1px solid var(--line); }
+.fcol:last-child { border-right: 0; }
+.fcol .lab { font-family: var(--display); font-weight: 600; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 4px 10px; background: var(--tint); }
+.fcol.br .lab { color: var(--margin); }
+.fcol .val { padding: 8px 10px; font-family: var(--serif); font-size: 1.05rem; color: var(--ink); white-space: nowrap; }
+.fcol.br .val { font-weight: 600; }
+.fcol .val.empty { color: var(--line); }
+
 .empty h2 { font-family: var(--display); font-weight: 700; font-size: 1.7rem; color: var(--ink); margin: 0; }
 
 /* Karteikasten: one cell per sentence, coloured by its Leitner box */
-.kasten { display: grid; gap: 10px; }
+.kasten { display: grid; gap: 12px; }
 .kasten-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
 .kasten-head h2 { font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); margin: 0; }
+.setgroup { display: grid; gap: 6px; }
+.setgroup h3 { margin: 0; font-family: var(--display); font-weight: 600; font-size: .9rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 5px; }
 .cell {
   aspect-ratio: 1; max-width: 100%; border-radius: 5px; border: 1.5px solid var(--line); background: var(--card);
@@ -162,6 +224,13 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
   nav.tabs { width: 100%; }
   nav.tabs button { flex: 1; padding-inline: 6px; }
 }
+@media (max-width: 600px) {
+  .frame-grid { grid-auto-flow: row; width: 100%; }
+  .fcol { grid-template-rows: none; grid-template-columns: 96px 1fr; border-right: 0; border-bottom: 1px solid var(--line); }
+  .fcol:last-child { border-bottom: 0; }
+  .fcol .lab { display: flex; align-items: center; }
+  .fcol .val { white-space: normal; }
+}
 @media (prefers-reduced-motion: no-preference) {
   .page { animation: rise .22s ease-out; }
   @keyframes rise { from { transform: translateY(4px); opacity: .6; } to { transform: none; opacity: 1; } }
@@ -172,7 +241,7 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
   <header>
     <div class="brand">
       <h1>Goldene Sätze<span>.</span></h1>
-      <p>41 golden sentences · German for English speakers</p>
+      <p>Golden sentences · German for English speakers</p>
     </div>
     <nav class="tabs" role="tablist" aria-label="Mode">
       <button role="tab" id="tab-learn" data-view="learn">Learn</button>
@@ -188,7 +257,7 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
       <h2>Karteikasten</h2>
       <span class="hint" id="summary"></span>
     </div>
-    <div class="cells" id="cells"></div>
+    <div id="groups" class="kasten"></div>
     <div class="legend">
       <span><i></i>new</span>
       <span><i data-box="1"></i>box 1 · again soon</span>
@@ -200,18 +269,24 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
   </section>
 
   <footer>
-    <span>Built on Tim Ferriss's sentence-deconstruction method, expanded to 41.</span>
+    <span>Tim Ferriss's 13 deconstruction sentences, the Golden 41 expansion, and gap fillers.</span>
     <button class="linkish" id="reset" type="button">Reset progress</button>
   </footer>
 </div>
 
 <script>
-const SENTENCES = /*__SENTENCES__*/[];
+const DATA = /*__SENTENCES__*/{ sets: {}, sentences: [] };
+const TOPICS = /*__TOPICS__*/{};
+const SENTENCES = DATA.sentences;
+const TOTAL = SENTENCES.length;
+
+const CASE_NAME = { N: "nominative", A: "accusative", D: "dative", G: "genitive", v: "verb" };
+const FIELD_NAME = { KF: "Konj.", VF: "Vorfeld", LK: "Verb", MF: "Mittelfeld", RK: "Verb end", NF: "Nachfeld" };
 
 // Leitner intervals per box, in ms. Box 0 = never practised.
 const MIN = 60e3, DAY = 864e5;
 const INTERVAL = [0, 10 * MIN, DAY, 3 * DAY, 7 * DAY, 21 * DAY];
-const KEY = "goldene-saetze:v1";
+const KEY = "goldene-saetze:v2";
 
 const store = {
   load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } },
@@ -220,16 +295,19 @@ const store = {
 const saved = store.load();
 const state = {
   view: saved.view || "learn",
-  idx: Number.isInteger(saved.idx) ? saved.idx : 0,
-  cards: saved.cards || {},          // id -> { box, due }
+  idx: Number.isInteger(saved.idx) && saved.idx < TOTAL ? saved.idx : 0,
+  cards: saved.cards || {},          // sentence key -> { box, due }
   slow: !!saved.slow,
+  word: null,                        // selected token index on the current card
   confirmReset: false
 };
 const persist = () => store.save({ view: state.view, idx: state.idx, cards: state.cards, slow: state.slow });
-const card = id => state.cards[id] || { box: 0, due: 0 };
+const card = s => state.cards[s.key] || { box: 0, due: 0 };
+const byId = id => SENTENCES.find(s => s.id === id);
 
 const $ = (sel, el = document) => el.querySelector(sel);
-const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pad = n => String(n).padStart(2, "0");
 
 /* ---------- Audio (browser text-to-speech) ---------- */
 const tts = "speechSynthesis" in window ? window.speechSynthesis : null;
@@ -243,7 +321,7 @@ function pickVoice() {
 }
 if (tts) { pickVoice(); tts.onvoiceschanged = pickVoice; }
 function speak(text) {
-  if (!tts) return;
+  if (!tts || !text) return;
   tts.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "de-DE";
@@ -255,43 +333,90 @@ const audioControls = () => tts ? `
   <button class="btn icon" data-act="speak" title="Play (space)">▶ Hören</button>
   <button class="btn icon" data-act="slow" aria-pressed="${state.slow}">${state.slow ? "Slow ✓" : "Slow"}</button>` : "";
 
+/* ---------- Shared pieces built from the sentence data ---------- */
+// German sentence as tappable words, underlined by case.
+function deWords(s) {
+  const last = s.de.slice(-1);
+  const punct = /[.?!]/.test(last) ? last : "";
+  return `<p class="de" lang="de">${s.tokens.map((t, i) =>
+    `<button class="w c-${t.c} ${state.word === i ? "on" : ""}" data-word="${i}">${esc(t.w)}</button>`).join(" ")}${punct}</p>
+  <p class="gloss" id="gloss">${glossText(s)}</p>`;
+}
+function glossText(s) {
+  if (state.word == null || !s.tokens[state.word]) return "Tap a word for its meaning and case.";
+  const t = s.tokens[state.word];
+  const bits = [esc(t.g)];
+  if (CASE_NAME[t.c]) bits.push(CASE_NAME[t.c]);
+  bits.push(FIELD_NAME[t.f].toLowerCase());
+  return `<b lang="de">${esc(t.w.replace(/,$/, ""))}</b> · ${bits.join(" · ")}`;
+}
+const literal = s => `<p class="literal">word for word: <span>${esc(s.tokens.map(t => t.g).join(" "))}</span></p>`;
+const caseLegend = () => `<div class="caselegend"><span class="c-N">nominative</span><span class="c-A">accusative</span><span class="c-D">dative</span><span class="c-G">genitive</span><span class="c-v">verb</span></div>`;
+function topicCards(s, open) {
+  return `<div class="topics">${s.topics.map((id, i) => {
+    const t = TOPICS[id];
+    const table = t.table ? `<div class="tablewrap"><table class="decl"><thead><tr>${t.table.head.map(h => `<th>${esc(h)}</th>`).join("")}</tr></thead>
+      <tbody>${t.table.rows.map(r => `<tr>${r.map((c, j) => j ? `<td lang="de">${esc(c)}</td>` : `<th>${esc(c)}</th>`).join("")}</tr>`).join("")}</tbody></table></div>` : "";
+    return `<details class="topic" ${open && i === 0 ? "open" : ""}>
+      <summary><span class="t">${esc(t.title)}</span><span class="s">${esc(t.summary)}</span></summary>
+      <div class="body"><p>${esc(t.body)}</p>${table}</div>
+    </details>`;
+  }).join("")}</div>`;
+}
+const mistakeBox = s => s.mistake ? `<div class="mistake"><span class="eyebrow">Common mistake</span>
+  <span class="x" lang="de">${esc(s.mistake.wrong)}</span><span class="why">${esc(s.mistake.why)}</span></div>` : "";
+function frameDiagram(s) {
+  const fields = ["VF", "LK", "MF", "RK"];
+  if (s.tokens.some(t => t.f === "KF")) fields.unshift("KF");
+  if (s.tokens.some(t => t.f === "NF")) fields.push("NF");
+  return `<div class="frame"><div class="frame-grid">${fields.map(f => {
+    const words = s.tokens.filter(t => t.f === f).map(t => esc(t.w)).join(" ");
+    return `<div class="fcol ${f === "LK" || f === "RK" ? "br" : ""}"><span class="lab">${FIELD_NAME[f]}</span>
+      <span class="val ${words ? "" : "empty"}" lang="de">${words || "—"}</span></div>`;
+  }).join("")}</div></div>`;
+}
+const header = (s, label) => `<span class="num">${pad(s.id)}</span>
+  <p class="eyebrow">${label} · <b>${esc(DATA.sets[s.set])}</b></p>`;
+
 /* ---------- Learn ---------- */
 function renderLearn() {
   const s = SENTENCES[state.idx];
   return `
   <article class="page">
-    <span class="num">${String(s.id).padStart(2, "0")}</span>
-    <p class="eyebrow">Sentence ${s.id} of ${SENTENCES.length}</p>
+    ${header(s, `${s.id} of ${TOTAL}`)}
     <p class="en">${esc(s.en)}</p>
-    <p class="de" lang="de">${esc(s.de)}</p>
-    <span class="tag">${esc(s.tag)}</span>
+    ${deWords(s)}
+    ${literal(s)}
+    ${caseLegend()}
     <p class="note">${esc(s.note)}</p>
+    ${mistakeBox(s)}
+    ${topicCards(s, false)}
     <div class="row spread">
       <div class="row">${audioControls()}</div>
       <div class="row">
         <button class="btn icon" data-act="prev" ${state.idx === 0 ? "disabled" : ""} aria-label="Previous sentence">←</button>
-        <button class="btn icon solid" data-act="next" ${state.idx === SENTENCES.length - 1 ? "disabled" : ""} aria-label="Next sentence">→</button>
+        <button class="btn icon solid" data-act="next" ${state.idx === TOTAL - 1 ? "disabled" : ""} aria-label="Next sentence">→</button>
       </div>
     </div>
-    <span class="hint">← → to move · space to listen</span>
+    <span class="hint">← → to move · space to listen · ${esc(s.source)}</span>
   </article>`;
 }
 
 /* ---------- Practice (spaced repetition) ---------- */
-let pr = null; // { id, revealed, typed, ahead }
+let pr = null; // { id, revealed, typed, hinted, ahead }
 
 function nextDue(ahead) {
   const now = Date.now();
-  const seen = SENTENCES.filter(s => card(s.id).box > 0);
-  const dueSeen = seen.filter(s => card(s.id).due <= now).sort((a, b) => card(a.id).due - card(b.id).due);
+  const seen = SENTENCES.filter(s => card(s).box > 0);
+  const dueSeen = seen.filter(s => card(s).due <= now).sort((a, b) => card(a).due - card(b).due);
   if (dueSeen.length) return dueSeen[0].id;
-  const fresh = SENTENCES.find(s => card(s.id).box === 0);
+  const fresh = SENTENCES.find(s => card(s).box === 0);
   if (fresh) return fresh.id;
-  if (ahead && seen.length) return seen.slice().sort((a, b) => card(a.id).due - card(b.id).due)[0].id;
+  if (ahead && seen.length) return seen.slice().sort((a, b) => card(a).due - card(b).due)[0].id;
   return null;
 }
 function soonest() {
-  const dues = SENTENCES.map(s => card(s.id)).filter(c => c.box > 0).map(c => c.due);
+  const dues = SENTENCES.map(card).filter(c => c.box > 0).map(c => c.due);
   return dues.length ? Math.min(...dues) : null;
 }
 function when(ts) {
@@ -320,9 +445,18 @@ function compare(typed, target) {
   while (j < b.length) out.push(["miss", b[j++]]);
   return { parts: out, perfect: out.every(p => p[0] === "ok") };
 }
+// Accept ae/oe/ue/ss spellings when the answer uses umlauts or ß.
+function normUmlauts(typed, target) {
+  if (!/[äöüß]/i.test(target)) return typed;
+  const tw = new Set(words(target));
+  return typed.split(/(\s+)/).map(tok => {
+    const alt = tok.replace(/ae/g, "ä").replace(/oe/g, "ö").replace(/ue/g, "ü").replace(/Ae/g, "Ä").replace(/Oe/g, "Ö").replace(/Ue/g, "Ü").replace(/ss/g, "ß");
+    return tw.has(words(alt)[0]) && !tw.has(words(tok)[0]) ? alt : tok;
+  }).join("");
+}
 
 function renderPractice() {
-  if (!pr || pr.id == null) pr = { id: nextDue(pr && pr.ahead), revealed: false, typed: "", ahead: pr && pr.ahead };
+  if (!pr || pr.id == null) pr = { id: nextDue(pr && pr.ahead), revealed: false, typed: "", hinted: false, ahead: pr && pr.ahead };
   if (pr.id == null) {
     const t = soonest();
     return `
@@ -333,28 +467,32 @@ function renderPractice() {
       <div class="row"><button class="btn solid" data-act="ahead">Review anyway</button></div>
     </article>`;
   }
-  const s = SENTENCES.find(x => x.id === pr.id);
-  const c = card(s.id);
+  const s = byId(pr.id);
+  const c = card(s);
   let body;
   if (!pr.revealed) {
     body = `
+      ${pr.hinted ? `<div class="hintbox"><span class="eyebrow">Hint</span><br>${esc(s.hint)}</div>` : ""}
       <form class="answer" id="pform" autocomplete="off">
         <label class="eyebrow" for="typed">Say it or type it in German</label>
         <input type="text" id="typed" lang="de" spellcheck="false" placeholder="Auf Deutsch …" value="${esc(pr.typed)}">
         <div class="row spread">
-          <button class="btn solid" type="submit">Show answer</button>
-          <span class="hint">enter to reveal · ä ö ü ß ok as ae oe ue ss</span>
+          <div class="row">
+            <button class="btn solid" type="submit">Show answer</button>
+            ${pr.hinted ? "" : `<button class="btn" type="button" data-act="hint">Hint</button>`}
+          </div>
+          <span class="hint">enter to reveal · ae oe ue ss are fine</span>
         </div>
       </form>`;
   } else {
     const typed = normUmlauts(pr.typed, s.de);
     const cmp = typed.trim() ? compare(typed, s.de) : null;
     body = `
-      <p class="de" lang="de">${esc(s.de)}</p>
+      ${deWords(s)}
       ${cmp ? `<div class="cmp" aria-label="Your answer compared">${cmp.parts.map(([k, w]) => `<span class="${k}">${esc(w)}</span>`).join("")}</div>
-               <p class="verdict ${cmp.perfect ? "ok" : "no"}">${cmp.perfect ? "Richtig!" : "Close — compare word by word."}</p>` : ""}
-      <span class="tag">${esc(s.tag)}</span>
+               <p class="verdict ${cmp.perfect ? "ok" : "no"}">${cmp.perfect ? "Richtig!" : "Close. Compare word by word."}</p>` : ""}
       <p class="note">${esc(s.note)}</p>
+      ${mistakeBox(s)}
       <div class="row">${audioControls()}</div>
       <p class="eyebrow">How did that go?</p>
       <div class="row">
@@ -365,41 +503,31 @@ function renderPractice() {
   }
   return `
   <article class="page">
-    <span class="num">${String(s.id).padStart(2, "0")}</span>
-    <p class="eyebrow">${c.box === 0 ? "New sentence" : `Review · box ${c.box}`}</p>
+    ${header(s, c.box === 0 ? "New sentence" : `Review · box ${c.box}`)}
     <p class="en">${esc(s.en)}</p>
     ${body}
   </article>`;
 }
-// Accept ae/oe/ue/ss spellings when the answer uses umlauts or ß.
-function normUmlauts(typed, target) {
-  if (!/[äöüß]/i.test(target)) return typed;
-  const tw = new Set(words(target));
-  return typed.split(/(\s+)/).map(tok => {
-    const alt = tok.replace(/ae/g, "ä").replace(/oe/g, "ö").replace(/ue/g, "ü").replace(/Ae/g, "Ä").replace(/Oe/g, "Ö").replace(/Ue/g, "Ü").replace(/ss/g, "ß");
-    return tw.has(words(alt)[0]) && !tw.has(words(tok)[0]) ? alt : tok;
-  }).join("");
-}
 function grade(g) {
-  const c = card(pr.id);
+  const s = byId(pr.id), c = card(s);
   let box;
   if (g === "again") box = 1;
   else if (g === "good") box = Math.min(5, Math.max(1, c.box + 1));
   else box = Math.min(5, c.box + 2);
-  const due = Date.now() + (g === "again" ? MIN : INTERVAL[box]);
-  state.cards[pr.id] = { box, due };
+  state.cards[s.key] = { box, due: Date.now() + (g === "again" ? MIN : INTERVAL[box]) };
   persist();
   pr = { id: null, ahead: pr.ahead };
+  state.word = null;
   render();
 }
 
 /* ---------- Build (word order) ---------- */
-let bd = null; // { id, bank, placed, punct, checked, ok }
+let bd = null; // { id, target, bank, placed, punct, checked, ok }
 function tokens(de) {
   const m = de.match(/^(.*?)([.?!])$/);
   const body = m ? m[1] : de, punct = m ? m[2] : "";
   const toks = body.split(/\s+/);
-  // First word is never a noun in this set, so lower-casing it removes the "starts with a capital" clue.
+  // No sentence here starts with a noun or formal Sie, so lower-casing the first word removes the capital-letter clue.
   toks[0] = toks[0].charAt(0).toLowerCase() + toks[0].slice(1);
   return { toks, punct };
 }
@@ -412,31 +540,34 @@ function shuffle(arr) {
   return a;
 }
 function newBuild(id) {
-  const { toks, punct } = tokens(SENTENCES.find(s => s.id === id).de);
+  const { toks, punct } = tokens(byId(id).de);
   const order = shuffle(toks.map((t, i) => i));
   bd = { id, target: toks, bank: order.map(i => ({ k: i, w: toks[i] })), placed: [], punct, checked: false, ok: false };
+  state.word = null;
 }
 function renderBuild() {
   if (!bd) newBuild(SENTENCES[state.idx].id);
-  const s = SENTENCES.find(x => x.id === bd.id);
+  const s = byId(bd.id);
   const slotCls = bd.checked ? (bd.ok ? "ok" : "no") : "";
   return `
   <article class="page">
-    <span class="num">${String(s.id).padStart(2, "0")}</span>
-    <p class="eyebrow">Put the words in order</p>
+    ${header(s, "Put the words in order")}
     <p class="en">${esc(s.en)}</p>
+    ${bd.checked ? "" : `
     <div class="slots ${slotCls}" id="slots" aria-label="Your sentence">
       ${bd.placed.map((t, i) => `<button class="tile" data-slot="${i}" lang="de">${esc(t.w)}</button>`).join("")}
       ${bd.placed.length && !bd.bank.length ? `<span class="punct">${bd.punct}</span>` : ""}
     </div>
     <div class="bank" aria-label="Word bank">
       ${bd.bank.map((t, i) => `<button class="tile" data-bank="${i}" lang="de">${esc(t.w)}</button>`).join("")}
-    </div>
+    </div>`}
     ${bd.checked ? `
-      <p class="verdict ${bd.ok ? "ok" : "no"}">${bd.ok ? "Richtig!" : "Not quite. The answer:"}</p>
-      ${bd.ok ? "" : `<p class="de" lang="de">${esc(s.de)}</p>`}
-      <span class="tag">${esc(s.tag)}</span>
-      <p class="note">${esc(s.note)}</p>` : ""}
+      <p class="verdict ${bd.ok ? "ok" : "no"}">${bd.ok ? "Richtig!" : `Not quite. You built: <span lang="de">${esc(bd.placed.map(p => p.w).join(" "))}</span>`}</p>
+      ${deWords(s)}
+      <p class="eyebrow">Sentence frame</p>
+      ${frameDiagram(s)}
+      <p class="note">${esc(s.note)}</p>
+      ${mistakeBox(s)}` : ""}
     <div class="row spread">
       <div class="row">
         ${bd.checked
@@ -451,76 +582,81 @@ function renderBuild() {
 }
 
 /* ---------- Shell ---------- */
+function currentId() {
+  return state.view === "practice" ? pr && pr.id : state.view === "build" ? bd && bd.id : SENTENCES[state.idx].id;
+}
 function renderCells() {
-  const current = state.view === "practice" ? pr && pr.id : state.view === "build" ? bd && bd.id : SENTENCES[state.idx].id;
-  $("#cells").innerHTML = SENTENCES.map(s => {
-    const c = card(s.id);
-    return `<button class="cell ${s.id === current ? "current" : ""}" data-box="${c.box}" data-jump="${s.id}" title="${esc(s.en)}">${s.id}</button>`;
+  const current = currentId();
+  $("#groups").innerHTML = Object.entries(DATA.sets).map(([set, name]) => {
+    const list = SENTENCES.filter(s => s.set === set);
+    return `<div class="setgroup"><h3>${esc(name)} · ${list.length}</h3><div class="cells">${list.map(s =>
+      `<button class="cell ${s.id === current ? "current" : ""}" data-box="${card(s).box}" data-jump="${s.id}" title="${esc(s.en)}">${s.id}</button>`).join("")}</div></div>`;
   }).join("");
   const now = Date.now();
-  const learned = SENTENCES.filter(s => card(s.id).box >= 3).length;
-  const started = SENTENCES.filter(s => card(s.id).box > 0).length;
-  const due = SENTENCES.filter(s => { const c = card(s.id); return c.box > 0 && c.due <= now; }).length;
-  $("#summary").textContent = `${started}/41 started · ${learned} solid · ${due} due now`;
+  const started = SENTENCES.filter(s => card(s).box > 0).length;
+  const solid = SENTENCES.filter(s => card(s).box >= 3).length;
+  const due = SENTENCES.filter(s => { const c = card(s); return c.box > 0 && c.due <= now; }).length;
+  $("#summary").textContent = `${started}/${TOTAL} started · ${solid} solid · ${due} due now`;
 }
 function render() {
   document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === state.view)));
-  const html = state.view === "practice" ? renderPractice() : state.view === "build" ? renderBuild() : renderLearn();
-  $("#view").innerHTML = html;
+  $("#view").innerHTML = state.view === "practice" ? renderPractice() : state.view === "build" ? renderBuild() : renderLearn();
   renderCells();
   const inp = $("#typed");
   if (inp) {
     inp.focus({ preventScroll: true });
     inp.addEventListener("input", () => { pr.typed = inp.value; });
-    $("#pform").addEventListener("submit", e => { e.preventDefault(); pr.typed = inp.value; pr.revealed = true; render(); speak(SENTENCES.find(s => s.id === pr.id).de); });
+    $("#pform").addEventListener("submit", e => { e.preventDefault(); pr.typed = inp.value; pr.revealed = true; render(); speak(byId(pr.id).de); });
   }
 }
-function currentText() {
-  const id = state.view === "practice" ? pr && pr.id : state.view === "build" ? bd && bd.id : SENTENCES[state.idx].id;
-  const s = SENTENCES.find(x => x.id === id);
-  return s ? s.de : "";
-}
+const currentText = () => { const s = byId(currentId()); return s ? s.de : ""; };
 
 document.addEventListener("click", e => {
   const t = e.target.closest("button");
   if (!t) return;
-  if (t.dataset.view) { state.view = t.dataset.view; persist(); render(); return; }
+  if (t.dataset.view) { state.view = t.dataset.view; state.word = null; persist(); render(); return; }
+  if (t.dataset.word != null) {
+    const i = +t.dataset.word;
+    state.word = state.word === i ? null : i;
+    document.querySelectorAll(".de .w").forEach(w => w.classList.toggle("on", +w.dataset.word === state.word));
+    const s = byId(currentId());
+    $("#gloss").innerHTML = glossText(s);
+    if (state.word != null) speak(s.tokens[i].w.replace(/,$/, ""));
+    return;
+  }
   if (t.dataset.jump) {
     const id = +t.dataset.jump;
-    state.idx = id - 1;
-    if (state.view === "practice") pr = { id, revealed: false, typed: "", ahead: true };
+    state.idx = id - 1; state.word = null;
+    if (state.view === "practice") pr = { id, revealed: false, typed: "", hinted: false, ahead: true };
     if (state.view === "build") newBuild(id);
     persist(); render(); return;
   }
   if (t.dataset.grade) { grade(t.dataset.grade); return; }
-  if (t.dataset.bank != null) {
-    const [tile] = bd.bank.splice(+t.dataset.bank, 1); bd.placed.push(tile); render();
-    if (!bd.bank.length) { /* ready to check */ }
-    return;
-  }
+  if (t.dataset.bank != null) { const [tile] = bd.bank.splice(+t.dataset.bank, 1); bd.placed.push(tile); render(); return; }
   if (t.dataset.slot != null && !bd.checked) { const [tile] = bd.placed.splice(+t.dataset.slot, 1); bd.bank.push(tile); render(); return; }
   switch (t.dataset.act) {
     case "speak": speak(currentText()); break;
     case "slow": state.slow = !state.slow; persist(); render(); break;
-    case "prev": if (state.idx > 0) { state.idx--; persist(); render(); } break;
-    case "next": if (state.idx < SENTENCES.length - 1) { state.idx++; persist(); render(); } break;
+    case "prev": if (state.idx > 0) { state.idx--; state.word = null; persist(); render(); } break;
+    case "next": if (state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); } break;
+    case "hint": pr.typed = $("#typed") ? $("#typed").value : pr.typed; pr.hinted = true; render(); break;
     case "ahead": pr = { id: null, ahead: true }; render(); break;
     case "check":
       bd.checked = true;
       bd.ok = bd.placed.map(p => p.w).join(" ") === bd.target.join(" ");
       render(); speak(currentText()); break;
     case "clear": bd.bank.push(...bd.placed); bd.placed = []; render(); break;
-    case "bnext": { const i = SENTENCES.findIndex(s => s.id === bd.id); newBuild(SENTENCES[(i + 1) % SENTENCES.length].id); render(); break; }
-    case "brandom": newBuild(SENTENCES[Math.floor(Math.random() * SENTENCES.length)].id); render(); break;
+    case "bnext": { const i = SENTENCES.findIndex(s => s.id === bd.id); newBuild(SENTENCES[(i + 1) % TOTAL].id); render(); break; }
+    case "brandom": newBuild(SENTENCES[Math.floor(Math.random() * TOTAL)].id); render(); break;
   }
 });
 
 document.addEventListener("keydown", e => {
   if (e.target.matches("input")) return;
   if (state.view === "learn") {
-    if (e.key === "ArrowRight" && state.idx < SENTENCES.length - 1) { state.idx++; persist(); render(); }
-    else if (e.key === "ArrowLeft" && state.idx > 0) { state.idx--; persist(); render(); }
-    else if (e.key === " " && !e.target.matches("button")) { e.preventDefault(); speak(currentText()); }
+    if (e.key === "ArrowRight" && state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); }
+    else if (e.key === "ArrowLeft" && state.idx > 0) { state.idx--; state.word = null; persist(); render(); }
+    else if (e.key === " " && !e.target.matches("button, summary")) { e.preventDefault(); speak(currentText()); }
   } else if (state.view === "practice" && pr && pr.revealed) {
     const g = { "1": "again", "2": "good", "3": "easy" }[e.key];
     if (g) grade(g);

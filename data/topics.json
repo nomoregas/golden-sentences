@@ -1,0 +1,240 @@
+{
+  "gender-articles": {
+    "title": "Gender and articles",
+    "summary": "Every noun is masculine (der), feminine (die) or neuter (das), and the article changes with case.",
+    "body": "Learn each noun with its article: der Apfel, die Banane, das Kind. The gender is mostly arbitrary, so the article is part of the word. What changes is the article's form depending on the noun's job in the sentence (its case). Plural is always die in the nominative.",
+    "table": {
+      "head": ["", "masc.", "fem.", "neut.", "plural"],
+      "rows": [
+        ["Nominative", "der / ein", "die / eine", "das / ein", "die / –"],
+        ["Accusative", "den / einen", "die / eine", "das / ein", "die / –"],
+        ["Dative", "dem / einem", "der / einer", "dem / einem", "den / –"],
+        ["Genitive", "des / eines", "der / einer", "des / eines", "der / –"]
+      ]
+    }
+  },
+  "predicate-adjective": {
+    "title": "Adjectives after sein",
+    "summary": "An adjective that follows sein/werden/bleiben takes no ending.",
+    "body": "Der Apfel ist rot. Die Äpfel sind rot. The adjective stays in its dictionary form whatever the gender or number. Endings only appear when the adjective stands before a noun (der rote Apfel)."
+  },
+  "genitive-s": {
+    "title": "Possessive -s on names",
+    "summary": "Names show possession with -s and no apostrophe: Johns Apfel.",
+    "body": "German adds -s directly to the name: Johns, Saras, Annas. An apostrophe is only used when the name already ends in an s-sound: Max' Apfel. In speech, von + dative is also common: der Apfel von John."
+  },
+  "genitive": {
+    "title": "Genitive (of the …)",
+    "summary": "The genitive expresses 'of the …': einer der Äpfel = one of the apples.",
+    "body": "In the genitive, masculine and neuter take des (and the noun often adds -s: des Apfels); feminine and plural take der. So der Äpfel after keiner/einer means 'of the apples', not a nominative. Spoken German often swaps the genitive for von + dative: einer von den Äpfeln."
+  },
+  "dative-accusative": {
+    "title": "Dative vs. accusative objects",
+    "summary": "The thing given is accusative; the person receiving it is dative.",
+    "body": "With geben, zeigen, schenken and similar verbs, the direct object (what is given) is accusative and the indirect object (who gets it) is dative. When both are nouns, dative usually comes first: Ich gebe dem Kind den Apfel. English marks this with word order or 'to'; German marks it on the article."
+  },
+  "verb-second": {
+    "title": "Verb second (V2)",
+    "summary": "In a statement, the conjugated verb is always the second element.",
+    "body": "Whatever comes first (the subject, a time word, an object, a whole clause) the conjugated verb follows it directly. If something other than the subject comes first, the subject moves behind the verb: Jetzt gehört er dir, not Jetzt er gehört dir. The first slot is called the Vorfeld."
+  },
+  "personal-pronouns": {
+    "title": "Personal pronouns",
+    "summary": "Pronouns change form for nominative, accusative and dative.",
+    "body": "English only distinguishes he/him. German has three forms for most persons, and the dative is the one learners forget: ihm (to him), ihr (to her), uns (to us), mir (to me), dir (to you).",
+    "table": {
+      "head": ["", "Nom.", "Acc.", "Dat."],
+      "rows": [
+        ["I", "ich", "mich", "mir"],
+        ["you (inf.)", "du", "dich", "dir"],
+        ["he / it (m.)", "er", "ihn", "ihm"],
+        ["she / it (f.)", "sie", "sie", "ihr"],
+        ["it (n.)", "es", "es", "ihm"],
+        ["we", "wir", "uns", "uns"],
+        ["you (pl.)", "ihr", "euch", "euch"],
+        ["they", "sie", "sie", "ihnen"],
+        ["you (formal)", "Sie", "Sie", "Ihnen"]
+      ]
+    }
+  },
+  "pronoun-order": {
+    "title": "Order of objects",
+    "summary": "Two pronouns: accusative before dative. Pronoun before noun.",
+    "body": "Nouns: dative before accusative (Ich gebe John den Apfel). Pronouns: accusative before dative (Ich gebe ihn ihm). Mixed: the pronoun comes first, whatever its case (Ich gebe ihn John; Ich gebe ihm den Apfel)."
+  },
+  "pronoun-gender": {
+    "title": "'It' follows the noun's gender",
+    "summary": "'It' is er, sie or es, matching the gender of the noun it replaces.",
+    "body": "Because der Apfel is masculine, 'it' is er (nominative) or ihn (accusative) when it refers to the apple. For die Banane it would be sie; for das Kind, es. This is why 'I give it to him' is Ich gebe ihn ihm when 'it' is the apple."
+  },
+  "stem-vowel-change": {
+    "title": "Stem-vowel change",
+    "summary": "Some strong verbs change their vowel for du and er/sie/es.",
+    "body": "geben → du gibst, er gibt. essen → du isst, er isst. nehmen → du nimmst, er nimmt. The change (e → i or ie, a → ä) only affects du and er/sie/es in the present tense; ich, wir, ihr and sie keep the original vowel."
+  },
+  "yes-no-question": {
+    "title": "Yes/no questions",
+    "summary": "Put the conjugated verb first.",
+    "body": "Der Apfel ist rot → Ist der Apfel rot? There is no helper like English 'do': Möchtest du einen Apfel? is literally 'Would-like you an apple?'. Everything else stays in place, including a verb at the end: Hast du den Apfel gegessen?"
+  },
+  "w-question": {
+    "title": "W-questions",
+    "summary": "Question word first, verb second.",
+    "body": "Warum, was, wer, wo, wann, wie, welch- take the first slot and the conjugated verb follows, just like V2 statements. Welch- ('which') declines like der: welcher, welche, welches; welchen in the masculine accusative."
+  },
+  "plural": {
+    "title": "Plurals",
+    "summary": "Plural forms have to be learned; many add an umlaut or -e/-en/-er.",
+    "body": "Apfel → Äpfel (umlaut only), Banane → Bananen, Kind → Kinder, Tisch → Tische. The article for all plurals is die in the nominative and accusative, den in the dative (with -n on the noun: den Äpfeln)."
+  },
+  "modal-verbs": {
+    "title": "Modal verbs",
+    "summary": "müssen, können, wollen, sollen, dürfen, mögen + a bare infinitive at the end.",
+    "body": "The modal is conjugated in position 2 and the main verb goes to the end as a plain infinitive, with no zu: Ich muss ihn ihm geben. Watch out: ich will means 'I want', not 'I will'. Modals are irregular in the singular: ich kann, du kannst, er kann.",
+    "table": {
+      "head": ["", "ich / er", "du", "wir / sie"],
+      "rows": [
+        ["must", "muss", "musst", "müssen"],
+        ["can", "kann", "kannst", "können"],
+        ["want", "will", "willst", "wollen"],
+        ["should", "soll", "sollst", "sollen"],
+        ["may", "darf", "darfst", "dürfen"]
+      ]
+    }
+  },
+  "satzklammer": {
+    "title": "The sentence bracket",
+    "summary": "The conjugated verb and the rest of the verb form a bracket around the middle of the sentence.",
+    "body": "German sentences have fixed slots: Vorfeld (one element) · left bracket (conjugated verb) · Mittelfeld (objects, adverbs, nicht) · right bracket (infinitive, participle, separable prefix) · Nachfeld (trailing clauses). Ich | muss | ihn ihm | geben. Once you see the bracket, long sentences stop looking scrambled."
+  },
+  "future-werden": {
+    "title": "Future with werden",
+    "summary": "werden (position 2) + infinitive (end).",
+    "body": "Ich werde es morgen wissen. werden is conjugated: ich werde, du wirst, er wird, wir werden. In everyday speech, the present tense plus a time word is just as common for the future: Ich weiß es morgen."
+  },
+  "negation-nicht": {
+    "title": "Where nicht goes",
+    "summary": "nicht goes before the part being negated, and before the verb at the end.",
+    "body": "To negate the whole statement, nicht goes late: after definite objects and pronouns, but before the infinitive or participle (Ich kann den Apfel nicht essen), before predicate adjectives (Er ist nicht rot), and before most prepositional phrases. Putting nicht right before a specific word contrasts it: Ich will nicht den Apfel (sondern die Banane)."
+  },
+  "kein": {
+    "title": "kein vs. nicht",
+    "summary": "Use kein to negate a noun with ein or no article.",
+    "body": "Ich habe einen Apfel → Ich habe keinen Apfel. Ich habe Äpfel → Ich habe keine Äpfel. kein takes the same endings as ein (and the plural endings of die). Used on its own, keiner/keine/keins means 'none/no one': keiner der Äpfel."
+  },
+  "perfekt": {
+    "title": "Perfect tense (Perfekt)",
+    "summary": "haben/sein (position 2) + past participle (end). The usual spoken past.",
+    "body": "Ich habe den Apfel gegessen. Where English says 'I ate' in conversation, German normally uses the Perfekt. Participles usually take ge-: gegessen, gesagt, gekauft. Most verbs use haben; verbs of movement or change of state use sein."
+  },
+  "perfekt-sein": {
+    "title": "Perfekt with sein",
+    "summary": "Verbs of motion or change of state build the Perfekt with sein.",
+    "body": "Der Apfel ist gefallen, not hat gefallen. Other common sein verbs: gehen, kommen, fahren, laufen, werden, bleiben, sterben, and sein itself (ich bin gewesen)."
+  },
+  "praeteritum": {
+    "title": "Simple past (Präteritum)",
+    "summary": "Used in speech mainly for sein, haben and modals.",
+    "body": "Es war Johns Apfel. For most verbs, spoken German prefers the Perfekt, but sein (war), haben (hatte) and the modals (musste, konnte, wollte) are normally used in the simple past, even in conversation."
+  },
+  "das-demonstrative": {
+    "title": "Das ist / Das sind",
+    "summary": "Pointing with das doesn't agree with the noun.",
+    "body": "Das ist ein Apfel. Das sind Äpfel. Here das means 'this/that/these' and stays das whatever the noun's gender; the verb agrees with the noun that follows (ist for one, sind for several)."
+  },
+  "possessive-endings": {
+    "title": "Possessive endings",
+    "summary": "mein, dein, sein, ihr … take the same endings as ein.",
+    "body": "sein Apfel (nom.), seinen Apfel (acc.), seinem Apfel (dat.); meine Äpfel (plural). Standing alone, without a noun, the possessive shows the gender itself: Der Apfel ist meiner. Das Kind ist meins. Die Banane ist meine."
+  },
+  "conjunction-position-zero": {
+    "title": "und, aber, oder, denn, sondern",
+    "summary": "These conjunctions sit before the sentence and don't take a slot.",
+    "body": "After und, aber, oder, denn and sondern the sentence continues with normal V2 order: Aber ich will den Apfel auch nicht. Compare weil and dass, which send the verb to the end."
+  },
+  "adjective-endings": {
+    "title": "Adjective endings",
+    "summary": "Before a noun, adjectives take endings that depend on the article in front.",
+    "body": "After der/die/das (and alle, welch-, jed-) the article already shows the case, so the adjective takes a 'weak' ending: -e or -en (der rote Apfel, den roten Apfel, die großen Äpfel). With no article, the adjective shows the case itself with 'strong' endings (kleine Äpfel, rote Äpfel). After ein/kein/mein you get a mix of the two (ein roter Apfel)."
+  },
+  "mochte": {
+    "title": "möchten and mögen",
+    "summary": "möchte = would like (polite wanting); mag = like.",
+    "body": "Möchtest du einen Apfel? is the polite everyday way to offer or ask for something. Ich mag Äpfel states a general liking. Both come from mögen: ich mag, du magst, er mag; ich möchte, du möchtest, er möchte."
+  },
+  "subordinate-verb-final": {
+    "title": "Verb-final clauses",
+    "summary": "dass, weil, wenn, ob and relative pronouns send the conjugated verb to the end.",
+    "body": "…, dass er ihn nicht mehr will. …, weil ich genug habe. The clause is set off with a comma. If the subordinate clause comes first, it fills the first slot of the main clause, so the main verb follows immediately: Wenn du ihn isst, bist du glücklich."
+  },
+  "dative-verbs": {
+    "title": "Verbs that take the dative",
+    "summary": "A few common verbs take a dative object: gehören, helfen, danken, gefallen.",
+    "body": "Der Apfel gehört dir ('belongs to you'). Ich helfe dir. Das gefällt mir. The dative feels like an English 'to' is hiding inside the verb."
+  },
+  "konjunktiv-2": {
+    "title": "Subjunctive II (würde, wäre, sollte)",
+    "summary": "For advice, politeness and 'if' situations that aren't real.",
+    "body": "würde + infinitive works for most verbs (du würdest ihn essen). A few common verbs have their own forms: wäre (would be), hätte (would have), sollte (should), könnte (could), möchte (would like). Wenn du ihn essen würdest, wärst du glücklich."
+  },
+  "es-gibt": {
+    "title": "es gibt (there is/are)",
+    "summary": "es gibt + accusative, for one thing or many.",
+    "body": "Es gibt einen Apfel. Es gibt viele Äpfel. The verb stays gibt in the singular even with a plural object, because the subject is es. The object is accusative (einen Apfel)."
+  },
+  "zu-infinitive": {
+    "title": "zu + infinitive",
+    "summary": "Most verbs and phrases take zu + infinitive; modals don't.",
+    "body": "viele Äpfel zu essen ('to eat'), Ich habe keine Zeit, den Apfel zu essen. With modal verbs and werden there is no zu: Ich muss essen, Ich werde essen."
+  },
+  "dative-prepositions": {
+    "title": "Prepositions with the dative",
+    "summary": "aus, bei, mit, nach, seit, von, zu always take the dative.",
+    "body": "von ihnen, mit einem Messer, vom Baum. Several contract with the article: von dem → vom, zu dem → zum, zu der → zur, bei dem → beim."
+  },
+  "accusative-prepositions": {
+    "title": "Prepositions with the accusative",
+    "summary": "durch, für, gegen, ohne, um always take the accusative.",
+    "body": "für alle, für dich, ohne den Apfel. The mnemonic DOGFU (durch, ohne, gegen, für, um) covers the common ones."
+  },
+  "comparison": {
+    "title": "Comparatives and superlatives",
+    "summary": "-er for 'more', am -sten / der -ste for 'most'. Short adjectives often add an umlaut.",
+    "body": "groß → größer → am größten (die größten). klein → kleiner → am kleinsten. Irregular: gut → besser → am besten; viel → mehr → am meisten. 'As … as' is so … wie; 'than' is als: größer als."
+  },
+  "imperative": {
+    "title": "Commands",
+    "summary": "du: stem only (Gib!). ihr: -t (Gebt!). Sie: verb + Sie (Geben Sie!).",
+    "body": "The du-command drops -st and du: du gibst → Gib! Stem-changing e → i verbs keep the change (gib, nimm, iss). The formal command keeps Sie after the verb: Geben Sie mir den Apfel, bitte."
+  },
+  "formal-sie": {
+    "title": "Formal Sie",
+    "summary": "Use Sie (capitalised) with strangers, in shops and at work.",
+    "body": "Formal Sie takes the same verb form as 'they' (möchten, haben, sind) and is always capitalised, including Ihnen and Ihr. Use du with friends, family, children, and when someone offers it."
+  },
+  "two-way-prepositions": {
+    "title": "Two-way prepositions",
+    "summary": "an, auf, hinter, in, neben, über, unter, vor, zwischen: accusative for movement, dative for location.",
+    "body": "Wohin? (where to?) → accusative: Ich lege den Apfel auf den Tisch. Wo? (where?) → dative: Der Apfel liegt auf dem Tisch. The verb pairs help: legen/liegen, stellen/stehen, setzen/sitzen, hängen/hängen."
+  },
+  "separable-verbs": {
+    "title": "Separable verbs",
+    "summary": "The prefix splits off and goes to the end of the sentence.",
+    "body": "mitbringen → Ich bringe morgen einen Apfel mit. anrufen → Ich rufe dich an. The prefix sits in the right bracket, like an infinitive would. It rejoins the verb at the end of a clause (…, weil ich einen Apfel mitbringe) and in the participle (mitgebracht)."
+  },
+  "relative-clauses": {
+    "title": "Relative clauses",
+    "summary": "der/die/das as 'that/which', with gender from the noun and case from the clause.",
+    "body": "Der Apfel, den ich gekauft habe, ist rot. The relative pronoun takes its gender and number from the noun it refers to (der Apfel → masculine) and its case from its job inside the clause (I bought it → accusative → den). The verb goes to the end and the clause is set off by commas."
+  },
+  "reflexive-verbs": {
+    "title": "Reflexive verbs",
+    "summary": "Some verbs need mich/dich/sich: sich freuen, sich setzen, sich erinnern.",
+    "body": "Ich freue mich auf den Apfel ('I look forward to the apple'). The reflexive pronoun matches the subject: ich … mich, du … dich, er/sie/es … sich, wir … uns. Many of these verbs also come with a fixed preposition: sich freuen auf + accusative."
+  },
+  "word-order-tekamolo": {
+    "title": "Time before place (TeKaMoLo)",
+    "summary": "In the middle of the sentence: time, cause, manner, place.",
+    "body": "Ich esse jeden Tag in der Küche einen Apfel. Time (jeden Tag) comes before place (in der Küche), the opposite of English 'in the kitchen every day'. New information, like an object with ein, tends to come late in the Mittelfeld."
+  }
+}
