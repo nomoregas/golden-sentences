@@ -8,6 +8,15 @@ A small study app for English speakers learning German through "golden sentences
 - **Golden expansion (23):** from the 41 Golden Sentences, dropping the 18 that repeat Ferriss's originals or reuse another sentence's frame with one word swapped. Their small points live on in the notes.
 - **Gap fillers (12):** grammar neither list covers: feminine and neuter nouns, kein, commands, formal Sie, two-way prepositions, Perfekt with sein, separable and reflexive verbs, relative clauses, time-before-place.
 
+## Install on your phone
+
+The app is published to GitHub Pages at **https://nomoregas.github.io/golden-sentences/** and installs as an app (PWA) that works offline, audio included.
+
+- **iPhone:** open the link in Safari → Share → **Add to Home Screen**.
+- **Android:** open the link in Chrome → ⋮ menu → **Install app** (or **Add to Home screen**).
+
+Progress is stored on the device, separately for the installed app and for any other copy of the page.
+
 ## Modes
 
 - **Learn**: German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
@@ -28,7 +37,10 @@ data/sentences.json     generated sentence data
 data/topics.json        grammar topics: title, summary, explanation, optional table
 audio/                  sentence and word clips (MP3), plus manifest.json
 src/app.html            the app (HTML/CSS/JS, no framework)
-build.js                inlines the data → dist/
+web/                    PWA files: manifest, service worker, icons
+tools/make_icons.py     draws web/icons/ (needs Pillow)
+build.js                inlines the data → dist/, adds the PWA files
+.github/workflows/      pages.yml publishes dist/ on every push; audio.yml regenerates the clips
 ```
 
 ## Build and run
@@ -37,7 +49,7 @@ build.js                inlines the data → dist/
 python3 tools/make_data.py   # after editing sentences
 python3 tools/make_audio.py --engine edge   # after editing sentences; pip install edge-tts
 node build.js
-open dist/index.html   # or any static host
+python3 -m http.server -d dist   # then open http://localhost:8000
 ```
 
 No dependencies. `dist/` is generated output and isn't committed.

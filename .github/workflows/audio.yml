@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   audio:
@@ -31,3 +32,8 @@ jobs:
           git diff --cached --quiet && { echo "No changes"; exit 0; }
           git commit -m "Regenerate audio with ${{ inputs.voice }}"
           git push
+      # Pushes made with the workflow token don't start other workflows, so ask for a site rebuild.
+      - name: Publish the app with the new audio
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

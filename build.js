@@ -1,5 +1,5 @@
 // Inlines data/sentences.json, data/topics.json and the audio clips into src/app.html.
-//   dist/index.html    – standalone page (open directly in a browser, or host anywhere)
+//   dist/index.html    – standalone page and installable app (host dist/ anywhere, e.g. GitHub Pages)
 //   dist/fragment.html – body-only version for hosts that supply their own <html> shell
 const fs = require("fs");
 const path = require("path");
@@ -33,20 +33,46 @@ for (const [placeholder, value] of [
   fragment = fragment.replace(placeholder, () => JSON.stringify(value));
 }
 
+// dist/index.html is also an installable app (PWA): manifest, icons and an offline cache.
+// The fragment stays plain, since hosts like Claude artifacts don't allow service workers.
 const page = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>body{margin:0}[hidden]{display:none!important}</style>
+<meta name="theme-color" content="#1B2F5E">
+<meta name="description" content="Learn German through golden sentences: flash cards, word order and grammar notes.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Goldene Sätze">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  body { margin: 0 }
+  [hidden] { display: none !important }
+</style>
 </head>
 <body>
 ${fragment}
+<script>
+if ("serviceWorker" in navigator && window.isSecureContext && location.protocol !== "file:") navigator.serviceWorker.register("sw.js");
+</script>
 </body>
 </html>
 `;
 
-fs.mkdirSync(path.join(root, "dist"), { recursive: true });
-fs.writeFileSync(path.join(root, "dist/index.html"), page);
-fs.writeFileSync(path.join(root, "dist/fragment.html"), fragment);
-console.log(`Built ${data.sentences.length} sentences, ${Object.keys(topics).length} topics, ${Object.keys(audio.sentences).length + Object.keys(audio.words).length} clips → dist/index.html, dist/fragment.html`);
+const dist = path.join(root, "dist");
+fs.mkdirSync(path.join(dist, "icons"), { recursive: true });
+fs.writeFileSync(path.join(dist, "index.html"), page);
+fs.writeFileSync(path.join(dist, "fragment.html"), fragment);
+const version = require("crypto").createHash("sha256").update(page).digest("hex").slice(0, 12);
+fs.writeFileSync(path.join(dist, "sw.js"), read("web/sw.js").replace("__VERSION__", version));
+fs.copyFileSync(path.join(root, "web/manifest.webmanifest"), path.join(dist, "manifest.webmanifest"));
+for (const f of fs.readdirSync(path.join(root, "web/icons"))) {
+  fs.copyFileSync(path.join(root, "web/icons", f), path.join(dist, "icons", f));
+}
+fs.writeFileSync(path.join(dist, ".nojekyll"), "");
+console.log(`Built ${data.sentences.length} sentences, ${Object.keys(topics).length} topics, ${Object.keys(audio.sentences).length + Object.keys(audio.words).length} clips → dist/ (app ${version})`);
