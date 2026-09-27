@@ -327,9 +327,10 @@ const state = {
   word: null,                        // selected token index on the current card
   pmode: saved.pmode === "type" ? "type" : "cards", // practice style: flash cards or typing
   pdir: ["en", "de", "listen"].includes(saved.pdir) ? saved.pdir : "en", // flash card front: English, German or audio only
+  order: saved.order === "seq" ? "seq" : "shuffle", // which sentence comes next in Practice and Build
   confirmReset: false
 };
-const persist = () => store.save({ view: state.view, idx: state.idx, cards: state.cards, slow: state.slow, pmode: state.pmode, pdir: state.pdir });
+const persist = () => store.save({ view: state.view, idx: state.idx, cards: state.cards, slow: state.slow, pmode: state.pmode, pdir: state.pdir, order: state.order });
 const card = s => state.cards[s.key] || { box: 0, due: 0 };
 const byId = id => SENTENCES.find(s => s.id === id);
 
@@ -448,13 +449,20 @@ function renderLearn() {
 /* ---------- Practice (spaced repetition) ---------- */
 let pr = null; // { id, revealed, typed, hinted, ahead }
 
-function nextDue(ahead) {
+// Pick from a list: at random when shuffled (avoiding the card just shown, if there's a choice), else the first.
+function pick(list, lastId) {
+  if (!list.length) return null;
+  if (state.order === "seq") return list[0].id;
+  const pool = list.length > 1 ? list.filter(s => s.id !== lastId) : list;
+  return pool[Math.floor(Math.random() * pool.length)].id;
+}
+function nextDue(ahead, lastId) {
   const now = Date.now();
   const seen = SENTENCES.filter(s => card(s).box > 0);
   const dueSeen = seen.filter(s => card(s).due <= now).sort((a, b) => card(a).due - card(b).due);
-  if (dueSeen.length) return dueSeen[0].id;
-  const fresh = SENTENCES.find(s => card(s).box === 0);
-  if (fresh) return fresh.id;
+  if (dueSeen.length) return pick(dueSeen, lastId);
+  const fresh = SENTENCES.filter(s => card(s).box === 0);
+  if (fresh.length) return pick(fresh, lastId);
   if (ahead && seen.length) return seen.slice().sort((a, b) => card(a).due - card(b).due)[0].id;
   return null;
 }
@@ -498,10 +506,12 @@ function normUmlauts(typed, target) {
   }).join("");
 }
 
+const seg = (key, val, label) => `<button data-${key}="${val}" aria-pressed="${state[key] === val}">${label}</button>`;
+const orderToggle = () => `<div class="seg" role="group" aria-label="Order">${seg("order", "shuffle", "⤨ Shuffled")}${seg("order", "seq", "In order")}</div>`;
 function practiceModes() {
-  const seg = (key, val, label) => `<button data-${key}="${val}" aria-pressed="${state[key] === val}">${label}</button>`;
   return `<div class="modes">
     <div class="seg" role="group" aria-label="Practice style">${seg("pmode", "cards", "Flash cards")}${seg("pmode", "type", "Type it")}</div>
+    ${orderToggle()}
     ${state.pmode === "cards" ? `<div class="seg" role="group" aria-label="Card front">${seg("pdir", "en", "EN → DE")}${seg("pdir", "de", "DE → EN")}${seg("pdir", "listen", "Listen")}</div>` : ""}
   </div>`;
 }
@@ -519,7 +529,7 @@ function flashFront(s) {
   return `<span class="ask">Say it in German</span><span class="prompt en">${esc(s.en)}</span>`;
 }
 function renderPractice() {
-  if (!pr || pr.id == null) pr = { id: nextDue(pr && pr.ahead), revealed: false, typed: "", hinted: false, ahead: pr && pr.ahead };
+  if (!pr || pr.id == null) pr = { id: nextDue(pr && pr.ahead, pr && pr.last), revealed: false, typed: "", hinted: false, ahead: pr && pr.ahead };
   if (pr.id == null) {
     const t = soonest();
     return `
@@ -605,13 +615,22 @@ function grade(g) {
   else box = Math.min(5, c.box + 2);
   state.cards[s.key] = { box, due: Date.now() + (g === "again" ? MIN : INTERVAL[box]) };
   persist();
-  pr = { id: null, ahead: pr.ahead };
+  pr = { id: null, ahead: pr.ahead, last: s.id };
   state.word = null;
   render();
 }
 
 /* ---------- Build (word order) ---------- */
 let bd = null; // { id, target, bank, placed, punct, checked, ok }
+let deck = [];  // shuffled sentence ids still to come in Build, so each appears once per round
+function dealBuild(lastId) {
+  if (!deck.length) {
+    deck = SENTENCES.map(s => s.id);
+    for (let i = deck.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [deck[i], deck[j]] = [deck[j], deck[i]]; }
+    if (deck.length > 1 && deck[deck.length - 1] === lastId) deck.unshift(deck.pop()); // no repeat across rounds
+  }
+  return deck.pop();
+}
 function tokens(de) {
   const m = de.match(/^(.*?)([.?!])$/);
   const body = m ? m[1] : de, punct = m ? m[2] : "";
@@ -635,7 +654,7 @@ function newBuild(id) {
   state.word = null;
 }
 function renderBuild() {
-  if (!bd) newBuild(SENTENCES[state.idx].id);
+  if (!bd) newBuild(state.order === "seq" ? SENTENCES[state.idx].id : dealBuild());
   const s = byId(bd.id);
   const slotCls = bd.checked ? (bd.ok ? "ok" : "no") : "";
   return `
@@ -665,7 +684,7 @@ function renderBuild() {
              <button class="btn" data-act="clear" ${bd.placed.length ? "" : "disabled"}>Clear</button>`}
         ${bd.checked ? audioControls() : ""}
       </div>
-      <button class="btn icon" data-act="brandom" title="Random sentence">⤨ Random</button>
+      ${orderToggle()}
     </div>
   </article>`;
 }
@@ -722,6 +741,7 @@ document.addEventListener("click", e => {
   }
   if (t.dataset.grade) { grade(t.dataset.grade); autoplayListen(); return; }
   if (t.dataset.pmode) { state.pmode = t.dataset.pmode; if (pr) { pr.revealed = false; pr.hinted = false; } persist(); render(); return; }
+  if (t.dataset.order) { state.order = t.dataset.order; persist(); render(); return; }
   if (t.dataset.pdir) { state.pdir = t.dataset.pdir; if (pr) { pr.revealed = false; pr.hinted = false; } persist(); render(); autoplayListen(); return; }
   if (t.dataset.bank != null) { const [tile] = bd.bank.splice(+t.dataset.bank, 1); bd.placed.push(tile); render(); return; }
   if (t.dataset.slot != null && !bd.checked) { const [tile] = bd.placed.splice(+t.dataset.slot, 1); bd.bank.push(tile); render(); return; }
@@ -738,8 +758,11 @@ document.addEventListener("click", e => {
       bd.ok = bd.placed.map(p => p.w).join(" ") === bd.target.join(" ");
       render(); speak(currentText()); break;
     case "clear": bd.bank.push(...bd.placed); bd.placed = []; render(); break;
-    case "bnext": { const i = SENTENCES.findIndex(s => s.id === bd.id); newBuild(SENTENCES[(i + 1) % TOTAL].id); render(); break; }
-    case "brandom": newBuild(SENTENCES[Math.floor(Math.random() * TOTAL)].id); render(); break;
+    case "bnext": {
+      const i = SENTENCES.findIndex(s => s.id === bd.id);
+      newBuild(state.order === "seq" ? SENTENCES[(i + 1) % TOTAL].id : dealBuild(bd.id));
+      render(); break;
+    }
   }
 });
 

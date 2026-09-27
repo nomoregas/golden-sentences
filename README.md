@@ -20,8 +20,8 @@ Progress is stored on the device, separately for the installed app and for any o
 ## Modes
 
 - **Learn**: German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
-- **Practice**: flash cards by default, with three fronts: English (say it in German), German (what does it mean?) or Listen (audio only). Tap to flip, then grade yourself. A Type it mode compares a typed answer word by word. Scheduling follows a Leitner card box (*Karteikasten*): box 1 comes back in 10 minutes, box 5 in 3 weeks.
-- **Build**: put shuffled German words back in order, then see the sentence laid out in its frame (Vorfeld · verb · Mittelfeld · verb end), which is the model behind German word order.
+- **Practice**: flash cards by default, with three fronts: English (say it in German), German (what does it mean?) or Listen (audio only). Cards come in random order (or **In order**, 1 → 48). Tap to flip, then grade yourself. A Type it mode compares a typed answer word by word. Scheduling follows a Leitner card box (*Karteikasten*): box 1 comes back in 10 minutes, box 5 in 3 weeks.
+- **Build**: put shuffled German words back in order (sentences are dealt from a shuffled deck, each once per round, or in order), then see the sentence laid out in its frame (Vorfeld · verb · Mittelfeld · verb end), which is the model behind German word order.
 
 Audio: every sentence and every word has a clip in `audio/`, embedded in the page so it plays anywhere, including in-app browsers with no speech voice. The committed clips use Microsoft's neural German voice Katja (`de-DE-KatjaNeural`, the voices behind Edge's Read Aloud; no API key). To regenerate them, for example after editing sentences or to switch voice, run the **Generate audio** workflow from the repo's Actions tab, or `python3 tools/make_audio.py --engine edge` on any machine with internet access. `--engine mbrola` is an offline fallback that sounds robotic. The Slow button plays clips at 70% speed. The browser's own voice is only a fallback for text without a clip.
 
