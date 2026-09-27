@@ -1,6 +1,6 @@
 {
- "engine": "mbrola",
- "voice": "mb-de7",
+ "engine": "edge",
+ "voice": "de-DE-KatjaNeural",
  "sentences": {
   "Der Apfel ist rot.": "audio/s/F1.mp3",
   "Es ist Johns Apfel.": "audio/s/F2.mp3",
