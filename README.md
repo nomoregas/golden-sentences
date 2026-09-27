@@ -21,6 +21,8 @@ Progress is stored on the device, separately for the installed app and for any o
 
 **Learn**: German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
 
+**Table**: all 48 sentences at once, switchable between English, Deutsch and Both without losing your place. Tap a sentence to peek at its translation, ▶ to hear it, or its number to open it in Learn.
+
 **Practice** opens a menu of drills. Each one is entered on its own, with its own progress, and shows what's due, new and solid:
 
 | Drill | What you do |

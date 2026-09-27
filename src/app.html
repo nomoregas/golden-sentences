@@ -223,6 +223,37 @@ input[type="text"] {
 .kasten-tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .btn.mini { font-size: .85rem; padding: 3px 10px; border-width: 1.5px; }
 .btn.mini.armed { background: var(--bad); border-color: var(--bad); color: var(--card); }
+/* Table: every sentence at once; the language switch only flips a class, so nothing reflows */
+.tbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--paper);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; padding-block: 8px;
+}
+.tbar h2 { font-family: var(--display); font-weight: 700; font-size: 1.7rem; color: var(--ink); margin: 0; }
+.stable { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.stable th.grp {
+  text-align: left; font-family: var(--display); font-weight: 600; font-size: .9rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); background: var(--tint); padding: 6px 12px;
+}
+.stable td { border-top: 1px solid var(--line); vertical-align: top; padding: 0; }
+.stable .n { width: 44px; }
+.stable .n button, .stable .play button {
+  background: none; border: 0; cursor: pointer; font: inherit; color: var(--muted); padding: 12px 8px; width: 100%;
+}
+.stable .n button { font-family: var(--mono); font-size: .78rem; font-variant-numeric: tabular-nums; text-decoration: underline; text-decoration-color: var(--line); }
+.stable .play { width: 44px; }
+.stable .play button { color: var(--ink); font-size: 1rem; }
+.rowbtn { display: grid; gap: 2px; width: 100%; text-align: left; background: none; border: 0; cursor: pointer; padding: 10px 4px; font: inherit; color: var(--text); }
+.rowbtn .en { font-family: var(--serif); font-style: italic; font-size: 1.02rem; color: var(--text); }
+.rowbtn .de { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; color: var(--ink); }
+.rowbtn .tg { font-family: var(--mono); font-size: .7rem; color: var(--muted); }
+.stable.lang-en .rowbtn .de, .stable.lang-de .rowbtn .en { display: none; }
+.stable.lang-en .peek .rowbtn .de, .stable.lang-de .peek .rowbtn .en { display: block; }
+.stable.lang-both .rowbtn .en { font-size: .95rem; color: var(--muted); }
+.stable .peek td { background: var(--tint); }
+.stable .peek .rowbtn .en, .stable .peek .rowbtn .de { order: 0; }
+.stable.lang-en .peek .rowbtn .de, .stable.lang-de .peek .rowbtn .en { font-size: .95rem; }
+.stable.lang-de .rowbtn .de { order: -1; }
+
 /* Practice menu: one entry per drill */
 .chooser { display: grid; gap: 14px; }
 .chooser-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
@@ -300,6 +331,7 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
     </div>
     <nav class="tabs" role="tablist" aria-label="Mode">
       <button role="tab" id="tab-learn" data-view="learn">Learn</button>
+      <button role="tab" id="tab-table" data-view="table">Table</button>
       <button role="tab" id="tab-practice" data-view="practice">Practice</button>
     </nav>
   </header>
@@ -351,7 +383,8 @@ const store = {
 };
 const saved = store.load();
 const state = {
-  view: saved.view === "practice" || saved.view === "build" ? "practice" : "learn",
+  view: saved.view === "practice" || saved.view === "build" ? "practice" : saved.view === "table" ? "table" : "learn",
+  tlang: ["en", "de", "both"].includes(saved.tlang) ? saved.tlang : "de",   // language shown in the Table
   session: null,                     // the drill the learner has entered (see DRILLS), or null for the practice menu
   idx: Number.isInteger(saved.idx) && saved.idx < TOTAL ? saved.idx : 0,
   // Progress is kept separately per practice type: sentence key -> { box, due }.
@@ -362,7 +395,7 @@ const state = {
   built: saved.built || {},          // Build: sentence key -> true once built correctly
   order: saved.order === "seq" ? "seq" : "shuffle", // which sentence comes next in Practice and Build
 };
-const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, built: state.built, order: state.order });
+const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, built: state.built, order: state.order, tlang: state.tlang });
 // Each drill is its own experience with its own progress.
 const DRILLS = [
   { id: "en", kind: "Flash cards", name: "EN → DE", desc: "See the English, say the German." },
@@ -488,6 +521,28 @@ function renderLearn() {
     </div>
     <span class="hint">← → to move · space to listen · ${esc(s.source)}</span>
   </article>`;
+}
+
+/* ---------- Table: all sentences at once ---------- */
+function renderTable() {
+  const tlangSeg = `<div class="seg" role="group" aria-label="Language">${seg("tlang", "en", "English")}${seg("tlang", "de", "Deutsch")}${seg("tlang", "both", "Both")}</div>`;
+  const rows = Object.entries(DATA.sets).map(([set, name]) => {
+    const list = SENTENCES.filter(s => s.set === set);
+    return `<tr><th class="grp" colspan="3">${esc(name)} · ${list.length}</th></tr>` + list.map(s => `
+      <tr data-row="${s.id}">
+        <td class="n"><button data-open="${s.id}" title="Open in Learn">${pad(s.id)}</button></td>
+        <td><button class="rowbtn" data-peek="${s.id}">
+          <span class="en">${esc(s.en)}</span>
+          <span class="de" lang="de">${esc(s.de)}</span>
+          <span class="tg">${esc(TOPICS[s.topics[0]].title)}</span>
+        </button></td>
+        <td class="play"><button data-say="${s.id}" aria-label="Play">▶</button></td>
+      </tr>`).join("");
+  }).join("");
+  return `
+  <div class="tbar"><h2>All sentences</h2>${tlangSeg}</div>
+  <p class="hint">Tap a sentence to see its translation · tap the number to open it in Learn</p>
+  <table class="stable lang-${state.tlang}" id="stable"><tbody>${rows}</tbody></table>`;
 }
 
 /* ---------- Practice (spaced repetition) ---------- */
@@ -775,7 +830,7 @@ function currentId() {
 // Progress panel: the current drill's boxes, Build's correct builds, or a plain sentence index in Learn.
 function renderCells() {
   const sec = $("#progress");
-  sec.hidden = state.view === "practice" && !state.session;
+  sec.hidden = state.view === "table" || (state.view === "practice" && !state.session);
   if (sec.hidden) return;
   const srs = !!deck(), build = state.session === "build";
   const current = currentId();
@@ -797,6 +852,7 @@ function renderCells() {
 function render() {
   document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === state.view)));
   $("#view").innerHTML = state.view === "learn" ? renderLearn()
+    : state.view === "table" ? renderTable()
     : !state.session ? renderChooser()
     : sessionBar() + (state.session === "build" ? renderBuild() : renderPractice());
   renderCells();
@@ -813,6 +869,18 @@ document.addEventListener("click", e => {
   const t = e.target.closest("button");
   if (!t) return;
   if (t.dataset.view) { state.view = t.dataset.view; state.session = null; state.word = null; persist(); render(); return; }
+  if (t.dataset.tlang) {
+    // Flip the language in place: no re-render, so the scroll position and open rows stay put.
+    state.tlang = t.dataset.tlang; persist();
+    $("#stable").className = `stable lang-${state.tlang}`;
+    t.parentElement.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === t)));
+    return;
+  }
+  if (t.dataset.peek) { t.closest("tr").classList.toggle("peek"); return; }
+  if (t.dataset.say) { speak(byId(+t.dataset.say).de); return; }
+  if (t.dataset.open) {
+    state.view = "learn"; state.idx = +t.dataset.open - 1; state.word = null; persist(); render(); window.scrollTo(0, 0); return;
+  }
   if (t.dataset.enter) {
     state.session = t.dataset.enter; pr = null; bd = null; state.word = null;
     render(); window.scrollTo(0, 0); autoplayListen(); return;
