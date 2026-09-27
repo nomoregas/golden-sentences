@@ -1,0 +1,542 @@
+<title>Goldene Sätze</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
+<style>
+:root {
+  --paper: #F4F6FA;
+  --grid: #DFE6F1;
+  --card: #FFFFFF;
+  --ink: #1B2F5E;
+  --text: #1F2533;
+  --muted: #5C6A84;
+  --line: #CBD5E4;
+  --margin: #D2453A;
+  --margin-soft: #F7DCD8;
+  --good: #2E7A4E;
+  --good-soft: #DCEFE3;
+  --bad: #B8352B;
+  --bad-soft: #F8DEDA;
+  --b1: #D2453A; --b2: #DE9A2E; --b3: #A6B83F; --b4: #4C9A5F; --b5: #1B2F5E;
+  --shadow: 0 1px 0 rgba(27,47,94,.06), 0 8px 24px -12px rgba(27,47,94,.25);
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --serif: "Literata", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0F141D; --grid: #182131; --card: #151C29; --ink: #C9D8F5; --text: #E3E8F2;
+    --muted: #8F9CB4; --line: #2A3549; --margin: #F0695B; --margin-soft: #3A1F1F;
+    --good: #62C08A; --good-soft: #17301F; --bad: #F0695B; --bad-soft: #3A1F1F;
+    --b1: #F0695B; --b2: #E8AC45; --b3: #B5C954; --b4: #5FB574; --b5: #C9D8F5;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0F141D; --grid: #182131; --card: #151C29; --ink: #C9D8F5; --text: #E3E8F2;
+  --muted: #8F9CB4; --line: #2A3549; --margin: #F0695B; --margin-soft: #3A1F1F;
+  --good: #62C08A; --good-soft: #17301F; --bad: #F0695B; --bad-soft: #3A1F1F;
+  --b1: #F0695B; --b2: #E8AC45; --b3: #B5C954; --b4: #5FB574; --b5: #C9D8F5;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
+}
+
+* { box-sizing: border-box; }
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 56px; display: grid; gap: 22px; }
+
+header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 20px; }
+.brand h1 {
+  font-family: var(--display); font-weight: 700; font-size: clamp(2.1rem, 6vw, 2.9rem);
+  line-height: .95; margin: 0; color: var(--ink); letter-spacing: .01em; text-wrap: balance;
+}
+.brand h1 span { color: var(--margin); }
+.brand p { margin: 6px 0 0; font-family: var(--display); font-weight: 500; font-size: 1.05rem; color: var(--muted); letter-spacing: .02em; }
+
+nav.tabs { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 4px; }
+nav.tabs button {
+  font-family: var(--display); font-weight: 600; font-size: 1.05rem; letter-spacing: .06em; text-transform: uppercase;
+  border: 0; background: transparent; color: var(--muted); padding: 6px 14px; border-radius: 7px; cursor: pointer;
+}
+nav.tabs button[aria-selected="true"] { background: var(--ink); color: var(--card); }
+
+button { font: inherit; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--margin); outline-offset: 2px; }
+
+/* The notebook page: red margin line on the left, like a German Schulheft */
+.page {
+  position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+  box-shadow: var(--shadow); padding: 22px 22px 22px 58px; display: grid; gap: 16px;
+}
+.page::before { content: ""; position: absolute; top: 0; bottom: 0; left: 40px; width: 2px; background: var(--margin); opacity: .7; }
+.num { position: absolute; left: 6px; top: 22px; width: 30px; text-align: center; font-family: var(--mono); font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.eyebrow { font-family: var(--display); font-weight: 600; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.en { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--muted); margin: 0; }
+.de { font-family: var(--serif); font-weight: 600; font-size: clamp(1.55rem, 4.6vw, 2.1rem); line-height: 1.25; color: var(--ink); margin: 0; text-wrap: balance; }
+.tag { justify-self: start; font-family: var(--display); font-weight: 600; font-size: .9rem; letter-spacing: .05em; text-transform: uppercase; color: var(--margin); border: 1.5px solid var(--margin); border-radius: 999px; padding: 1px 10px; }
+.note { margin: 0; max-width: 62ch; font-size: .98rem; }
+
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.row.spread { justify-content: space-between; }
+.btn {
+  font-family: var(--display); font-weight: 600; font-size: 1.02rem; letter-spacing: .05em; text-transform: uppercase;
+  border: 1.5px solid var(--ink); background: transparent; color: var(--ink); padding: 7px 16px; border-radius: 8px; cursor: pointer;
+}
+.btn.solid { background: var(--ink); color: var(--card); }
+.btn.good { border-color: var(--good); color: var(--good); }
+.btn.bad { border-color: var(--bad); color: var(--bad); }
+.btn:disabled { opacity: .4; cursor: default; }
+.btn.icon { padding: 7px 12px; }
+.hint { font-family: var(--mono); font-size: .75rem; color: var(--muted); }
+
+.answer { display: grid; gap: 10px; }
+input[type="text"] {
+  width: 100%; font-family: var(--serif); font-size: 1.15rem; color: var(--text); background: var(--paper);
+  border: 1.5px solid var(--line); border-radius: 8px; padding: 10px 12px;
+}
+.cmp { display: flex; flex-wrap: wrap; gap: 6px; font-family: var(--serif); font-size: 1.05rem; }
+.cmp span { padding: 1px 6px; border-radius: 4px; }
+.cmp .ok { background: var(--good-soft); color: var(--good); }
+.cmp .no { background: var(--bad-soft); color: var(--bad); text-decoration: line-through; }
+.cmp .miss { border: 1.5px dashed var(--bad); color: var(--bad); }
+
+.slots { min-height: 58px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; padding: 10px; border-bottom: 2px solid var(--ink); }
+.slots.ok { border-color: var(--good); }
+.slots.no { border-color: var(--bad); }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; min-height: 44px; }
+.tile {
+  font-family: var(--serif); font-size: 1.1rem; background: var(--paper); color: var(--ink);
+  border: 1.5px solid var(--line); border-bottom-width: 3px; border-radius: 8px; padding: 4px 12px; cursor: pointer;
+}
+.tile:hover { border-color: var(--ink); }
+.punct { align-self: center; font-family: var(--serif); font-size: 1.3rem; color: var(--ink); }
+.verdict { font-family: var(--display); font-weight: 600; font-size: 1.15rem; letter-spacing: .04em; margin: 0; }
+.verdict.ok { color: var(--good); }
+.verdict.no { color: var(--bad); }
+
+.empty { text-align: left; }
+.empty h2 { font-family: var(--display); font-weight: 700; font-size: 1.7rem; color: var(--ink); margin: 0; }
+
+/* Karteikasten: one cell per sentence, coloured by its Leitner box */
+.kasten { display: grid; gap: 10px; }
+.kasten-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
+.kasten-head h2 { font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); margin: 0; }
+.cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 5px; }
+.cell {
+  aspect-ratio: 1; max-width: 100%; border-radius: 5px; border: 1.5px solid var(--line); background: var(--card);
+  font-family: var(--mono); font-size: .78rem; color: var(--muted); cursor: pointer; font-variant-numeric: tabular-nums; padding: 0;
+}
+.cell[data-box="1"] { background: var(--b1); border-color: var(--b1); color: #fff; }
+.cell[data-box="2"] { background: var(--b2); border-color: var(--b2); color: #1a1a1a; }
+.cell[data-box="3"] { background: var(--b3); border-color: var(--b3); color: #1a1a1a; }
+.cell[data-box="4"] { background: var(--b4); border-color: var(--b4); color: #fff; }
+.cell[data-box="5"] { background: var(--b5); border-color: var(--b5); color: var(--card); }
+.cell.current { outline: 2px solid var(--margin); outline-offset: 2px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; border: 1.5px solid var(--line); }
+.legend i[data-box="1"] { background: var(--b1); border-color: var(--b1); }
+.legend i[data-box="2"] { background: var(--b2); border-color: var(--b2); }
+.legend i[data-box="3"] { background: var(--b3); border-color: var(--b3); }
+.legend i[data-box="4"] { background: var(--b4); border-color: var(--b4); }
+.legend i[data-box="5"] { background: var(--b5); border-color: var(--b5); }
+
+footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.linkish { background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; font: inherit; padding: 0; }
+
+@media (max-width: 480px) {
+  .page { padding: 18px 16px 18px 44px; }
+  .page::before { left: 30px; }
+  .num { left: 2px; width: 26px; top: 18px; }
+  nav.tabs { width: 100%; }
+  nav.tabs button { flex: 1; padding-inline: 6px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .page { animation: rise .22s ease-out; }
+  @keyframes rise { from { transform: translateY(4px); opacity: .6; } to { transform: none; opacity: 1; } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1>Goldene Sätze<span>.</span></h1>
+      <p>41 golden sentences · German for English speakers</p>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Mode">
+      <button role="tab" id="tab-learn" data-view="learn">Learn</button>
+      <button role="tab" id="tab-practice" data-view="practice">Practice</button>
+      <button role="tab" id="tab-build" data-view="build">Build</button>
+    </nav>
+  </header>
+
+  <main id="view" aria-live="polite"></main>
+
+  <section class="kasten" aria-label="Progress">
+    <div class="kasten-head">
+      <h2>Karteikasten</h2>
+      <span class="hint" id="summary"></span>
+    </div>
+    <div class="cells" id="cells"></div>
+    <div class="legend">
+      <span><i></i>new</span>
+      <span><i data-box="1"></i>box 1 · again soon</span>
+      <span><i data-box="2"></i>box 2 · 1 day</span>
+      <span><i data-box="3"></i>box 3 · 3 days</span>
+      <span><i data-box="4"></i>box 4 · 1 week</span>
+      <span><i data-box="5"></i>box 5 · 3 weeks</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>Built on Tim Ferriss's sentence-deconstruction method, expanded to 41.</span>
+    <button class="linkish" id="reset" type="button">Reset progress</button>
+  </footer>
+</div>
+
+<script>
+const SENTENCES = /*__SENTENCES__*/[];
+
+// Leitner intervals per box, in ms. Box 0 = never practised.
+const MIN = 60e3, DAY = 864e5;
+const INTERVAL = [0, 10 * MIN, DAY, 3 * DAY, 7 * DAY, 21 * DAY];
+const KEY = "goldene-saetze:v1";
+
+const store = {
+  load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } },
+  save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {} }
+};
+const saved = store.load();
+const state = {
+  view: saved.view || "learn",
+  idx: Number.isInteger(saved.idx) ? saved.idx : 0,
+  cards: saved.cards || {},          // id -> { box, due }
+  slow: !!saved.slow,
+  confirmReset: false
+};
+const persist = () => store.save({ view: state.view, idx: state.idx, cards: state.cards, slow: state.slow });
+const card = id => state.cards[id] || { box: 0, due: 0 };
+
+const $ = (sel, el = document) => el.querySelector(sel);
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* ---------- Audio (browser text-to-speech) ---------- */
+const tts = "speechSynthesis" in window ? window.speechSynthesis : null;
+let deVoice = null;
+function pickVoice() {
+  if (!tts) return;
+  const voices = tts.getVoices();
+  deVoice = voices.find(v => v.lang === "de-DE" && /google|natural|premium|enhanced/i.test(v.name))
+         || voices.find(v => v.lang === "de-DE")
+         || voices.find(v => v.lang && v.lang.toLowerCase().startsWith("de")) || null;
+}
+if (tts) { pickVoice(); tts.onvoiceschanged = pickVoice; }
+function speak(text) {
+  if (!tts) return;
+  tts.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "de-DE";
+  if (deVoice) u.voice = deVoice;
+  u.rate = state.slow ? 0.65 : 0.92;
+  tts.speak(u);
+}
+const audioControls = () => tts ? `
+  <button class="btn icon" data-act="speak" title="Play (space)">▶ Hören</button>
+  <button class="btn icon" data-act="slow" aria-pressed="${state.slow}">${state.slow ? "Slow ✓" : "Slow"}</button>` : "";
+
+/* ---------- Learn ---------- */
+function renderLearn() {
+  const s = SENTENCES[state.idx];
+  return `
+  <article class="page">
+    <span class="num">${String(s.id).padStart(2, "0")}</span>
+    <p class="eyebrow">Sentence ${s.id} of ${SENTENCES.length}</p>
+    <p class="en">${esc(s.en)}</p>
+    <p class="de" lang="de">${esc(s.de)}</p>
+    <span class="tag">${esc(s.tag)}</span>
+    <p class="note">${esc(s.note)}</p>
+    <div class="row spread">
+      <div class="row">${audioControls()}</div>
+      <div class="row">
+        <button class="btn icon" data-act="prev" ${state.idx === 0 ? "disabled" : ""} aria-label="Previous sentence">←</button>
+        <button class="btn icon solid" data-act="next" ${state.idx === SENTENCES.length - 1 ? "disabled" : ""} aria-label="Next sentence">→</button>
+      </div>
+    </div>
+    <span class="hint">← → to move · space to listen</span>
+  </article>`;
+}
+
+/* ---------- Practice (spaced repetition) ---------- */
+let pr = null; // { id, revealed, typed, ahead }
+
+function nextDue(ahead) {
+  const now = Date.now();
+  const seen = SENTENCES.filter(s => card(s.id).box > 0);
+  const dueSeen = seen.filter(s => card(s.id).due <= now).sort((a, b) => card(a.id).due - card(b.id).due);
+  if (dueSeen.length) return dueSeen[0].id;
+  const fresh = SENTENCES.find(s => card(s.id).box === 0);
+  if (fresh) return fresh.id;
+  if (ahead && seen.length) return seen.slice().sort((a, b) => card(a.id).due - card(b.id).due)[0].id;
+  return null;
+}
+function soonest() {
+  const dues = SENTENCES.map(s => card(s.id)).filter(c => c.box > 0).map(c => c.due);
+  return dues.length ? Math.min(...dues) : null;
+}
+function when(ts) {
+  const d = ts - Date.now();
+  if (d < MIN) return "in under a minute";
+  if (d < 60 * MIN) return `in ${Math.round(d / MIN)} min`;
+  if (d < DAY) return `in ${Math.round(d / 36e5)} h`;
+  return `in ${Math.round(d / DAY)} day${Math.round(d / DAY) === 1 ? "" : "s"}`;
+}
+const words = s => s.toLowerCase().replace(/[.,?!;:„“"»«]/g, " ").split(/\s+/).filter(Boolean);
+
+// Word-level diff (LCS) between what the learner typed and the answer.
+function compare(typed, target) {
+  const a = words(typed), b = words(target);
+  const dp = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+  for (let i = a.length - 1; i >= 0; i--)
+    for (let j = b.length - 1; j >= 0; j--)
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+  const out = []; let i = 0, j = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) { out.push(["ok", b[j]]); i++; j++; }
+    else if (dp[i + 1][j] >= dp[i][j + 1]) { out.push(["no", a[i]]); i++; }
+    else { out.push(["miss", b[j]]); j++; }
+  }
+  while (i < a.length) out.push(["no", a[i++]]);
+  while (j < b.length) out.push(["miss", b[j++]]);
+  return { parts: out, perfect: out.every(p => p[0] === "ok") };
+}
+
+function renderPractice() {
+  if (!pr || pr.id == null) pr = { id: nextDue(pr && pr.ahead), revealed: false, typed: "", ahead: pr && pr.ahead };
+  if (pr.id == null) {
+    const t = soonest();
+    return `
+    <article class="page empty">
+      <span class="num">✓</span>
+      <h2>Alles erledigt.</h2>
+      <p class="note">Nothing is due right now. Your next review is ${t ? when(t) : "whenever you like"}.</p>
+      <div class="row"><button class="btn solid" data-act="ahead">Review anyway</button></div>
+    </article>`;
+  }
+  const s = SENTENCES.find(x => x.id === pr.id);
+  const c = card(s.id);
+  let body;
+  if (!pr.revealed) {
+    body = `
+      <form class="answer" id="pform" autocomplete="off">
+        <label class="eyebrow" for="typed">Say it or type it in German</label>
+        <input type="text" id="typed" lang="de" spellcheck="false" placeholder="Auf Deutsch …" value="${esc(pr.typed)}">
+        <div class="row spread">
+          <button class="btn solid" type="submit">Show answer</button>
+          <span class="hint">enter to reveal · ä ö ü ß ok as ae oe ue ss</span>
+        </div>
+      </form>`;
+  } else {
+    const typed = normUmlauts(pr.typed, s.de);
+    const cmp = typed.trim() ? compare(typed, s.de) : null;
+    body = `
+      <p class="de" lang="de">${esc(s.de)}</p>
+      ${cmp ? `<div class="cmp" aria-label="Your answer compared">${cmp.parts.map(([k, w]) => `<span class="${k}">${esc(w)}</span>`).join("")}</div>
+               <p class="verdict ${cmp.perfect ? "ok" : "no"}">${cmp.perfect ? "Richtig!" : "Close — compare word by word."}</p>` : ""}
+      <span class="tag">${esc(s.tag)}</span>
+      <p class="note">${esc(s.note)}</p>
+      <div class="row">${audioControls()}</div>
+      <p class="eyebrow">How did that go?</p>
+      <div class="row">
+        <button class="btn bad" data-grade="again">1 · Again</button>
+        <button class="btn" data-grade="good">2 · Got it</button>
+        <button class="btn good" data-grade="easy">3 · Easy</button>
+      </div>`;
+  }
+  return `
+  <article class="page">
+    <span class="num">${String(s.id).padStart(2, "0")}</span>
+    <p class="eyebrow">${c.box === 0 ? "New sentence" : `Review · box ${c.box}`}</p>
+    <p class="en">${esc(s.en)}</p>
+    ${body}
+  </article>`;
+}
+// Accept ae/oe/ue/ss spellings when the answer uses umlauts or ß.
+function normUmlauts(typed, target) {
+  if (!/[äöüß]/i.test(target)) return typed;
+  const tw = new Set(words(target));
+  return typed.split(/(\s+)/).map(tok => {
+    const alt = tok.replace(/ae/g, "ä").replace(/oe/g, "ö").replace(/ue/g, "ü").replace(/Ae/g, "Ä").replace(/Oe/g, "Ö").replace(/Ue/g, "Ü").replace(/ss/g, "ß");
+    return tw.has(words(alt)[0]) && !tw.has(words(tok)[0]) ? alt : tok;
+  }).join("");
+}
+function grade(g) {
+  const c = card(pr.id);
+  let box;
+  if (g === "again") box = 1;
+  else if (g === "good") box = Math.min(5, Math.max(1, c.box + 1));
+  else box = Math.min(5, c.box + 2);
+  const due = Date.now() + (g === "again" ? MIN : INTERVAL[box]);
+  state.cards[pr.id] = { box, due };
+  persist();
+  pr = { id: null, ahead: pr.ahead };
+  render();
+}
+
+/* ---------- Build (word order) ---------- */
+let bd = null; // { id, bank, placed, punct, checked, ok }
+function tokens(de) {
+  const m = de.match(/^(.*?)([.?!])$/);
+  const body = m ? m[1] : de, punct = m ? m[2] : "";
+  const toks = body.split(/\s+/);
+  // First word is never a noun in this set, so lower-casing it removes the "starts with a capital" clue.
+  toks[0] = toks[0].charAt(0).toLowerCase() + toks[0].slice(1);
+  return { toks, punct };
+}
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let tries = 0; tries < 10; tries++) {
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    if (a.join(" ") !== arr.join(" ")) break;
+  }
+  return a;
+}
+function newBuild(id) {
+  const { toks, punct } = tokens(SENTENCES.find(s => s.id === id).de);
+  const order = shuffle(toks.map((t, i) => i));
+  bd = { id, target: toks, bank: order.map(i => ({ k: i, w: toks[i] })), placed: [], punct, checked: false, ok: false };
+}
+function renderBuild() {
+  if (!bd) newBuild(SENTENCES[state.idx].id);
+  const s = SENTENCES.find(x => x.id === bd.id);
+  const slotCls = bd.checked ? (bd.ok ? "ok" : "no") : "";
+  return `
+  <article class="page">
+    <span class="num">${String(s.id).padStart(2, "0")}</span>
+    <p class="eyebrow">Put the words in order</p>
+    <p class="en">${esc(s.en)}</p>
+    <div class="slots ${slotCls}" id="slots" aria-label="Your sentence">
+      ${bd.placed.map((t, i) => `<button class="tile" data-slot="${i}" lang="de">${esc(t.w)}</button>`).join("")}
+      ${bd.placed.length && !bd.bank.length ? `<span class="punct">${bd.punct}</span>` : ""}
+    </div>
+    <div class="bank" aria-label="Word bank">
+      ${bd.bank.map((t, i) => `<button class="tile" data-bank="${i}" lang="de">${esc(t.w)}</button>`).join("")}
+    </div>
+    ${bd.checked ? `
+      <p class="verdict ${bd.ok ? "ok" : "no"}">${bd.ok ? "Richtig!" : "Not quite. The answer:"}</p>
+      ${bd.ok ? "" : `<p class="de" lang="de">${esc(s.de)}</p>`}
+      <span class="tag">${esc(s.tag)}</span>
+      <p class="note">${esc(s.note)}</p>` : ""}
+    <div class="row spread">
+      <div class="row">
+        ${bd.checked
+          ? `<button class="btn solid" data-act="bnext">Next sentence →</button>`
+          : `<button class="btn solid" data-act="check" ${bd.bank.length ? "disabled" : ""}>Check</button>
+             <button class="btn" data-act="clear" ${bd.placed.length ? "" : "disabled"}>Clear</button>`}
+        ${bd.checked ? audioControls() : ""}
+      </div>
+      <button class="btn icon" data-act="brandom" title="Random sentence">⤨ Random</button>
+    </div>
+  </article>`;
+}
+
+/* ---------- Shell ---------- */
+function renderCells() {
+  const current = state.view === "practice" ? pr && pr.id : state.view === "build" ? bd && bd.id : SENTENCES[state.idx].id;
+  $("#cells").innerHTML = SENTENCES.map(s => {
+    const c = card(s.id);
+    return `<button class="cell ${s.id === current ? "current" : ""}" data-box="${c.box}" data-jump="${s.id}" title="${esc(s.en)}">${s.id}</button>`;
+  }).join("");
+  const now = Date.now();
+  const learned = SENTENCES.filter(s => card(s.id).box >= 3).length;
+  const started = SENTENCES.filter(s => card(s.id).box > 0).length;
+  const due = SENTENCES.filter(s => { const c = card(s.id); return c.box > 0 && c.due <= now; }).length;
+  $("#summary").textContent = `${started}/41 started · ${learned} solid · ${due} due now`;
+}
+function render() {
+  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === state.view)));
+  const html = state.view === "practice" ? renderPractice() : state.view === "build" ? renderBuild() : renderLearn();
+  $("#view").innerHTML = html;
+  renderCells();
+  const inp = $("#typed");
+  if (inp) {
+    inp.focus({ preventScroll: true });
+    inp.addEventListener("input", () => { pr.typed = inp.value; });
+    $("#pform").addEventListener("submit", e => { e.preventDefault(); pr.typed = inp.value; pr.revealed = true; render(); speak(SENTENCES.find(s => s.id === pr.id).de); });
+  }
+}
+function currentText() {
+  const id = state.view === "practice" ? pr && pr.id : state.view === "build" ? bd && bd.id : SENTENCES[state.idx].id;
+  const s = SENTENCES.find(x => x.id === id);
+  return s ? s.de : "";
+}
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("button");
+  if (!t) return;
+  if (t.dataset.view) { state.view = t.dataset.view; persist(); render(); return; }
+  if (t.dataset.jump) {
+    const id = +t.dataset.jump;
+    state.idx = id - 1;
+    if (state.view === "practice") pr = { id, revealed: false, typed: "", ahead: true };
+    if (state.view === "build") newBuild(id);
+    persist(); render(); return;
+  }
+  if (t.dataset.grade) { grade(t.dataset.grade); return; }
+  if (t.dataset.bank != null) {
+    const [tile] = bd.bank.splice(+t.dataset.bank, 1); bd.placed.push(tile); render();
+    if (!bd.bank.length) { /* ready to check */ }
+    return;
+  }
+  if (t.dataset.slot != null && !bd.checked) { const [tile] = bd.placed.splice(+t.dataset.slot, 1); bd.bank.push(tile); render(); return; }
+  switch (t.dataset.act) {
+    case "speak": speak(currentText()); break;
+    case "slow": state.slow = !state.slow; persist(); render(); break;
+    case "prev": if (state.idx > 0) { state.idx--; persist(); render(); } break;
+    case "next": if (state.idx < SENTENCES.length - 1) { state.idx++; persist(); render(); } break;
+    case "ahead": pr = { id: null, ahead: true }; render(); break;
+    case "check":
+      bd.checked = true;
+      bd.ok = bd.placed.map(p => p.w).join(" ") === bd.target.join(" ");
+      render(); speak(currentText()); break;
+    case "clear": bd.bank.push(...bd.placed); bd.placed = []; render(); break;
+    case "bnext": { const i = SENTENCES.findIndex(s => s.id === bd.id); newBuild(SENTENCES[(i + 1) % SENTENCES.length].id); render(); break; }
+    case "brandom": newBuild(SENTENCES[Math.floor(Math.random() * SENTENCES.length)].id); render(); break;
+  }
+});
+
+document.addEventListener("keydown", e => {
+  if (e.target.matches("input")) return;
+  if (state.view === "learn") {
+    if (e.key === "ArrowRight" && state.idx < SENTENCES.length - 1) { state.idx++; persist(); render(); }
+    else if (e.key === "ArrowLeft" && state.idx > 0) { state.idx--; persist(); render(); }
+    else if (e.key === " " && !e.target.matches("button")) { e.preventDefault(); speak(currentText()); }
+  } else if (state.view === "practice" && pr && pr.revealed) {
+    const g = { "1": "again", "2": "good", "3": "easy" }[e.key];
+    if (g) grade(g);
+  }
+});
+
+$("#reset").addEventListener("click", () => {
+  const b = $("#reset");
+  if (!state.confirmReset) {
+    state.confirmReset = true; b.textContent = "Click again to erase all progress";
+    setTimeout(() => { state.confirmReset = false; b.textContent = "Reset progress"; }, 4000);
+    return;
+  }
+  state.confirmReset = false; state.cards = {}; pr = null; persist(); b.textContent = "Progress erased"; render();
+  setTimeout(() => { b.textContent = "Reset progress"; }, 2000);
+});
+
+render();
+</script>
