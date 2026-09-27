@@ -152,6 +152,32 @@ table.decl th { background: var(--tint); color: var(--muted); font-weight: 500; 
 .hint { font-family: var(--mono); font-size: .75rem; color: var(--muted); }
 
 .answer { display: grid; gap: 10px; }
+/* Practice mode switches */
+.seg { display: inline-flex; flex-wrap: wrap; gap: 2px; background: var(--tint); border-radius: 8px; padding: 3px; }
+.seg button {
+  font-family: var(--display); font-weight: 600; font-size: .9rem; letter-spacing: .05em; text-transform: uppercase;
+  border: 0; background: transparent; color: var(--muted); padding: 4px 10px; border-radius: 6px; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.modes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }
+
+/* Flash card */
+.flash {
+  width: 100%; min-height: 200px; display: grid; place-content: center; gap: 12px; text-align: center;
+  background: var(--paper); border: 1.5px solid var(--line); border-bottom-width: 4px; border-radius: 12px;
+  padding: 24px 18px; cursor: pointer; color: var(--text); font: inherit;
+}
+.flash:hover { border-color: var(--ink); }
+.flash .prompt { font-family: var(--serif); font-size: clamp(1.35rem, 4.4vw, 1.8rem); line-height: 1.3; color: var(--ink); text-wrap: balance; }
+.flash .prompt.en { font-style: italic; color: var(--text); }
+.flash .ask { font-family: var(--display); font-weight: 600; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.flash .big { font-size: 3rem; line-height: 1; color: var(--ink); }
+.back { display: grid; gap: 14px; }
+.back .en { font-size: 1.05rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .back { animation: flip .28s ease-out; transform-origin: top center; }
+  @keyframes flip { from { transform: perspective(800px) rotateX(-70deg); opacity: 0; } to { transform: none; opacity: 1; } }
+}
 input[type="text"] {
   width: 100%; font-family: var(--serif); font-size: 1.15rem; color: var(--text); background: var(--paper);
   border: 1.5px solid var(--line); border-radius: 8px; padding: 10px 12px;
@@ -299,9 +325,11 @@ const state = {
   cards: saved.cards || {},          // sentence key -> { box, due }
   slow: !!saved.slow,
   word: null,                        // selected token index on the current card
+  pmode: saved.pmode === "type" ? "type" : "cards", // practice style: flash cards or typing
+  pdir: ["en", "de", "listen"].includes(saved.pdir) ? saved.pdir : "en", // flash card front: English, German or audio only
   confirmReset: false
 };
-const persist = () => store.save({ view: state.view, idx: state.idx, cards: state.cards, slow: state.slow });
+const persist = () => store.save({ view: state.view, idx: state.idx, cards: state.cards, slow: state.slow, pmode: state.pmode, pdir: state.pdir });
 const card = s => state.cards[s.key] || { box: 0, due: 0 };
 const byId = id => SENTENCES.find(s => s.id === id);
 
@@ -470,6 +498,26 @@ function normUmlauts(typed, target) {
   }).join("");
 }
 
+function practiceModes() {
+  const seg = (key, val, label) => `<button data-${key}="${val}" aria-pressed="${state[key] === val}">${label}</button>`;
+  return `<div class="modes">
+    <div class="seg" role="group" aria-label="Practice style">${seg("pmode", "cards", "Flash cards")}${seg("pmode", "type", "Type it")}</div>
+    ${state.pmode === "cards" ? `<div class="seg" role="group" aria-label="Card front">${seg("pdir", "en", "EN → DE")}${seg("pdir", "de", "DE → EN")}${seg("pdir", "listen", "Listen")}</div>` : ""}
+  </div>`;
+}
+function gradeButtons() {
+  return `<p class="eyebrow">How did that go?</p>
+    <div class="row">
+      <button class="btn bad" data-grade="again">1 · Again</button>
+      <button class="btn" data-grade="good">2 · Got it</button>
+      <button class="btn good" data-grade="easy">3 · Easy</button>
+    </div>`;
+}
+function flashFront(s) {
+  if (state.pdir === "de") return `<span class="ask">What does it mean?</span><span class="prompt" lang="de">${esc(s.de)}</span>`;
+  if (state.pdir === "listen") return `<span class="ask">Listen. What does it mean?</span><span class="big" aria-hidden="true">▶</span><span class="hint">tap ▶ Hören below to replay</span>`;
+  return `<span class="ask">Say it in German</span><span class="prompt en">${esc(s.en)}</span>`;
+}
 function renderPractice() {
   if (!pr || pr.id == null) pr = { id: nextDue(pr && pr.ahead), revealed: false, typed: "", hinted: false, ahead: pr && pr.ahead };
   if (pr.id == null) {
@@ -484,12 +532,38 @@ function renderPractice() {
   }
   const s = byId(pr.id);
   const c = card(s);
+  const hintBox = pr.hinted ? `<div class="hintbox"><span class="eyebrow">Hint</span><br>${esc(s.hint)}</div>` : "";
   let body;
-  if (!pr.revealed) {
+  if (state.pmode === "cards") {
+    if (!pr.revealed) {
+      body = `
+        <button class="flash" data-act="flip" aria-label="Flip card">${flashFront(s)}</button>
+        ${hintBox}
+        <div class="row spread">
+          <div class="row">
+            <button class="btn solid" data-act="flip">Flip</button>
+            ${state.pdir === "en" && !pr.hinted ? `<button class="btn" data-act="hint">Hint</button>` : ""}
+            ${state.pdir !== "en" ? audioControls() : ""}
+          </div>
+          <span class="hint">tap the card or press space</span>
+        </div>`;
+    } else {
+      body = `
+        <div class="back">
+          ${deWords(s)}
+          <p class="en">${esc(s.en)}</p>
+          <p class="note">${esc(s.note)}</p>
+          ${mistakeBox(s)}
+          <div class="row">${audioControls()}</div>
+          ${gradeButtons()}
+        </div>`;
+    }
+  } else if (!pr.revealed) {
     body = `
-      ${pr.hinted ? `<div class="hintbox"><span class="eyebrow">Hint</span><br>${esc(s.hint)}</div>` : ""}
+      <p class="en">${esc(s.en)}</p>
+      ${hintBox}
       <form class="answer" id="pform" autocomplete="off">
-        <label class="eyebrow" for="typed">Say it or type it in German</label>
+        <label class="eyebrow" for="typed">Type it in German</label>
         <input type="text" id="typed" lang="de" spellcheck="false" placeholder="Auf Deutsch …" value="${esc(pr.typed)}">
         <div class="row spread">
           <div class="row">
@@ -503,25 +577,25 @@ function renderPractice() {
     const typed = normUmlauts(pr.typed, s.de);
     const cmp = typed.trim() ? compare(typed, s.de) : null;
     body = `
+      <p class="en">${esc(s.en)}</p>
       ${deWords(s)}
       ${cmp ? `<div class="cmp" aria-label="Your answer compared">${cmp.parts.map(([k, w]) => `<span class="${k}">${esc(w)}</span>`).join("")}</div>
                <p class="verdict ${cmp.perfect ? "ok" : "no"}">${cmp.perfect ? "Richtig!" : "Close. Compare word by word."}</p>` : ""}
       <p class="note">${esc(s.note)}</p>
       ${mistakeBox(s)}
       <div class="row">${audioControls()}</div>
-      <p class="eyebrow">How did that go?</p>
-      <div class="row">
-        <button class="btn bad" data-grade="again">1 · Again</button>
-        <button class="btn" data-grade="good">2 · Got it</button>
-        <button class="btn good" data-grade="easy">3 · Easy</button>
-      </div>`;
+      ${gradeButtons()}`;
   }
   return `
   <article class="page">
     ${header(s, c.box === 0 ? "New sentence" : `Review · box ${c.box}`)}
-    <p class="en">${esc(s.en)}</p>
+    ${practiceModes()}
     ${body}
   </article>`;
+}
+// Listen cards play the sentence as soon as they appear (always after a tap, so browsers allow it).
+function autoplayListen() {
+  if (state.view === "practice" && state.pmode === "cards" && state.pdir === "listen" && pr && pr.id != null && !pr.revealed) speak(byId(pr.id).de);
 }
 function grade(g) {
   const s = byId(pr.id), c = card(s);
@@ -629,7 +703,7 @@ const currentText = () => { const s = byId(currentId()); return s ? s.de : ""; }
 document.addEventListener("click", e => {
   const t = e.target.closest("button");
   if (!t) return;
-  if (t.dataset.view) { state.view = t.dataset.view; state.word = null; persist(); render(); return; }
+  if (t.dataset.view) { state.view = t.dataset.view; state.word = null; persist(); render(); autoplayListen(); return; }
   if (t.dataset.word != null) {
     const i = +t.dataset.word;
     state.word = state.word === i ? null : i;
@@ -642,11 +716,13 @@ document.addEventListener("click", e => {
   if (t.dataset.jump) {
     const id = +t.dataset.jump;
     state.idx = id - 1; state.word = null;
-    if (state.view === "practice") pr = { id, revealed: false, typed: "", hinted: false, ahead: true };
+    if (state.view === "practice") { pr = { id, revealed: false, typed: "", hinted: false, ahead: true }; }
     if (state.view === "build") newBuild(id);
-    persist(); render(); return;
+    persist(); render(); autoplayListen(); return;
   }
-  if (t.dataset.grade) { grade(t.dataset.grade); return; }
+  if (t.dataset.grade) { grade(t.dataset.grade); autoplayListen(); return; }
+  if (t.dataset.pmode) { state.pmode = t.dataset.pmode; if (pr) { pr.revealed = false; pr.hinted = false; } persist(); render(); return; }
+  if (t.dataset.pdir) { state.pdir = t.dataset.pdir; if (pr) { pr.revealed = false; pr.hinted = false; } persist(); render(); autoplayListen(); return; }
   if (t.dataset.bank != null) { const [tile] = bd.bank.splice(+t.dataset.bank, 1); bd.placed.push(tile); render(); return; }
   if (t.dataset.slot != null && !bd.checked) { const [tile] = bd.placed.splice(+t.dataset.slot, 1); bd.bank.push(tile); render(); return; }
   switch (t.dataset.act) {
@@ -655,7 +731,8 @@ document.addEventListener("click", e => {
     case "prev": if (state.idx > 0) { state.idx--; state.word = null; persist(); render(); } break;
     case "next": if (state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); } break;
     case "hint": pr.typed = $("#typed") ? $("#typed").value : pr.typed; pr.hinted = true; render(); break;
-    case "ahead": pr = { id: null, ahead: true }; render(); break;
+    case "ahead": pr = { id: null, ahead: true }; render(); autoplayListen(); break;
+    case "flip": pr.revealed = true; render(); if (state.pdir !== "listen") speak(byId(pr.id).de); break;
     case "check":
       bd.checked = true;
       bd.ok = bd.placed.map(p => p.w).join(" ") === bd.target.join(" ");
@@ -672,6 +749,8 @@ document.addEventListener("keydown", e => {
     if (e.key === "ArrowRight" && state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); }
     else if (e.key === "ArrowLeft" && state.idx > 0) { state.idx--; state.word = null; persist(); render(); }
     else if (e.key === " " && !e.target.matches("button, summary")) { e.preventDefault(); speak(currentText()); }
+  } else if (state.view === "practice" && pr && pr.id != null && !pr.revealed && state.pmode === "cards" && e.key === " " && !e.target.matches("button")) {
+    e.preventDefault(); pr.revealed = true; render(); if (state.pdir !== "listen") speak(byId(pr.id).de);
   } else if (state.view === "practice" && pr && pr.revealed) {
     const g = { "1": "again", "2": "good", "3": "easy" }[e.key];
     if (g) grade(g);
