@@ -1,47 +1,68 @@
 """Generate audio/ clips for every sentence and every distinct word.
 
-Needs espeak-ng, the MBROLA German voice and lame:
-    sudo apt-get install espeak-ng mbrola mbrola-de7 lame
-    python3 tools/make_audio.py
+Two engines, same output (audio/s/<key>.mp3, audio/w/<n>.mp3, audio/manifest.json),
+which build.js inlines into the page:
 
-Writes audio/s/<key>.mp3, audio/w/<n>.mp3 and audio/manifest.json, which
-build.js inlines into the page. Swap VOICE or replace files with human
-recordings; the manifest maps text to file, so nothing else changes.
+  edge   Microsoft's neural voices (what Edge's Read Aloud uses). Natural-sounding,
+         no API key, needs internet access and a WebSocket connection.
+             pip install edge-tts
+             python3 tools/make_audio.py --engine edge
+  mbrola Offline, robotic but accurate. Used for the clips currently committed.
+             sudo apt-get install espeak-ng mbrola mbrola-de7 lame
+             python3 tools/make_audio.py --engine mbrola
+
+Human recordings can replace any file directly; the manifest maps text to file.
 """
+import argparse
+import asyncio
 import json
 import subprocess
 import tempfile
 from pathlib import Path
 
-VOICE = "mb-de7"   # MBROLA German female; mb-de6 is male
-SPEED = "135"      # words per minute; the app's Slow button lowers playback rate further
-BITRATE = "40"     # kbps, mono
-
 root = Path(__file__).resolve().parent.parent
-data = json.loads((root / "data/sentences.json").read_text(encoding="utf-8"))
 out = root / "audio"
-(out / "s").mkdir(parents=True, exist_ok=True)
-(out / "w").mkdir(parents=True, exist_ok=True)
+
+ap = argparse.ArgumentParser()
+ap.add_argument("--engine", choices=["edge", "mbrola"], default="edge")
+ap.add_argument("--voice", help="edge: e.g. de-DE-KatjaNeural (default), de-DE-ConradNeural; mbrola: mb-de7 (default), mb-de6")
+args = ap.parse_args()
+voice = args.voice or ("de-DE-KatjaNeural" if args.engine == "edge" else "mb-de7")
 
 
-def synth(text, dest):
+def synth_mbrola(text, dest):
     with tempfile.NamedTemporaryFile(suffix=".wav") as wav:
-        subprocess.run(["espeak-ng", "-v", VOICE, "-s", SPEED, "-w", wav.name, text], check=True)
-        subprocess.run(["lame", "--quiet", "-m", "m", "-b", BITRATE, wav.name, str(dest)], check=True)
+        subprocess.run(["espeak-ng", "-v", voice, "-s", "135", "-w", wav.name, text], check=True)
+        subprocess.run(["lame", "--quiet", "-m", "m", "-b", "40", wav.name, str(dest)], check=True)
 
 
-manifest = {"voice": VOICE, "sentences": {}, "words": {}}
-for s in data["sentences"]:
-    f = out / "s" / f"{s['key']}.mp3"
-    synth(s["de"], f)
-    manifest["sentences"][s["de"]] = f.relative_to(root).as_posix()
+async def synth_edge(text, dest):
+    import edge_tts
+    # A slightly slower rate suits learners; the app's Slow button slows it further.
+    await edge_tts.Communicate(text, voice, rate="-10%").save(str(dest))
 
-words = sorted({t["w"].rstrip(",") for s in data["sentences"] for t in s["tokens"]})
-for i, w in enumerate(words, 1):
-    f = out / "w" / f"{i:03d}.mp3"
-    synth(w, f)
-    manifest["words"][w] = f.relative_to(root).as_posix()
 
-(out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-size = sum(p.stat().st_size for p in out.rglob("*.mp3"))
-print(f"{len(manifest['sentences'])} sentence clips, {len(words)} word clips, {size / 1024:.0f} KB")
+async def main():
+    data = json.loads((root / "data/sentences.json").read_text(encoding="utf-8"))
+    (out / "s").mkdir(parents=True, exist_ok=True)
+    (out / "w").mkdir(parents=True, exist_ok=True)
+    jobs = [(s["de"], out / "s" / f"{s['key']}.mp3", "sentences") for s in data["sentences"]]
+    words = sorted({t["w"].rstrip(",") for s in data["sentences"] for t in s["tokens"]})
+    jobs += [(w, out / "w" / f"{i:03d}.mp3", "words") for i, w in enumerate(words, 1)]
+
+    manifest = {"engine": args.engine, "voice": voice, "sentences": {}, "words": {}}
+    for n, (text, dest, kind) in enumerate(jobs, 1):
+        if args.engine == "edge":
+            await synth_edge(text, dest)
+        else:
+            synth_mbrola(text, dest)
+        manifest[kind][text] = dest.relative_to(root).as_posix()
+        print(f"\r{n}/{len(jobs)}", end="", flush=True)
+    print()
+
+    (out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    size = sum(p.stat().st_size for p in out.rglob("*.mp3"))
+    print(f"{len(manifest['sentences'])} sentence clips, {len(words)} word clips, {size / 1024:.0f} KB ({args.engine}, {voice})")
+
+
+asyncio.run(main())

@@ -1,4 +1,5 @@
 {
+ "engine": "mbrola",
  "voice": "mb-de7",
  "sentences": {
   "Der Apfel ist rot.": "audio/s/F1.mp3",

@@ -14,7 +14,7 @@ A small study app for English speakers learning German through "golden sentences
 - **Practice**: see the English and produce the German, typed or said aloud, with an optional hint, then grade yourself. Scheduling follows a Leitner card box (*Karteikasten*): box 1 comes back in 10 minutes, box 5 in 3 weeks.
 - **Build**: put shuffled German words back in order, then see the sentence laid out in its frame (Vorfeld · verb · Mittelfeld · verb end), which is the model behind German word order.
 
-Audio: every sentence and every word has a clip in `audio/`, embedded in the page so it plays anywhere, including in-app browsers with no speech voice. The clips are generated with eSpeak NG and the MBROLA German voice `de7`; the Slow button plays them at 70% speed. The browser's own voice is only a fallback for text without a clip.
+Audio: every sentence and every word has a clip in `audio/`, embedded in the page so it plays anywhere, including in-app browsers with no speech voice. The committed clips use eSpeak NG with the MBROLA German voice (`de7`), which works offline but sounds robotic. For natural-sounding audio, run `python3 tools/make_audio.py --engine edge` on a machine with internet access: it uses Microsoft's neural German voices (the ones behind Edge's Read Aloud), needs no API key, and writes the same files. The Slow button plays clips at 70% speed. The browser's own voice is only a fallback for text without a clip.
 
 Progress is stored in the browser's `localStorage`.
 
@@ -35,7 +35,7 @@ build.js                inlines the data → dist/
 
 ```sh
 python3 tools/make_data.py   # after editing sentences
-python3 tools/make_audio.py  # after editing sentences; needs espeak-ng, mbrola-de7, lame
+python3 tools/make_audio.py --engine edge   # after editing sentences; pip install edge-tts
 node build.js
 open dist/index.html   # or any static host
 ```
