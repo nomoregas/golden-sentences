@@ -2,11 +2,11 @@
 
 A small study app for English speakers learning German through "golden sentences": short sentences that reuse the same apple and a handful of people, so each one isolates a single grammar point.
 
-61 sentences in three sets:
+48 sentences in three sets, each chosen to add something the others don't:
 
 - **Ferriss core (13):** Tim Ferriss's original deconstruction sentences, verbatim.
-- **Golden expansion (35):** the 41 Golden Sentences, minus the six that repeat Ferriss's originals.
-- **Gap fillers (13):** grammar neither list covers: feminine and neuter nouns, kein, commands, formal Sie, two-way prepositions, Perfekt with sein, separable and reflexive verbs, relative clauses, time-before-place.
+- **Golden expansion (23):** from the 41 Golden Sentences, dropping the 18 that repeat Ferriss's originals or reuse another sentence's frame with one word swapped. Their small points live on in the notes.
+- **Gap fillers (12):** grammar neither list covers: feminine and neuter nouns, kein, commands, formal Sie, two-way prepositions, Perfekt with sein, separable and reflexive verbs, relative clauses, time-before-place.
 
 ## Modes
 

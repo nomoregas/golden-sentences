@@ -59,7 +59,7 @@ s("F5", "ferriss", "Ferriss #5", "He gives it to John.", "Er gibt ihn John.",
 s("F6", "ferriss", "Ferriss #6", "She gives it to him.", "Sie gibt ihn ihm.",
   "Sie:she:N:VF gibt:gives:v:LK ihn:it:A:MF ihm:him:D:MF",
   ["pronoun-order", "personal-pronouns"],
-  "Two pronouns: accusative (ihn, the apple) before dative (ihm, him).",
+  "Two pronouns: accusative (ihn, the apple) before dative (ihm, him). Other dative pronouns slot in the same way: Sie gibt ihn uns (to us), mir (to me).",
   "Two pronouns: accusative first.",
   {"wrong": "Sie gibt ihm ihn.", "why": "With two pronouns, the accusative comes first."})
 s("F7", "ferriss", "Ferriss #7", "Is the apple red?", "Ist der Apfel rot?",
@@ -70,7 +70,7 @@ s("F7", "ferriss", "Ferriss #7", "Is the apple red?", "Ist der Apfel rot?",
 s("F8", "ferriss", "Ferriss #8", "The apples are red.", "Die Äpfel sind rot.",
   "Die:the:N:VF Äpfel:apples:N:VF sind:are:v:LK rot:red:-:MF",
   ["plural", "predicate-adjective"],
-  "Apfel → Äpfel: the plural adds an umlaut. Every plural takes die. rot still has no ending after sind.",
+  "Apfel → Äpfel: the plural adds an umlaut. Every plural takes die. rot still has no ending after sind. Possessives take -e in the plural: meine Äpfel.",
   "The plural of Apfel has an umlaut.")
 s("F9", "ferriss", "Ferriss #9", "I must give it to him.", "Ich muss ihn ihm geben.",
   "Ich:I:N:VF muss:must:v:LK ihn:it:A:MF ihm:him:D:MF geben:give:v:RK",
@@ -81,7 +81,7 @@ s("F9", "ferriss", "Ferriss #9", "I must give it to him.", "Ich muss ihn ihm geb
 s("F10", "ferriss", "Ferriss #10", "I want to give it to her.", "Ich will ihn ihr geben.",
   "Ich:I:N:VF will:want:v:LK ihn:it:A:MF ihr:her:D:MF geben:give:v:RK",
   ["modal-verbs", "pronoun-order", "personal-pronouns"],
-  "ich will means 'I want'. Modals take a bare infinitive: no zu for English 'to'. ihr is 'to her'.",
+  "ich will means 'I want'. Modals take a bare infinitive: no zu for English 'to'. ihr is 'to her'. With sie, the verb tells you who: sie will (she wants), sie wollen (they want).",
   "wollen, not werden. No zu.",
   {"wrong": "Ich will zu ihn ihr geben.", "why": "Modal verbs take the infinitive without zu."})
 s("F11", "ferriss", "Ferriss #11", "I'm going to know tomorrow.", "Ich werde es morgen wissen.",
@@ -104,8 +104,13 @@ s("F13", "ferriss", "Ferriss #13", "I have eaten the apple.", "Ich habe den Apfe
   {"wrong": "Ich habe gegessen den Apfel.", "why": "The participle goes to the end."})
 
 # --------------------------------------------------------------------------
-# The 41 Golden Sentences, minus the 6 that duplicate or restate Ferriss's
-# originals (#2 #3 #4 #12 are identical; #6 #8 repeat F5 and F4 with a new name).
+# The 41 Golden Sentences, keeping only those that add something beyond
+# Ferriss's originals and each other. Dropped:
+#   identical to Ferriss: #2 #3 #4 #12
+#   same frame, one word swapped: #6 (F5) #7 (F6) #8 (F4) #9 (#11) #10 (F10)
+#     #14 (F8) #18 (#15 + F4) #23 (#24) #26 (#21 + #15) #30 #32 (#29)
+#     #33 (#31) #34 (#27) #40 (#35)
+# Their small points (uns, sie/they, einige, ein paar …) live on in the notes.
 # --------------------------------------------------------------------------
 s("G1", "golden", "Golden 41 #1", "This is an apple.", "Das ist ein Apfel.",
   "Das:this:N:VF ist:is:v:LK ein:an:N:MF Apfel:apple:N:MF",
@@ -117,25 +122,10 @@ s("G5", "golden", "Golden 41 #5", "I give John his apple.", "Ich gebe John seine
   ["possessive-endings", "dative-accusative"],
   "The apple is the accusative object, so sein takes -en: seinen, like einen.",
   "sein takes the same ending as ein would.")
-s("G7", "golden", "Golden 41 #7", "She gives it to us.", "Sie gibt ihn uns.",
-  "Sie:she:N:VF gibt:gives:v:LK ihn:it:A:MF uns:us:D:MF",
-  ["personal-pronouns", "pronoun-order"],
-  "uns is 'to us' (dative). Accusative pronoun ihn comes first.",
-  "Accusative pronoun first.")
-s("G9", "golden", "Golden 41 #9", "She doesn't want the apple.", "Sie will den Apfel nicht.",
-  "Sie:she:N:VF will:wants:v:LK den:the:A:MF Apfel:apple:A:MF nicht:not:-:MF",
-  ["negation-nicht", "modal-verbs"],
-  "Here will is the main verb ('wants'). To negate the whole statement, nicht goes after the definite object, at the end.",
-  "nicht goes at the end here.")
-s("G10", "golden", "Golden 41 #10", "They want to give it to me.", "Sie wollen ihn mir geben.",
-  "Sie:they:N:VF wollen:want:v:LK ihn:it:A:MF mir:me:D:MF geben:give:v:RK",
-  ["modal-verbs", "pronoun-order"],
-  "sie can mean 'she' or 'they'. The verb tells you which: sie will (she), sie wollen (they). Accusative ihn before dative mir.",
-  "'they' takes wollen.")
 s("G11", "golden", "Golden 41 #11", "But I do not want the apple either.", "Aber ich will den Apfel auch nicht.",
   "Aber:but:-:KF ich:I:N:VF will:want:v:LK den:the:A:MF Apfel:apple:A:MF auch:also:-:MF nicht:not:-:MF",
   ["conjunction-position-zero", "negation-nicht"],
-  "aber doesn't take a slot, so the order after it is normal V2. auch nicht = 'not either / neither'.",
+  "aber doesn't take a slot, so the order after it is normal V2. To negate the whole statement, nicht goes after the definite object (Sie will den Apfel nicht); auch nicht = 'not either'.",
   "aber doesn't count as position 1.")
 s("G13", "golden", "Golden 41 #13", "It's not mine.", "Er ist nicht meiner.",
   "Er:it:N:VF ist:is:v:LK nicht:not:-:MF meiner:mine:N:MF",
@@ -143,15 +133,10 @@ s("G13", "golden", "Golden 41 #13", "It's not mine.", "Er ist nicht meiner.",
   "'It' is er because it refers to der Apfel. The standalone possessive shows the gender too: meiner.",
   "'it' is still der Apfel.",
   {"wrong": "Es ist nicht meins.", "why": "That works for a neuter noun (das Kind). For der Apfel, use er … meiner."})
-s("G14", "golden", "Golden 41 #14", "My apples are green.", "Meine Äpfel sind grün.",
-  "Meine:my:N:VF Äpfel:apples:N:VF sind:are:v:LK grün:green:-:MF",
-  ["plural", "possessive-endings"],
-  "Plural Äpfel with umlaut; mein takes -e in the plural: meine.",
-  "Plural possessive ends in -e.")
 s("G15", "golden", "Golden 41 #15", "I will not take the red apple.", "Ich werde den roten Apfel nicht nehmen.",
   "Ich:I:N:VF werde:will:v:LK den:the:A:MF roten:red:A:MF Apfel:apple:A:MF nicht:not:-:MF nehmen:take:v:RK",
   ["future-werden", "adjective-endings", "negation-nicht"],
-  "werden + infinitive for the future. After den, the adjective takes the weak ending -en: den roten Apfel.",
+  "werden + infinitive for the future. After den, the adjective takes the weak ending -en: den roten Apfel. Add a receiver and it goes before the apple: Ich werde dir den roten Apfel geben.",
   "Adjective after den ends in -en.")
 s("G16", "golden", "Golden 41 #16", "Do you want an apple?", "Möchtest du einen Apfel?",
   "Möchtest:would-like:v:LK du:you:N:MF einen:an:A:MF Apfel:apple:A:MF",
@@ -163,11 +148,6 @@ s("G17", "golden", "Golden 41 #17", "Which one do you want?", "Welchen möchtest
   ["w-question"],
   "welch- declines like der. It stands for a masculine accusative (den Apfel), so it's welchen.",
   "welch- ends like den.")
-s("G18", "golden", "Golden 41 #18", "I will give you the red apple.", "Ich werde dir den roten Apfel geben.",
-  "Ich:I:N:VF werde:will:v:LK dir:you:D:MF den:the:A:MF roten:red:A:MF Apfel:apple:A:MF geben:give:v:RK",
-  ["future-werden", "dative-accusative", "adjective-endings"],
-  "werde in position 2, geben at the end. A dative pronoun (dir) comes before a noun object.",
-  "'you' as the receiver is dir.")
 s("G19", "golden", "Golden 41 #19", "It was John's apple.", "Es war Johns Apfel.",
   "Es:it:N:VF war:was:v:LK Johns:John's:G:MF Apfel:apple:N:MF",
   ["praeteritum", "genitive-s"],
@@ -190,26 +170,16 @@ s("G22", "golden", "Golden 41 #22", "You should eat it.", "Du solltest ihn essen
   ["konjunktiv-2", "modal-verbs"],
   "solltest (subjunctive of sollen) gives advice: 'you should'. du sollst is closer to 'you're supposed to'.",
   "Advice uses sollte.")
-s("G23", "golden", "Golden 41 #23", "Did you eat the apple?", "Hast du den Apfel gegessen?",
-  "Hast:have:v:LK du:you:N:MF den:the:A:MF Apfel:apple:A:MF gegessen:eaten:v:RK",
-  ["perfekt", "yes-no-question"],
-  "Spoken past (Perfekt) as a question: hast first, gegessen still at the end.",
-  "Perfekt question: hast first.")
 s("G24", "golden", "Golden 41 #24", "Why didn't you eat it?", "Warum hast du ihn nicht gegessen?",
   "Warum:why:-:VF hast:have:v:LK du:you:N:MF ihn:it:A:MF nicht:not:-:MF gegessen:eaten:v:RK",
   ["w-question", "perfekt", "negation-nicht"],
-  "warum first, hast second, gegessen last. nicht comes right before the participle.",
+  "warum first, hast second, gegessen last. nicht comes right before the participle. The yes/no version just starts with the verb: Hast du den Apfel gegessen?",
   "Question word, then hast.")
 s("G25", "golden", "Golden 41 #25", "If you ate it, you would be happy.", "Wenn du ihn essen würdest, wärst du glücklich.",
   "Wenn:if:-:VF du:you:N:VF ihn:it:A:VF essen:eat:v:VF würdest,:would:v:VF wärst:would-be:v:LK du:you:N:MF glücklich:happy:-:MF",
   ["konjunktiv-2", "subordinate-verb-final", "verb-second"],
   "The wenn-clause puts würdest last. The whole clause fills position 1, so the main clause starts with its verb: wärst du.",
   "After the wenn-clause, the verb comes next.")
-s("G26", "golden", "Golden 41 #26", "Now someone else will eat the apple.", "Jetzt wird jemand anderes den Apfel essen.",
-  "Jetzt:now:-:VF wird:will:v:LK jemand:someone:N:MF anderes:else:N:MF den:the:A:MF Apfel:apple:A:MF essen:eat:v:RK",
-  ["future-werden", "verb-second"],
-  "jetzt (1), wird (2), then the subject. essen at the end.",
-  "wird comes right after jetzt.")
 s("G27", "golden", "Golden 41 #27", "They will eat all of the apples.", "Sie werden alle Äpfel essen.",
   "Sie:they:N:VF werden:will:v:LK alle:all:A:MF Äpfel:apples:A:MF essen:eat:v:RK",
   ["future-werden", "plural"],
@@ -223,37 +193,17 @@ s("G28", "golden", "Golden 41 #28", "And there are a lot of apples to eat.", "Un
 s("G29", "golden", "Golden 41 #29", "Most of them are red.", "Die meisten von ihnen sind rot.",
   "Die:the:N:VF meisten:most:N:VF von:of:-:VF ihnen:them:D:VF sind:are:v:LK rot:red:-:MF",
   ["comparison", "dative-prepositions"],
-  "die meisten = 'most'. von takes the dative: ihnen.",
+  "die meisten = 'most'. von takes the dative: ihnen. Swap in other amounts: einige von ihnen (some), ein paar von ihnen (a few; ein Paar with a capital P is 'a pair').",
   "von takes the dative.")
-s("G30", "golden", "Golden 41 #30", "But some of them are green.", "Aber einige von ihnen sind grün.",
-  "Aber:but:-:KF einige:some:N:VF von:of:-:VF ihnen:them:D:VF sind:are:v:LK grün:green:-:MF",
-  ["dative-prepositions"],
-  "einige = 'some, several' for things you can count.",
-  "'some' (countable) is einige.")
 s("G31", "golden", "Golden 41 #31", "And none of the apples are blue.", "Und keiner der Äpfel ist blau.",
   "Und:and:-:KF keiner:none:N:VF der:of-the:G:VF Äpfel:apples:G:VF ist:is:v:LK blau:blue:-:MF",
   ["kein", "genitive"],
-  "der Äpfel is genitive plural ('of the apples'). keiner is singular, so the verb is ist.",
+  "der Äpfel is genitive plural ('of the apples'). keiner is singular, so the verb is ist. 'One of the apples' works the same way: einer der Äpfel.",
   "keiner is singular.")
-s("G32", "golden", "Golden 41 #32", "A few of them are big.", "Ein paar von ihnen sind groß.",
-  "Ein:a:-:VF paar:few:-:VF von:of:-:VF ihnen:them:D:VF sind:are:v:LK groß:big:-:MF",
-  ["dative-prepositions"],
-  "ein paar (lower case) = 'a few'. ein Paar (capital P) = 'a pair'.",
-  "'a few' is ein paar.")
-s("G33", "golden", "Golden 41 #33", "And one of the apples is very small.", "Und einer der Äpfel ist sehr klein.",
-  "Und:and:-:KF einer:one:N:VF der:of-the:G:VF Äpfel:apples:G:VF ist:is:v:LK sehr:very:-:MF klein:small:-:MF",
-  ["genitive"],
-  "einer stands in for ein Apfel, with a masculine -er. der Äpfel is genitive plural again.",
-  "'one' of a masculine noun is einer.")
-s("G34", "golden", "Golden 41 #34", "But all of the apples are beautiful.", "Aber alle Äpfel sind schön.",
-  "Aber:but:-:KF alle:all:N:VF Äpfel:apples:N:VF sind:are:v:LK schön:beautiful:-:MF",
-  ["plural"],
-  "alle directly before the noun, no 'of'.",
-  "No 'of' after alle.")
 s("G35", "golden", "Golden 41 #35", "These are beautiful, big, red apples.", "Das sind schöne, große, rote Äpfel.",
   "Das:these:N:VF sind:are:v:LK schöne,:beautiful:N:MF große,:big:N:MF rote:red:N:MF Äpfel:apples:N:MF",
   ["adjective-endings", "das-demonstrative"],
-  "No article before a plural noun, so every adjective takes the strong ending -e. Das sind = 'these are'.",
+  "No article before a plural noun, so every adjective takes the strong ending -e (also: Kleine Äpfel sind auch gut). Das sind = 'these are'.",
   "No article, so each adjective ends in -e.")
 s("G36", "golden", "Golden 41 #36", "You can have as many as you want.", "Du kannst so viele haben, wie du willst.",
   "Du:you:N:VF kannst:can:v:LK so:as:-:MF viele:many:A:MF haben,:have:v:RK wie:as:-:NF du:you:N:NF willst:want:v:NF",
@@ -276,11 +226,6 @@ s("G39", "golden", "Golden 41 #39", "The biggest ones are the best.", "Die grö�
   ["comparison", "adjective-endings"],
   "Superlatives used as nouns: die größten, die besten. groß adds an umlaut; gut is irregular (besser, best-).",
   "gut → besser → best-.")
-s("G40", "golden", "Golden 41 #40", "Small apples are good too.", "Kleine Äpfel sind auch gut.",
-  "Kleine:small:N:VF Äpfel:apples:N:VF sind:are:v:LK auch:also:-:MF gut:good:-:MF",
-  ["adjective-endings"],
-  "No article before the plural, so the adjective takes -e: kleine.",
-  "No article, so the adjective ends in -e.")
 s("G41", "golden", "Golden 41 #41", "But the big apples are better.", "Aber die großen Äpfel sind besser.",
   "Aber:but:-:KF die:the:N:VF großen:big:N:VF Äpfel:apples:N:VF sind:are:v:LK besser:better:-:MF",
   ["comparison", "adjective-endings"],
@@ -290,15 +235,10 @@ s("G41", "golden", "Golden 41 #41", "But the big apples are better.", "Aber die 
 # --------------------------------------------------------------------------
 # Gap fillers: core grammar neither list covers
 # --------------------------------------------------------------------------
-s("X1", "extra", "Added", "The banana is yellow.", "Die Banane ist gelb.",
-  "Die:the:N:VF Banane:banana:N:VF ist:is:v:LK gelb:yellow:-:MF",
-  ["gender-articles"],
-  "Every earlier sentence uses der Apfel. Banane is feminine: die.",
-  "Banane is feminine.")
 s("X2", "extra", "Added", "The child eats the apple.", "Das Kind isst den Apfel.",
   "Das:the:N:VF Kind:child:N:VF isst:eats:v:LK den:the:A:MF Apfel:apple:A:MF",
   ["gender-articles", "stem-vowel-change"],
-  "Kind is neuter: das. essen changes its vowel like geben: er isst.",
+  "Every earlier sentence uses der Apfel. Kind is neuter (das Kind); Banane is feminine (die Banane). essen changes its vowel like geben: er isst.",
   "Kind is neuter; essen → isst.")
 s("X3", "extra", "Added", "I give the child the banana.", "Ich gebe dem Kind die Banane.",
   "Ich:I:N:VF gebe:give:v:LK dem:the:D:MF Kind:child:D:MF die:the:A:MF Banane:banana:A:MF",
