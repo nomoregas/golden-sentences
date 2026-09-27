@@ -19,9 +19,19 @@ Progress is stored on the device, separately for the installed app and for any o
 
 ## Modes
 
-- **Learn**: German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
-- **Practice**: flash cards by default, with three fronts: English (say it in German), German (what does it mean?) or Listen (audio only). Cards come in random order (or **In order**, 1 → 48). Tap to flip, then grade yourself. A Type it mode compares a typed answer word by word. Scheduling follows a Leitner card box (*Karteikasten*): box 1 comes back in 10 minutes, box 5 in 3 weeks, and each grade button shows when the card will return. Each practice type (EN → DE, DE → EN, Listen, Type it) keeps its own progress, with a Clear button for the current type and Reset all progress in the footer.
-- **Build**: put shuffled German words back in order (sentences are dealt from a shuffled deck, each once per round, or in order), then see the sentence laid out in its frame (Vorfeld · verb · Mittelfeld · verb end), which is the model behind German word order.
+**Learn**: German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
+
+**Practice** opens a menu of drills. Each one is entered on its own, with its own progress, and shows what's due, new and solid:
+
+| Drill | What you do |
+|---|---|
+| EN → DE (flash cards) | See the English, say the German, flip to check |
+| DE → EN (flash cards) | Read the German, say what it means |
+| Listen (flash cards) | Hear the sentence with no text, say what it means |
+| Type it | Type the German and see it compared word by word |
+| Build | Put shuffled German words back in order, then see the sentence frame (Vorfeld · verb · Mittelfeld · verb end), the model behind German word order |
+
+The four card drills are scheduled with a Leitner card box (*Karteikasten*): box 1 comes back in 10 minutes, box 5 in 3 weeks, and each grade button shows when the card will return. Build tracks which sentences you've built correctly. Sentences come in random order, or **In order** (1 → 48). Inside a drill, **Clear** resets that drill; the footer's **Reset all progress** resets everything.
 
 Audio: every sentence and every word has a clip in `audio/`, embedded in the page so it plays anywhere, including in-app browsers with no speech voice. The committed clips use Microsoft's neural German voice Katja (`de-DE-KatjaNeural`, the voices behind Edge's Read Aloud; no API key). To regenerate them, for example after editing sentences or to switch voice, run the **Generate audio** workflow from the repo's Actions tab, or `python3 tools/make_audio.py --engine edge` on any machine with internet access. `--engine mbrola` is an offline fallback that sounds robotic. The Slow button plays clips at 70% speed. The browser's own voice is only a fallback for text without a clip.
 

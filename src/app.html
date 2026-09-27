@@ -223,6 +223,30 @@ input[type="text"] {
 .kasten-tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .btn.mini { font-size: .85rem; padding: 3px 10px; border-width: 1.5px; }
 .btn.mini.armed { background: var(--bad); border-color: var(--bad); color: var(--card); }
+/* Practice menu: one entry per drill */
+.chooser { display: grid; gap: 14px; }
+.chooser-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.chooser-head h2 { font-family: var(--display); font-weight: 700; font-size: 1.7rem; color: var(--ink); margin: 0; }
+.drills { display: grid; gap: 10px; }
+.drill {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 12px; text-align: left; width: 100%;
+  background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; cursor: pointer; font: inherit;
+  box-shadow: var(--shadow);
+}
+.drill:hover { border-color: var(--ink); }
+.drill .kind { font-family: var(--display); font-weight: 600; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.drill .name { font-family: var(--display); font-weight: 700; font-size: 1.45rem; color: var(--ink); line-height: 1.1; }
+.drill .desc { font-size: .95rem; }
+.drill .stat { font-family: var(--mono); font-size: .75rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 4px; }
+.drill .stat .due { color: var(--card); background: var(--margin); border-radius: 999px; padding: 0 8px; }
+.drill .go { grid-row: 1 / span 4; grid-column: 2; font-family: var(--display); font-size: 1.6rem; color: var(--ink); }
+/* Inside a drill */
+.sessionbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.sessionbar .title { display: grid; line-height: 1.1; }
+.sessionbar .title span { font-family: var(--display); font-weight: 600; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.sessionbar .title strong { font-family: var(--display); font-weight: 700; font-size: 1.4rem; color: var(--ink); }
+.sessionbar .hint { margin-left: auto; }
+.cell[data-box="done"] { background: var(--b4); border-color: var(--b4); color: #fff; }
 .btn small { display: block; font-family: var(--mono); font-size: .68rem; font-weight: 400; letter-spacing: 0; text-transform: none; opacity: .8; }
 .setgroup { display: grid; gap: 6px; }
 .setgroup h3 { margin: 0; font-family: var(--display); font-weight: 600; font-size: .9rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
@@ -277,22 +301,21 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
     <nav class="tabs" role="tablist" aria-label="Mode">
       <button role="tab" id="tab-learn" data-view="learn">Learn</button>
       <button role="tab" id="tab-practice" data-view="practice">Practice</button>
-      <button role="tab" id="tab-build" data-view="build">Build</button>
     </nav>
   </header>
 
   <main id="view" aria-live="polite"></main>
 
-  <section class="kasten" aria-label="Progress">
+  <section class="kasten" id="progress" aria-label="Progress">
     <div class="kasten-head">
-      <h2>Karteikasten · <span id="deckname"></span></h2>
+      <h2 id="kastentitle"></h2>
       <div class="kasten-tools">
         <span class="hint" id="summary"></span>
         <button class="btn mini bad" id="clear" type="button">Clear</button>
       </div>
     </div>
     <div id="groups" class="kasten"></div>
-    <div class="legend">
+    <div class="legend" id="legend">
       <span><i></i>new</span>
       <span><i data-box="1"></i>box 1 · again soon</span>
       <span><i data-box="2"></i>box 2 · 1 day</span>
@@ -328,21 +351,30 @@ const store = {
 };
 const saved = store.load();
 const state = {
-  view: saved.view || "learn",
+  view: saved.view === "practice" || saved.view === "build" ? "practice" : "learn",
+  session: null,                     // the drill the learner has entered (see DRILLS), or null for the practice menu
   idx: Number.isInteger(saved.idx) && saved.idx < TOTAL ? saved.idx : 0,
   // Progress is kept separately per practice type: sentence key -> { box, due }.
   // Older saves had one shared record; it becomes the EN → DE deck.
   progress: Object.assign({ en: {}, de: {}, listen: {}, type: {} }, saved.progress || (saved.cards ? { en: saved.cards } : {})),
   slow: !!saved.slow,
   word: null,                        // selected token index on the current card
-  pmode: saved.pmode === "type" ? "type" : "cards", // practice style: flash cards or typing
-  pdir: ["en", "de", "listen"].includes(saved.pdir) ? saved.pdir : "en", // flash card front: English, German or audio only
+  built: saved.built || {},          // Build: sentence key -> true once built correctly
   order: saved.order === "seq" ? "seq" : "shuffle", // which sentence comes next in Practice and Build
 };
-const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, pmode: state.pmode, pdir: state.pdir, order: state.order });
-const DECK_NAME = { en: "EN → DE", de: "DE → EN", listen: "Listen", type: "Type it" };
-const deck = () => state.pmode === "type" ? "type" : state.pdir;   // the practice type currently chosen
-const cards = () => state.progress[deck()];
+const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, built: state.built, order: state.order });
+// Each drill is its own experience with its own progress.
+const DRILLS = [
+  { id: "en", kind: "Flash cards", name: "EN → DE", desc: "See the English, say the German." },
+  { id: "de", kind: "Flash cards", name: "DE → EN", desc: "Read the German, say what it means." },
+  { id: "listen", kind: "Flash cards", name: "Listen", desc: "Hear it with no text, say what it means." },
+  { id: "type", kind: "Writing", name: "Type it", desc: "Type the German and see it checked word by word." },
+  { id: "build", kind: "Word order", name: "Build", desc: "Put the German words back in the right order." },
+];
+const DRILL = Object.fromEntries(DRILLS.map(d => [d.id, d]));
+const SRS = ["en", "de", "listen", "type"];     // drills scheduled with Leitner boxes
+const deck = () => SRS.includes(state.session) ? state.session : null;
+const cards = () => deck() ? state.progress[deck()] : {};
 const card = s => cards()[s.key] || { box: 0, due: 0 };
 const byId = id => SENTENCES.find(s => s.id === id);
 
@@ -520,11 +552,40 @@ function normUmlauts(typed, target) {
 
 const seg = (key, val, label) => `<button data-${key}="${val}" aria-pressed="${state[key] === val}">${label}</button>`;
 const orderToggle = () => `<div class="seg" role="group" aria-label="Order">${seg("order", "shuffle", "⤨ Shuffled")}${seg("order", "seq", "In order")}</div>`;
-function practiceModes() {
-  return `<div class="modes">
-    <div class="seg" role="group" aria-label="Practice style">${seg("pmode", "cards", "Flash cards")}${seg("pmode", "type", "Type it")}</div>
-    ${orderToggle()}
-    ${state.pmode === "cards" ? `<div class="seg" role="group" aria-label="Card front">${seg("pdir", "en", "EN → DE")}${seg("pdir", "de", "DE → EN")}${seg("pdir", "listen", "Listen")}</div>` : ""}
+// Status line for a drill, from its own progress.
+function drillStats(id) {
+  if (id === "build") {
+    const n = SENTENCES.filter(s => state.built[s.key]).length;
+    return { due: 0, text: [`${n}/${TOTAL} built correctly`] };
+  }
+  const prog = state.progress[id], now = Date.now();
+  const c = s => prog[s.key] || { box: 0, due: 0 };
+  const due = SENTENCES.filter(s => c(s).box > 0 && c(s).due <= now).length;
+  const fresh = SENTENCES.filter(s => c(s).box === 0).length;
+  const solid = SENTENCES.filter(s => c(s).box >= 3).length;
+  return { due, text: [`${fresh} new`, `${solid} solid`] };
+}
+function renderChooser() {
+  return `<section class="chooser">
+    <div class="chooser-head"><h2>Practice</h2>${orderToggle()}</div>
+    <div class="drills">${DRILLS.map(d => {
+      const st = drillStats(d.id);
+      return `<button class="drill" data-enter="${d.id}">
+        <span class="kind">${d.kind}</span>
+        <span class="name">${d.name}</span>
+        <span class="desc">${d.desc}</span>
+        <span class="stat">${st.due ? `<span class="due">${st.due} due</span>` : ""}${st.text.map(t => `<span>${t}</span>`).join("")}</span>
+        <span class="go" aria-hidden="true">→</span>
+      </button>`;
+    }).join("")}</div>
+  </section>`;
+}
+function sessionBar() {
+  const d = DRILL[state.session], st = drillStats(d.id);
+  return `<div class="sessionbar">
+    <button class="btn icon" data-act="exit">← Practice</button>
+    <div class="title"><span>${d.kind}</span><strong>${d.name}</strong></div>
+    <span class="hint">${[st.due ? `${st.due} due` : "", ...st.text].filter(Boolean).join(" · ")}</span>
   </div>`;
 }
 // Box a grade would move the current card to, and how long until it comes back.
@@ -545,8 +606,8 @@ function gradeButtons() {
     </div>`;
 }
 function flashFront(s) {
-  if (state.pdir === "de") return `<span class="ask">What does it mean?</span><span class="prompt" lang="de">${esc(s.de)}</span>`;
-  if (state.pdir === "listen") return `<span class="ask">Listen. What does it mean?</span><span class="big" aria-hidden="true">▶</span><span class="hint">tap ▶ Hören below to replay</span>`;
+  if (state.session === "de") return `<span class="ask">What does it mean?</span><span class="prompt" lang="de">${esc(s.de)}</span>`;
+  if (state.session === "listen") return `<span class="ask">Listen. What does it mean?</span><span class="big" aria-hidden="true">▶</span><span class="hint">tap ▶ Hören below to replay</span>`;
   return `<span class="ask">Say it in German</span><span class="prompt en">${esc(s.en)}</span>`;
 }
 function renderPractice() {
@@ -565,7 +626,7 @@ function renderPractice() {
   const c = card(s);
   const hintBox = pr.hinted ? `<div class="hintbox"><span class="eyebrow">Hint</span><br>${esc(s.hint)}</div>` : "";
   let body;
-  if (state.pmode === "cards") {
+  if (state.session !== "type") {
     if (!pr.revealed) {
       body = `
         <button class="flash" data-act="flip" aria-label="Flip card">${flashFront(s)}</button>
@@ -573,8 +634,8 @@ function renderPractice() {
         <div class="row spread">
           <div class="row">
             <button class="btn solid" data-act="flip">Flip</button>
-            ${state.pdir === "en" && !pr.hinted ? `<button class="btn" data-act="hint">Hint</button>` : ""}
-            ${state.pdir !== "en" ? audioControls() : ""}
+            ${state.session === "en" && !pr.hinted ? `<button class="btn" data-act="hint">Hint</button>` : ""}
+            ${state.session !== "en" ? audioControls() : ""}
           </div>
           <span class="hint">tap the card or press space</span>
         </div>`;
@@ -620,13 +681,12 @@ function renderPractice() {
   return `
   <article class="page">
     ${header(s, c.box === 0 ? "New sentence" : `Review · box ${c.box}`)}
-    ${practiceModes()}
     ${body}
   </article>`;
 }
 // Listen cards play the sentence as soon as they appear (always after a tap, so browsers allow it).
 function autoplayListen() {
-  if (state.view === "practice" && state.pmode === "cards" && state.pdir === "listen" && pr && pr.id != null && !pr.revealed) speak(byId(pr.id).de);
+  if (state.view === "practice" && state.session === "listen" && pr && pr.id != null && !pr.revealed) speak(byId(pr.id).de);
 }
 function grade(g) {
   const s = byId(pr.id), c = card(s);
@@ -702,32 +762,43 @@ function renderBuild() {
              <button class="btn" data-act="clear" ${bd.placed.length ? "" : "disabled"}>Clear</button>`}
         ${bd.checked ? audioControls() : ""}
       </div>
-      ${orderToggle()}
     </div>
   </article>`;
 }
 
 /* ---------- Shell ---------- */
 function currentId() {
-  return state.view === "practice" ? pr && pr.id : state.view === "build" ? bd && bd.id : SENTENCES[state.idx].id;
+  if (state.view === "learn") return SENTENCES[state.idx].id;
+  if (state.session === "build") return bd && bd.id;
+  return deck() ? pr && pr.id : null;
 }
+// Progress panel: the current drill's boxes, Build's correct builds, or a plain sentence index in Learn.
 function renderCells() {
+  const sec = $("#progress");
+  sec.hidden = state.view === "practice" && !state.session;
+  if (sec.hidden) return;
+  const srs = !!deck(), build = state.session === "build";
   const current = currentId();
   $("#groups").innerHTML = Object.entries(DATA.sets).map(([set, name]) => {
     const list = SENTENCES.filter(s => s.set === set);
     return `<div class="setgroup"><h3>${esc(name)} · ${list.length}</h3><div class="cells">${list.map(s =>
-      `<button class="cell ${s.id === current ? "current" : ""}" data-box="${card(s).box}" data-jump="${s.id}" title="${esc(s.en)}">${s.id}</button>`).join("")}</div></div>`;
+      `<button class="cell ${s.id === current ? "current" : ""}" data-box="${srs ? card(s).box : build && state.built[s.key] ? "done" : ""}" data-jump="${s.id}" title="${esc(s.en)}">${s.id}</button>`).join("")}</div></div>`;
   }).join("");
   const now = Date.now();
   const started = SENTENCES.filter(s => card(s).box > 0).length;
   const solid = SENTENCES.filter(s => card(s).box >= 3).length;
   const due = SENTENCES.filter(s => { const c = card(s); return c.box > 0 && c.due <= now; }).length;
-  $("#deckname").textContent = DECK_NAME[deck()];
-  $("#summary").textContent = `${started}/${TOTAL} started · ${solid} solid · ${due} due now`;
+  $("#kastentitle").innerHTML = srs || build ? `Karteikasten · <span>${DRILL[state.session].name}</span>` : "Sentences";
+  $("#summary").textContent = srs ? `${started}/${TOTAL} started · ${solid} solid · ${due} due now`
+    : build ? drillStats("build").text[0] : "Tap a number to open that sentence.";
+  $("#clear").hidden = !(srs || build);
+  $("#legend").hidden = !srs;
 }
 function render() {
   document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === state.view)));
-  $("#view").innerHTML = state.view === "practice" ? renderPractice() : state.view === "build" ? renderBuild() : renderLearn();
+  $("#view").innerHTML = state.view === "learn" ? renderLearn()
+    : !state.session ? renderChooser()
+    : sessionBar() + (state.session === "build" ? renderBuild() : renderPractice());
   renderCells();
   const inp = $("#typed");
   if (inp) {
@@ -741,7 +812,11 @@ const currentText = () => { const s = byId(currentId()); return s ? s.de : ""; }
 document.addEventListener("click", e => {
   const t = e.target.closest("button");
   if (!t) return;
-  if (t.dataset.view) { state.view = t.dataset.view; state.word = null; persist(); render(); autoplayListen(); return; }
+  if (t.dataset.view) { state.view = t.dataset.view; state.session = null; state.word = null; persist(); render(); return; }
+  if (t.dataset.enter) {
+    state.session = t.dataset.enter; pr = null; bd = null; state.word = null;
+    render(); window.scrollTo(0, 0); autoplayListen(); return;
+  }
   if (t.dataset.word != null) {
     const i = +t.dataset.word;
     state.word = state.word === i ? null : i;
@@ -754,14 +829,12 @@ document.addEventListener("click", e => {
   if (t.dataset.jump) {
     const id = +t.dataset.jump;
     state.idx = id - 1; state.word = null;
-    if (state.view === "practice") { pr = { id, revealed: false, typed: "", hinted: false, ahead: true }; }
-    if (state.view === "build") newBuild(id);
+    if (state.session === "build") newBuild(id);
+    else if (deck()) pr = { id, revealed: false, typed: "", hinted: false, ahead: true };
     persist(); render(); autoplayListen(); return;
   }
   if (t.dataset.grade) { grade(t.dataset.grade); autoplayListen(); return; }
-  if (t.dataset.pmode) { state.pmode = t.dataset.pmode; pr = null; persist(); render(); autoplayListen(); return; }
   if (t.dataset.order) { state.order = t.dataset.order; persist(); render(); return; }
-  if (t.dataset.pdir) { state.pdir = t.dataset.pdir; pr = null; persist(); render(); autoplayListen(); return; }
   if (t.dataset.bank != null) { const [tile] = bd.bank.splice(+t.dataset.bank, 1); bd.placed.push(tile); render(); return; }
   if (t.dataset.slot != null && !bd.checked) { const [tile] = bd.placed.splice(+t.dataset.slot, 1); bd.bank.push(tile); render(); return; }
   switch (t.dataset.act) {
@@ -771,10 +844,12 @@ document.addEventListener("click", e => {
     case "next": if (state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); } break;
     case "hint": pr.typed = $("#typed") ? $("#typed").value : pr.typed; pr.hinted = true; render(); break;
     case "ahead": pr = { id: null, ahead: true }; render(); autoplayListen(); break;
-    case "flip": pr.revealed = true; render(); if (state.pdir !== "listen") speak(byId(pr.id).de); break;
+    case "flip": pr.revealed = true; render(); if (state.session !== "listen") speak(byId(pr.id).de); break;
+    case "exit": state.session = null; pr = null; state.word = null; render(); window.scrollTo(0, 0); break;
     case "check":
       bd.checked = true;
       bd.ok = bd.placed.map(p => p.w).join(" ") === bd.target.join(" ");
+      if (bd.ok) { state.built[byId(bd.id).key] = true; persist(); }
       render(); speak(currentText()); break;
     case "clear": bd.bank.push(...bd.placed); bd.placed = []; render(); break;
     case "bnext": {
@@ -791,9 +866,11 @@ document.addEventListener("keydown", e => {
     if (e.key === "ArrowRight" && state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); }
     else if (e.key === "ArrowLeft" && state.idx > 0) { state.idx--; state.word = null; persist(); render(); }
     else if (e.key === " " && !e.target.matches("button, summary")) { e.preventDefault(); speak(currentText()); }
-  } else if (state.view === "practice" && pr && pr.id != null && !pr.revealed && state.pmode === "cards" && e.key === " " && !e.target.matches("button")) {
-    e.preventDefault(); pr.revealed = true; render(); if (state.pdir !== "listen") speak(byId(pr.id).de);
-  } else if (state.view === "practice" && pr && pr.revealed) {
+  } else if (state.view === "practice" && state.session && e.key === "Escape") {
+    state.session = null; pr = null; render();
+  } else if (deck() && pr && pr.id != null && !pr.revealed && state.session !== "type" && e.key === " " && !e.target.matches("button")) {
+    e.preventDefault(); pr.revealed = true; render(); if (state.session !== "listen") speak(byId(pr.id).de);
+  } else if (deck() && pr && pr.revealed) {
     const g = { "1": "again", "2": "good", "3": "easy" }[e.key];
     if (g) grade(g);
   }
@@ -812,10 +889,11 @@ function confirmTap(b, idle, armedText, doneText, action) {
   setTimeout(() => { b.textContent = idle(); }, 2000);
 }
 $("#clear").addEventListener("click", e => confirmTap(e.currentTarget, () => "Clear",
-  `Tap again to clear ${DECK_NAME[deck()]}`, "Cleared", () => { state.progress[deck()] = {}; }));
+  `Tap again to clear ${DRILL[state.session].name}`, "Cleared",
+  () => { if (state.session === "build") state.built = {}; else state.progress[deck()] = {}; }));
 $("#reset").addEventListener("click", e => confirmTap(e.currentTarget, () => "Reset all progress",
   "Tap again to erase progress for every practice type", "All progress erased",
-  () => { state.progress = { en: {}, de: {}, listen: {}, type: {} }; }));
+  () => { state.progress = { en: {}, de: {}, listen: {}, type: {} }; state.built = {}; }));
 
 render();
 </script>
