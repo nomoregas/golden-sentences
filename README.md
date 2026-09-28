@@ -19,7 +19,7 @@ Progress is stored on the device, separately for the installed app and for any o
 
 ## Modes
 
-**Learn**: German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
+**Learn**: a picture of the sentence, German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
 
 **Table**: all 48 sentences at once, switchable between English, Deutsch and Both without losing your place. Tap a sentence to peek at its translation, ▶ to hear it, or its number to open it in Learn.
 
@@ -35,6 +35,8 @@ Progress is stored on the device, separately for the installed app and for any o
 
 The four card drills are scheduled with a Leitner card box (*Karteikasten*): box 1 comes back in 10 minutes, box 5 in 3 weeks, and each grade button shows when the card will return. Build tracks which sentences you've built correctly. Sentences come in random order, or **In order** (1 → 48). Inside a drill, **Clear** resets that drill; the footer's **Reset all progress** resets everything.
 
+Pictures: every sentence has a small scene (`data/scenes.json`, drawn as SVG by the app) with a fixed cast, each person in one colour: **ich** blue, **du** green, **er** teal, **sie** purple, **John** orange, a child, and a formal **Sie**. The same marks recur: a dashed arrow for giving, ✗ for not, ? for questions, ! for must, ♥ for want, and a clock with an arrow back (past) or ahead (future). Pictures show in Learn and Build, on the front of EN → DE cards, and only on the back of DE → EN and Listen cards so they don't give the meaning away.
+
 Audio: every sentence and every word has a clip in `audio/`, embedded in the page so it plays anywhere, including in-app browsers with no speech voice. The committed clips use Microsoft's neural German voice Katja (`de-DE-KatjaNeural`, the voices behind Edge's Read Aloud; no API key). To regenerate them, for example after editing sentences or to switch voice, run the **Generate audio** workflow from the repo's Actions tab, or `python3 tools/make_audio.py --engine edge` on any machine with internet access. `--engine mbrola` is an offline fallback that sounds robotic. The Slow button plays clips at 70% speed. The browser's own voice is only a fallback for text without a clip.
 
 Progress is stored in the browser's `localStorage`.
@@ -47,6 +49,7 @@ tools/make_data.py      validates the source and writes data/sentences.json
 tools/make_audio.py     generates audio/ clips and audio/manifest.json
 data/sentences.json     generated sentence data
 data/topics.json        grammar topics: title, summary, explanation, optional table
+data/scenes.json        one picture per sentence, as a list of cast members and props
 audio/                  sentence and word clips (MP3), plus manifest.json
 src/app.html            the app (HTML/CSS/JS, no framework)
 web/                    PWA files: manifest, service worker, icons

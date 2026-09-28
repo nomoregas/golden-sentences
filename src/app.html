@@ -223,6 +223,17 @@ input[type="text"] {
 .kasten-tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .btn.mini { font-size: .85rem; padding: 3px 10px; border-width: 1.5px; }
 .btn.mini.armed { background: var(--bad); border-color: var(--bad); color: var(--card); }
+/* Scene pictures */
+.scene { display: block; width: 100%; max-width: 440px; height: auto; margin-inline: auto; background: var(--tint); border-radius: 10px; }
+.flash .scene { max-width: 320px; background: transparent; }
+.scene .ground { stroke: var(--line); stroke-width: 2; }
+.scene .lbl { fill: var(--muted); font: 600 10px var(--mono); text-anchor: middle; }
+.scene .ink { fill: var(--ink); }
+.scene .inks { stroke: var(--ink); fill: none; }
+.scene .mut { stroke: var(--muted); fill: none; }
+.scene .bub { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+.scene .caltext { fill: var(--ink); font: 600 10px var(--mono); text-anchor: middle; }
+
 /* Table: every sentence at once; the language switch only flips a class, so nothing reflows */
 .tbar {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--paper);
@@ -454,6 +465,153 @@ const audioControls = () => (hasClips || tts) ? `
   <button class="btn icon" data-act="speak" title="Play (space)">▶ Hören</button>
   <button class="btn icon" data-act="slow" aria-pressed="${state.slow}">${state.slow ? "Slow ✓" : "Slow"}</button>` : "";
 
+/* ---------- Scenes: one picture per sentence, drawn from data/scenes.json ---------- */
+const SCENES = /*__SCENES__*/{};
+// A fixed cast so every picture tells the same story: each person keeps one colour and label.
+const CAST = {
+  ich: { c: "#3D6FD1", label: "ich" }, du: { c: "#5B9A2F", label: "du" }, er: { c: "#1F9A8A", label: "er" },
+  sie: { c: "#9A5BC9", label: "sie" }, John: { c: "#E08A1E", label: "John" }, Kind: { c: "#E0668F", label: "Kind", s: .72 },
+  Sie: { c: "#6B7890", label: "Sie", formal: true },
+};
+const FRUIT = { red: "#D8413A", green: "#7CB342", blue: "#4A7BD0" };
+const GROUND = 132;
+function sApple(x, y, r, o = {}) {
+  if (o.core) return `<g>
+    <path d="M${x - r * .45} ${y - r} Q${x - r * .1} ${y} ${x - r * .45} ${y + r} L${x + r * .45} ${y + r} Q${x + r * .1} ${y} ${x + r * .45} ${y - r} Z" fill="#F2E2BD"/>
+    <ellipse cx="${x}" cy="${y - r}" rx="${r * .5}" ry="${r * .22}" fill="${FRUIT.red}"/><ellipse cx="${x}" cy="${y + r}" rx="${r * .5}" ry="${r * .22}" fill="${FRUIT.red}"/>
+    <path d="M${x} ${y - r * 1.2} l1 ${-r * .4}" stroke="#6B4A2B" stroke-width="2"/></g>`;
+  const fill = o.outline ? "none" : FRUIT[o.c || "red"];
+  const stroke = o.outline ? `stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 3"` : "";
+  let g = `<g opacity="${o.ghost ? .45 : 1}">
+    <path d="M${x} ${y - r * .75} C${x - r * 1.25} ${y - r * 1.25} ${x - r * 1.2} ${y + r * .9} ${x - r * .35} ${y + r} C${x - r * .1} ${y + r * 1.05} ${x + r * .1} ${y + r * 1.05} ${x + r * .35} ${y + r}
+      C${x + r * 1.2} ${y + r * .9} ${x + r * 1.25} ${y - r * 1.25} ${x} ${y - r * .75} Z" fill="${fill}" ${stroke}/>
+    <path d="M${x} ${y - r * .7} q1 ${-r * .45} ${r * .12} ${-r * .6}" stroke="#6B4A2B" stroke-width="${Math.max(1.5, r / 9)}" fill="none" stroke-linecap="round"/>`;
+  if (!o.outline) g += `<ellipse cx="${x + r * .32}" cy="${y - r * .95}" rx="${r * .32}" ry="${r * .14}" transform="rotate(-25 ${x + r * .32} ${y - r * .95})" fill="#5E9E3A"/>
+    <ellipse cx="${x - r * .42}" cy="${y - r * .2}" rx="${r * .14}" ry="${r * .26}" fill="#fff" opacity=".35"/>`;
+  if (o.cross) g += `<path d="M${x - r} ${y - r} L${x + r} ${y + r} M${x + r} ${y - r} L${x - r} ${y + r}" stroke="#B8352B" stroke-width="4" stroke-linecap="round"/>`;
+  if (o.star) g += `<path d="${starPath(x + r * .85, y - r * 1.05, r * .32)}" fill="#F2B233"/>`;
+  if (o.price) g += `<g transform="translate(${x + r * .7} ${y - r * .2}) rotate(12)"><rect x="0" y="-8" width="24" height="16" rx="3" fill="#F7F3E6" stroke="#B89B5E"/><text x="12" y="4" font-size="10" font-weight="700" text-anchor="middle" fill="#6B4A2B">€</text></g>`;
+  if (o.owner) g += `<g><rect x="${x + r * .6}" y="${y + r * .15}" width="30" height="13" rx="6" fill="${CAST[o.owner].c}"/><text x="${x + r * .6 + 15}" y="${y + r * .15 + 9.5}" font-size="8" font-weight="700" text-anchor="middle" fill="#fff">${CAST[o.owner].label}</text></g>`;
+  return g + "</g>";
+}
+function starPath(cx, cy, r) {
+  let d = "";
+  for (let i = 0; i < 10; i++) { const a = Math.PI / 5 * i - Math.PI / 2, rr = i % 2 ? r * .45 : r; d += `${i ? "L" : "M"}${cx + rr * Math.cos(a)} ${cy + rr * Math.sin(a)} `; }
+  return d + "Z";
+}
+function sBanana(x, y) {
+  return `<g><path d="M${x - 14} ${y - 8} Q${x} ${y + 14} ${x + 16} ${y - 10} Q${x + 2} ${y + 4} ${x - 14} ${y - 8} Z" fill="#F2C94C" stroke="#C99A2E" stroke-width="1.2"/><path d="M${x + 16} ${y - 10} l3 -3" stroke="#6B4A2B" stroke-width="2"/></g>`;
+}
+function sIcon(kind, x, y) {
+  if (kind === "q") return `<text x="${x}" y="${y + 7}" font-size="20" font-weight="700" text-anchor="middle" class="ink">?</text>`;
+  if (kind === "ex") return `<text x="${x}" y="${y + 7}" font-size="20" font-weight="700" text-anchor="middle" fill="#D98E1B">!</text>`;
+  if (kind === "apple") return sApple(x, y + 2, 9);
+  if (kind === "apple-x") return sApple(x, y + 2, 9, { cross: true });
+  if (kind === "apple-smile") return sApple(x - 11, y + 2, 8) + `<circle cx="${x + 11}" cy="${y + 1}" r="8" fill="#F2B233"/><path d="M${x + 7} ${y + 3} q4 4 8 0" stroke="#6B4A2B" stroke-width="1.5" fill="none"/><circle cx="${x + 8.5}" cy="${y - 1}" r="1.2" fill="#6B4A2B"/><circle cx="${x + 13.5}" cy="${y - 1}" r="1.2" fill="#6B4A2B"/>`;
+  return "";
+}
+function sBadge(m, x, y) {
+  const bg = { no: "#C8372D", yes: "#2E8B57", q: "var(--ink)", ex: "#D98E1B", heart: "#fff" }[m];
+  const inner = {
+    no: `<path d="M${x - 4} ${y - 4} L${x + 4} ${y + 4} M${x + 4} ${y - 4} L${x - 4} ${y + 4}" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>`,
+    yes: `<path d="M${x - 4} ${y} l3 3 l5 -6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>`,
+    q: `<text x="${x}" y="${y + 4.5}" font-size="13" font-weight="700" text-anchor="middle" fill="var(--card)">?</text>`,
+    ex: `<text x="${x}" y="${y + 4.5}" font-size="13" font-weight="700" text-anchor="middle" fill="#fff">!</text>`,
+    heart: `<path d="M${x} ${y + 5} C${x - 9} ${y - 1} ${x - 5} ${y - 9} ${x} ${y - 3} C${x + 5} ${y - 9} ${x + 9} ${y - 1} ${x} ${y + 5} Z" fill="#D8413A"/>`,
+  }[m];
+  return `<circle cx="${x}" cy="${y}" r="9" fill="${bg}" ${m === "heart" ? 'stroke="var(--line)"' : ""}/>${inner}`;
+}
+function sFig(o) {
+  const p = CAST[o.who], s = p.s || 1, d = o.dir || 1, x = o.x, c = p.c;
+  const Y = v => GROUND - v * s;                // heights measured up from the ground
+  const headY = Y(64), sh = Y(45);
+  const arm = (x2, y2) => `<path d="M${x + d * 10 * s} ${sh} L${x2} ${y2}" stroke="${c}" stroke-width="${5 * s}" stroke-linecap="round"/>`;
+  const back = `<path d="M${x - d * 10 * s} ${sh} L${x - d * 14 * s} ${Y(24)}" stroke="${c}" stroke-width="${5 * s}" stroke-linecap="round"/>`;
+  let front = "", item = null;
+  switch (o.pose) {
+    case "give": front = arm(x + d * 34 * s, Y(44)); item = [x + d * 42 * s, Y(46)]; break;
+    case "reach": front = arm(x + d * 32 * s, Y(46)) + `<circle cx="${x + d * 34 * s}" cy="${Y(46)}" r="${3.5 * s}" fill="${c}"/>`; break;
+    case "hold": front = arm(x + d * 20 * s, Y(30)); item = [x + d * 22 * s, Y(36)]; break;
+    case "eat": front = arm(x + d * 19 * s, Y(54)); item = [x + d * 22 * s, Y(58)]; break;
+    case "point": front = arm(x + d * 36 * s, Y(58)); break;
+    case "cheer": front = arm(x + d * 20 * s, Y(80)); break;
+    default: front = arm(x + d * 14 * s, Y(24));
+  }
+  const backArm = o.pose === "cheer" ? `<path d="M${x - d * 10 * s} ${sh} L${x - d * 20 * s} ${Y(80)}" stroke="${c}" stroke-width="${5 * s}" stroke-linecap="round"/>` : back;
+  const mouth = o.face === "happy" ? `<path d="M${x + d * 1 * s - 4 * s} ${headY + 3 * s} q${4 * s} ${4 * s} ${8 * s} 0" stroke="#fff" stroke-width="${1.6 * s}" fill="none" stroke-linecap="round"/>`
+    : o.face === "sad" ? `<path d="M${x - 3 * s} ${headY + 6 * s} q${4 * s} ${-3 * s} ${8 * s} 0" stroke="#fff" stroke-width="${1.6 * s}" fill="none"/>`
+    : `<path d="M${x - 2 * s + d * 1} ${headY + 5 * s} h${5 * s}" stroke="#fff" stroke-width="${1.5 * s}" stroke-linecap="round"/>`;
+  let g = `<g opacity="${o.ghost ? .45 : 1}">
+    <path d="M${x - 5 * s} ${Y(14)} L${x - 6 * s} ${GROUND}" stroke="${c}" stroke-width="${5.5 * s}" stroke-linecap="round"/>
+    <path d="M${x + 5 * s} ${Y(14)} L${x + 6 * s} ${GROUND}" stroke="${c}" stroke-width="${5.5 * s}" stroke-linecap="round"/>
+    ${backArm}
+    <rect x="${x - 12 * s}" y="${Y(50)}" width="${24 * s}" height="${37 * s}" rx="${9 * s}" fill="${c}"/>
+    <circle cx="${x}" cy="${headY}" r="${12 * s}" fill="${c}"/>
+    <circle cx="${x}" cy="${headY}" r="${12 * s}" fill="#fff" opacity=".18"/>
+    <circle cx="${x + d * 2 * s - 3.5 * s}" cy="${headY - 2 * s}" r="${1.6 * s}" fill="#fff"/><circle cx="${x + d * 2 * s + 3.5 * s}" cy="${headY - 2 * s}" r="${1.6 * s}" fill="#fff"/>
+    ${mouth}`;
+  if (p.formal) g += `<rect x="${x - 13}" y="${headY - 20}" width="26" height="5" rx="2" fill="#2B2F3A"/><rect x="${x - 8}" y="${headY - 30}" width="16" height="11" rx="2" fill="#2B2F3A"/><path d="M${x} ${Y(49)} l-3 6 l3 14 l3 -14 z" fill="#C8372D"/>`;
+  g += front;
+  if (item && o.hold) g += o.hold === "banana" ? sBanana(item[0], item[1]) : sApple(item[0], item[1], 10 * s);
+  g += `<text class="lbl" x="${x}" y="${GROUND + 13}">${p.label}</text>`;
+  if (o.mark) g += sBadge(o.mark, x - d * 16 * s, headY - 16 * s);
+  const bubble = o.think || o.say;
+  if (bubble) {
+    const bx = x + d * 40 * s, by = headY - 26 * s;
+    g += o.think
+      ? `<circle class="bub" cx="${x + d * 15 * s}" cy="${headY - 15 * s}" r="2.5"/><circle class="bub" cx="${x + d * 22 * s}" cy="${headY - 21 * s}" r="4"/><ellipse class="bub" cx="${bx}" cy="${by}" rx="27" ry="17"/>`
+      : `<path class="bub" d="M${bx - 26} ${by - 15} h52 a6 6 0 0 1 6 6 v18 a6 6 0 0 1 -6 6 h-${d > 0 ? 38 : 8} l-${d > 0 ? 8 : -8} 9 l2 -9 h-${d > 0 ? 8 : 38} a6 6 0 0 1 -6 -6 v-18 a6 6 0 0 1 6 -6 z"/>`;
+    g += sIcon(bubble, bx, by - 2);
+  }
+  return g + "</g>";
+}
+// Past: arrow pointing back from the clock; future: pointing ahead.
+function sClock(x, y, dir) {
+  const ax = x + dir * 14, tip = x + dir * 34;
+  return `<circle cx="${x}" cy="${y}" r="11" fill="var(--card)" stroke="var(--muted)" stroke-width="1.8"/>
+    <path d="M${x} ${y - 7} V${y} L${x + 5} ${y + 3}" class="mut" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M${ax} ${y} H${tip} M${tip - dir * 6} ${y - 6} L${tip} ${y} L${tip - dir * 6} ${y + 6}" class="mut" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+}
+function sceneSvg(key) {
+  const spec = SCENES[key];
+  if (!spec) return "";
+  const parts = spec.map(e => {
+    switch (e.t) {
+      case "fig": return sFig(e);
+      case "apple": return sApple(e.x, e.y, e.r, e);
+      case "banana": return sBanana(e.x, e.y);
+      case "badge": return sBadge(e.m, e.x, e.y);
+      case "pile": {
+        const n = e.n, r = e.r || 15, colors = e.colors || [], out = [];
+        const rows = n <= 4 ? [n] : n <= 7 ? [n - 3, 3] : [n - 6, 4, 2].filter(v => v > 0);
+        let k = 0;
+        rows.forEach((cnt, row) => {
+          for (let i = 0; i < cnt; i++) out.push([e.x + (i - (cnt - 1) / 2) * r * 2.1, GROUND - r - row * r * 1.7, colors[k++] || "red"]);
+        });
+        return out.map(([x, y, c]) => sApple(x, y, r, { c })).join("");
+      }
+      case "arrow": {
+        const { x1, x2, y } = e, mid = (x1 + x2) / 2, dir = x2 > x1 ? 1 : -1;
+        return `<path d="M${x1} ${y} Q${mid} ${y - 30} ${x2} ${y}" class="mut" stroke-width="2" stroke-dasharray="5 4"/>
+          <path d="M${x2 - dir * 9} ${y - 7} L${x2} ${y} L${x2 - dir * 10} ${y + 3}" class="mut" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+      }
+      case "fall": return `<path d="M${e.x1} ${e.y1} Q${e.x2 - 10} ${e.y1 - 5} ${e.x2} ${e.y2}" class="mut" stroke-width="2" stroke-dasharray="4 4"/>`;
+      case "clock": return sClock(e.x, e.y, e.dir);
+      case "repeat": return `<g class="mut" stroke-width="2" stroke-linecap="round"><path d="M${e.x - 12} ${e.y} a12 12 0 0 1 21 -8"/><path d="M${e.x + 12} ${e.y} a12 12 0 0 1 -21 8"/><path d="M${e.x + 9} ${e.y - 14} l0 6 l-6 0"/><path d="M${e.x - 9} ${e.y + 14} l0 -6 l6 0"/></g>`;
+      case "bulb": return `<circle cx="${e.x}" cy="${e.y - 4}" r="11" fill="#F2C94C"/><rect x="${e.x - 5}" y="${e.y + 6}" width="10" height="7" rx="2" fill="var(--muted)"/><path d="M${e.x - 18} ${e.y - 12} l-5 -4 M${e.x + 18} ${e.y - 12} l5 -4 M${e.x} ${e.y - 22} v-6" class="mut" stroke-width="2" stroke-linecap="round"/>`;
+      case "cal": return `<rect x="${e.x - 30}" y="${e.y - 14}" width="60" height="32" rx="5" fill="var(--card)" stroke="var(--muted)" stroke-width="1.5"/><rect x="${e.x - 30}" y="${e.y - 14}" width="60" height="9" rx="4" fill="#D8413A"/><text class="caltext" x="${e.x}" y="${e.y + 12}">${e.text}</text>`;
+      case "tree": return `<rect x="${e.x - 7}" y="${GROUND - 55}" width="14" height="55" rx="3" fill="#8B5A2B"/><circle cx="${e.x}" cy="${GROUND - 78}" r="36" fill="#5E9E3A"/><circle cx="${e.x - 14}" cy="${GROUND - 88}" r="5" fill="${FRUIT.red}"/><circle cx="${e.x + 12}" cy="${GROUND - 70}" r="5" fill="${FRUIT.red}"/>`;
+      case "table": return `<rect x="${e.x - 45}" y="${GROUND - 36}" width="90" height="7" rx="2" fill="#A0703E"/><rect x="${e.x - 40}" y="${GROUND - 29}" width="6" height="29" fill="#8B5A2B"/><rect x="${e.x + 34}" y="${GROUND - 29}" width="6" height="29" fill="#8B5A2B"/>`;
+      case "kitchen": return `<rect x="${e.x - 55}" y="${GROUND - 44}" width="110" height="44" rx="3" fill="var(--card)" stroke="var(--muted)" stroke-width="1.5"/><path d="M${e.x - 55} ${GROUND - 34} h110" class="mut" stroke-width="1.5"/>
+        <circle cx="${e.x - 30}" cy="${GROUND - 50}" r="6" class="mut" stroke-width="2"/><circle cx="${e.x - 12}" cy="${GROUND - 50}" r="6" class="mut" stroke-width="2"/>
+        <rect x="${e.x + 5}" y="${GROUND - 64}" width="34" height="18" rx="3" fill="#6B7890"/><rect x="${e.x + 1}" y="${GROUND - 66}" width="42" height="4" rx="2" fill="#6B7890"/>
+        <rect x="${e.x - 40}" y="${GROUND - 116}" width="50" height="40" rx="3" fill="none" stroke="var(--muted)" stroke-width="1.5"/><path d="M${e.x - 15} ${GROUND - 116} v40 M${e.x - 40} ${GROUND - 96} h50" class="mut" stroke-width="1.5"/>`;
+      default: return "";
+    }
+  }).join("");
+  return `<svg class="scene" viewBox="0 0 320 150" role="img" aria-label="Picture of the sentence"><line class="ground" x1="10" y1="${GROUND}" x2="310" y2="${GROUND}"/>${parts}</svg>`;
+}
+
 /* ---------- Shared pieces built from the sentence data ---------- */
 // German sentence as tappable words, underlined by case.
 function deWords(s) {
@@ -505,6 +663,7 @@ function renderLearn() {
   return `
   <article class="page">
     ${header(s, `${s.id} of ${TOTAL}`)}
+    ${sceneSvg(s.key)}
     <p class="en">${esc(s.en)}</p>
     ${deWords(s)}
     ${literal(s)}
@@ -663,7 +822,7 @@ function gradeButtons() {
 function flashFront(s) {
   if (state.session === "de") return `<span class="ask">What does it mean?</span><span class="prompt" lang="de">${esc(s.de)}</span>`;
   if (state.session === "listen") return `<span class="ask">Listen. What does it mean?</span><span class="big" aria-hidden="true">▶</span><span class="hint">tap ▶ Hören below to replay</span>`;
-  return `<span class="ask">Say it in German</span><span class="prompt en">${esc(s.en)}</span>`;
+  return `<span class="ask">Say it in German</span>${sceneSvg(s.key)}<span class="prompt en">${esc(s.en)}</span>`;
 }
 function renderPractice() {
   if (!pr || pr.id == null) pr = { id: nextDue(pr && pr.ahead, pr && pr.last), revealed: false, typed: "", hinted: false, ahead: pr && pr.ahead };
@@ -697,6 +856,7 @@ function renderPractice() {
     } else {
       body = `
         <div class="back">
+          ${state.session === "en" ? "" : sceneSvg(s.key)}
           ${deWords(s)}
           <p class="en">${esc(s.en)}</p>
           <p class="note">${esc(s.note)}</p>
@@ -793,6 +953,7 @@ function renderBuild() {
   return `
   <article class="page">
     ${header(s, "Put the words in order")}
+    ${sceneSvg(s.key)}
     <p class="en">${esc(s.en)}</p>
     ${bd.checked ? "" : `
     <div class="slots ${slotCls}" id="slots" aria-label="Your sentence">

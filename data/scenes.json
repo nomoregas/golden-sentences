@@ -1,0 +1,890 @@
+{
+ "_about": "One picture per sentence, drawn by src/app.html (see 'Scenes'). The canvas is 320 x 150 with the ground at y = 132. Elements: fig (a person: who, x, pose stand|give|hold|eat|point|reach|cheer, dir 1 right / -1 left, hold apple|banana, mark no|yes|q|ex|heart, face happy|sad, think/say icon q|apple|apple-x|apple-smile|ex, ghost), apple (x, y, r, c red|green|blue, core, cross, star, price, outline, ghost, owner), pile (x, n, colors, r), arrow (x1, x2, y), fall (x1, y1, x2, y2), clock (x, y, dir -1 past / 1 future), repeat (x, y), bulb (x, y), cal (x, y, text), tree (x), table (x), kitchen (x), banana (x, y).",
+ "F1": [
+  {
+   "t": "apple",
+   "x": 160,
+   "y": 90,
+   "r": 28
+  }
+ ],
+ "F2": [
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 150,
+   "pose": "hold",
+   "hold": "apple",
+   "face": "happy"
+  }
+ ],
+ "F3": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 75,
+   "pose": "give",
+   "hold": "apple"
+  },
+  {
+   "t": "arrow",
+   "x1": 125,
+   "x2": 220,
+   "y": 84
+  },
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 250,
+   "dir": -1
+  }
+ ],
+ "F4": [
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 45
+  },
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 90,
+   "pose": "give",
+   "hold": "apple"
+  },
+  {
+   "t": "arrow",
+   "x1": 140,
+   "x2": 222,
+   "y": 84
+  },
+  {
+   "t": "fig",
+   "who": "er",
+   "x": 255,
+   "dir": -1
+  }
+ ],
+ "F5": [
+  {
+   "t": "fig",
+   "who": "er",
+   "x": 75,
+   "pose": "give",
+   "hold": "apple"
+  },
+  {
+   "t": "arrow",
+   "x1": 125,
+   "x2": 220,
+   "y": 84
+  },
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 250,
+   "dir": -1
+  }
+ ],
+ "F6": [
+  {
+   "t": "fig",
+   "who": "sie",
+   "x": 75,
+   "pose": "give",
+   "hold": "apple"
+  },
+  {
+   "t": "arrow",
+   "x1": 125,
+   "x2": 220,
+   "y": 84
+  },
+  {
+   "t": "fig",
+   "who": "er",
+   "x": 250,
+   "dir": -1
+  }
+ ],
+ "F7": [
+  {
+   "t": "apple",
+   "x": 150,
+   "y": 90,
+   "r": 28
+  },
+  {
+   "t": "badge",
+   "x": 200,
+   "y": 48,
+   "m": "q"
+  }
+ ],
+ "F8": [
+  {
+   "t": "apple",
+   "x": 105,
+   "y": 100,
+   "r": 22
+  },
+  {
+   "t": "apple",
+   "x": 160,
+   "y": 100,
+   "r": 22
+  },
+  {
+   "t": "apple",
+   "x": 215,
+   "y": 100,
+   "r": 22
+  }
+ ],
+ "F9": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 75,
+   "pose": "give",
+   "hold": "apple",
+   "mark": "ex"
+  },
+  {
+   "t": "arrow",
+   "x1": 125,
+   "x2": 220,
+   "y": 84
+  },
+  {
+   "t": "fig",
+   "who": "er",
+   "x": 250,
+   "dir": -1
+  }
+ ],
+ "F10": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 75,
+   "pose": "give",
+   "hold": "apple",
+   "mark": "heart"
+  },
+  {
+   "t": "arrow",
+   "x1": 125,
+   "x2": 220,
+   "y": 84
+  },
+  {
+   "t": "fig",
+   "who": "sie",
+   "x": 250,
+   "dir": -1
+  }
+ ],
+ "F11": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 70,
+   "think": "q"
+  },
+  {
+   "t": "arrow",
+   "x1": 130,
+   "x2": 200,
+   "y": 100
+  },
+  {
+   "t": "cal",
+   "x": 245,
+   "y": 58,
+   "text": "morgen"
+  },
+  {
+   "t": "bulb",
+   "x": 245,
+   "y": 108
+  }
+ ],
+ "F12": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 150,
+   "pose": "eat",
+   "hold": "apple",
+   "mark": "no"
+  }
+ ],
+ "F13": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 120,
+   "face": "happy"
+  },
+  {
+   "t": "apple",
+   "x": 200,
+   "y": 116,
+   "r": 16,
+   "core": true
+  },
+  {
+   "t": "clock",
+   "x": 255,
+   "y": 50,
+   "dir": -1
+  }
+ ],
+ "G1": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 90,
+   "pose": "point"
+  },
+  {
+   "t": "apple",
+   "x": 215,
+   "y": 96,
+   "r": 24
+  }
+ ],
+ "G5": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 75,
+   "pose": "give",
+   "hold": "apple"
+  },
+  {
+   "t": "arrow",
+   "x1": 125,
+   "x2": 220,
+   "y": 84
+  },
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 250,
+   "dir": -1,
+   "think": "apple"
+  }
+ ],
+ "G11": [
+  {
+   "t": "fig",
+   "who": "sie",
+   "x": 60,
+   "mark": "no"
+  },
+  {
+   "t": "apple",
+   "x": 160,
+   "y": 112,
+   "r": 18
+  },
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 260,
+   "dir": -1,
+   "mark": "no"
+  }
+ ],
+ "G13": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 110,
+   "mark": "no"
+  },
+  {
+   "t": "apple",
+   "x": 210,
+   "y": 110,
+   "r": 20,
+   "owner": "John"
+  }
+ ],
+ "G15": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 105,
+   "mark": "no"
+  },
+  {
+   "t": "apple",
+   "x": 205,
+   "y": 110,
+   "r": 20
+  },
+  {
+   "t": "clock",
+   "x": 255,
+   "y": 48,
+   "dir": 1
+  }
+ ],
+ "G16": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 80,
+   "pose": "give",
+   "hold": "apple",
+   "say": "q"
+  },
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 245,
+   "dir": -1
+  }
+ ],
+ "G17": [
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 70,
+   "think": "q"
+  },
+  {
+   "t": "apple",
+   "x": 190,
+   "y": 110,
+   "r": 20
+  },
+  {
+   "t": "apple",
+   "x": 245,
+   "y": 110,
+   "r": 20,
+   "c": "green"
+  }
+ ],
+ "G19": [
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 145,
+   "pose": "hold",
+   "hold": "apple",
+   "ghost": true
+  },
+  {
+   "t": "clock",
+   "x": 245,
+   "y": 50,
+   "dir": -1
+  }
+ ],
+ "G20": [
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 95,
+   "say": "apple-x"
+  },
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 250,
+   "dir": -1
+  },
+  {
+   "t": "clock",
+   "x": 180,
+   "y": 110,
+   "dir": -1
+  }
+ ],
+ "G21": [
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 160,
+   "pose": "hold",
+   "hold": "apple",
+   "face": "happy"
+  }
+ ],
+ "G22": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 80,
+   "pose": "point",
+   "say": "ex"
+  },
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 245,
+   "dir": -1,
+   "pose": "hold",
+   "hold": "apple"
+  }
+ ],
+ "G24": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 80,
+   "say": "q"
+  },
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 245,
+   "dir": -1,
+   "pose": "hold",
+   "hold": "apple"
+  },
+  {
+   "t": "clock",
+   "x": 165,
+   "y": 110,
+   "dir": -1
+  }
+ ],
+ "G25": [
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 100,
+   "think": "apple-smile"
+  }
+ ],
+ "G27": [
+  {
+   "t": "fig",
+   "who": "er",
+   "x": 50
+  },
+  {
+   "t": "fig",
+   "who": "sie",
+   "x": 95
+  },
+  {
+   "t": "pile",
+   "x": 220,
+   "n": 6
+  },
+  {
+   "t": "clock",
+   "x": 150,
+   "y": 45,
+   "dir": 1
+  }
+ ],
+ "G28": [
+  {
+   "t": "pile",
+   "x": 160,
+   "n": 10
+  }
+ ],
+ "G29": [
+  {
+   "t": "pile",
+   "x": 160,
+   "n": 7,
+   "colors": [
+    "red",
+    "red",
+    "green",
+    "red",
+    "red",
+    "green",
+    "red"
+   ]
+  }
+ ],
+ "G31": [
+  {
+   "t": "apple",
+   "x": 70,
+   "y": 110,
+   "r": 18
+  },
+  {
+   "t": "apple",
+   "x": 120,
+   "y": 110,
+   "r": 18,
+   "c": "green"
+  },
+  {
+   "t": "apple",
+   "x": 170,
+   "y": 110,
+   "r": 18
+  },
+  {
+   "t": "apple",
+   "x": 250,
+   "y": 105,
+   "r": 22,
+   "c": "blue",
+   "cross": true
+  }
+ ],
+ "G35": [
+  {
+   "t": "apple",
+   "x": 95,
+   "y": 98,
+   "r": 26,
+   "star": true
+  },
+  {
+   "t": "apple",
+   "x": 160,
+   "y": 98,
+   "r": 26,
+   "star": true
+  },
+  {
+   "t": "apple",
+   "x": 225,
+   "y": 98,
+   "r": 26,
+   "star": true
+  }
+ ],
+ "G36": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 55,
+   "pose": "point"
+  },
+  {
+   "t": "pile",
+   "x": 160,
+   "n": 7
+  },
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 268,
+   "dir": -1,
+   "pose": "cheer",
+   "face": "happy"
+  }
+ ],
+ "G37": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 45
+  },
+  {
+   "t": "pile",
+   "x": 125,
+   "n": 6
+  },
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 205,
+   "dir": -1,
+   "face": "happy"
+  },
+  {
+   "t": "fig",
+   "who": "er",
+   "x": 245,
+   "dir": -1,
+   "face": "happy"
+  },
+  {
+   "t": "fig",
+   "who": "sie",
+   "x": 285,
+   "dir": -1,
+   "face": "happy"
+  }
+ ],
+ "G38": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 40,
+   "mark": "heart"
+  },
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 100,
+   "mark": "heart"
+  },
+  {
+   "t": "fig",
+   "who": "er",
+   "x": 160,
+   "mark": "heart"
+  },
+  {
+   "t": "fig",
+   "who": "sie",
+   "x": 220,
+   "mark": "heart"
+  },
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 280,
+   "mark": "no"
+  }
+ ],
+ "G39": [
+  {
+   "t": "apple",
+   "x": 70,
+   "y": 120,
+   "r": 10
+  },
+  {
+   "t": "apple",
+   "x": 115,
+   "y": 116,
+   "r": 14
+  },
+  {
+   "t": "apple",
+   "x": 170,
+   "y": 110,
+   "r": 19
+  },
+  {
+   "t": "apple",
+   "x": 240,
+   "y": 102,
+   "r": 27,
+   "star": true
+  }
+ ],
+ "G41": [
+  {
+   "t": "apple",
+   "x": 110,
+   "y": 118,
+   "r": 12
+  },
+  {
+   "t": "apple",
+   "x": 205,
+   "y": 102,
+   "r": 27,
+   "star": true
+  }
+ ],
+ "X2": [
+  {
+   "t": "fig",
+   "who": "Kind",
+   "x": 160,
+   "pose": "eat",
+   "hold": "apple",
+   "face": "happy"
+  }
+ ],
+ "X3": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 75,
+   "pose": "give",
+   "hold": "banana"
+  },
+  {
+   "t": "arrow",
+   "x1": 125,
+   "x2": 222,
+   "y": 90
+  },
+  {
+   "t": "fig",
+   "who": "Kind",
+   "x": 250,
+   "dir": -1
+  }
+ ],
+ "X4": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 130,
+   "mark": "no"
+  },
+  {
+   "t": "apple",
+   "x": 210,
+   "y": 100,
+   "r": 20,
+   "outline": true
+  }
+ ],
+ "X5": [
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 85,
+   "pose": "reach",
+   "mark": "ex"
+  },
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 245,
+   "dir": -1,
+   "pose": "hold",
+   "hold": "apple"
+  }
+ ],
+ "X6": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 80,
+   "pose": "give",
+   "hold": "apple",
+   "say": "q"
+  },
+  {
+   "t": "fig",
+   "who": "Sie",
+   "x": 245,
+   "dir": -1
+  }
+ ],
+ "X7": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 70,
+   "pose": "give",
+   "hold": "apple"
+  },
+  {
+   "t": "arrow",
+   "x1": 118,
+   "x2": 212,
+   "y": 80
+  },
+  {
+   "t": "table",
+   "x": 225
+  }
+ ],
+ "X8": [
+  {
+   "t": "table",
+   "x": 160
+  },
+  {
+   "t": "apple",
+   "x": 160,
+   "y": 84,
+   "r": 14
+  }
+ ],
+ "X9": [
+  {
+   "t": "tree",
+   "x": 105
+  },
+  {
+   "t": "fall",
+   "x1": 130,
+   "y1": 62,
+   "x2": 205,
+   "y2": 108
+  },
+  {
+   "t": "apple",
+   "x": 215,
+   "y": 118,
+   "r": 14
+  },
+  {
+   "t": "clock",
+   "x": 270,
+   "y": 50,
+   "dir": -1
+  }
+ ],
+ "X10": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 110,
+   "pose": "hold",
+   "hold": "apple"
+  },
+  {
+   "t": "cal",
+   "x": 235,
+   "y": 70,
+   "text": "morgen"
+  }
+ ],
+ "X11": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 95,
+   "face": "happy"
+  },
+  {
+   "t": "apple",
+   "x": 205,
+   "y": 104,
+   "r": 24,
+   "price": true
+  },
+  {
+   "t": "clock",
+   "x": 262,
+   "y": 48,
+   "dir": -1
+  }
+ ],
+ "X12": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 110,
+   "face": "happy",
+   "think": "apple"
+  }
+ ],
+ "X13": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 90,
+   "pose": "eat",
+   "hold": "apple"
+  },
+  {
+   "t": "kitchen",
+   "x": 225
+  },
+  {
+   "t": "repeat",
+   "x": 150,
+   "y": 38
+  }
+ ]
+}

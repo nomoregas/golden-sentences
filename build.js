@@ -8,6 +8,10 @@ const root = __dirname;
 const read = f => fs.readFileSync(path.join(root, f), "utf8");
 const data = JSON.parse(read("data/sentences.json"));
 const topics = JSON.parse(read("data/topics.json"));
+const scenes = JSON.parse(read("data/scenes.json"));
+delete scenes._about;
+const noScene = data.sentences.filter(x => !scenes[x.key]).map(x => x.key);
+if (noScene.length) console.warn(`No picture yet for: ${noScene.join(" ")}`);
 const app = read("src/app.html");
 
 // Audio clips are embedded as data: URIs so the page works as a single file,
@@ -27,6 +31,7 @@ let fragment = app;
 for (const [placeholder, value] of [
   ["/*__SENTENCES__*/{ sets: {}, sentences: [] }", data],
   ["/*__TOPICS__*/{}", topics],
+  ["/*__SCENES__*/{}", scenes],
   ["/*__AUDIO__*/{ sentences: {}, words: {} }", audio],
 ]) {
   if (!fragment.includes(placeholder)) throw new Error(`Placeholder ${placeholder} not found in src/app.html`);
