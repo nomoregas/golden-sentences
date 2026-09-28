@@ -33,7 +33,7 @@ Progress is stored on the device, separately for the installed app and for any o
 | Type it | Type the German and see it compared word by word |
 | Build | Put shuffled German words back in order, then see the sentence frame (Vorfeld · verb · Mittelfeld · verb end), the model behind German word order |
 
-The four card drills are scheduled with a Leitner card box (*Karteikasten*): box 1 comes back in 10 minutes, box 5 in 3 weeks, and each grade button shows when the card will return. Build tracks which sentences you've built correctly. Sentences come in random order, or **In order** (1 → 48). Inside a drill, **Clear** resets that drill; the footer's **Reset all progress** resets everything.
+The four card drills are scheduled with a Leitner card box (*Karteikasten*, "card box"): box 1 comes back in 10 minutes, box 5 in 3 weeks, and each grade button shows when the card will return. Build tracks which sentences you've built correctly. Sentences come in random order, or **In order** (1 → 48). Inside a drill, **Clear** resets that drill; the footer's **Reset all progress** resets everything.
 
 Pictures: every sentence has a small scene (`data/scenes.json`, drawn as SVG by the app) with a fixed cast, each person in one colour: **ich** blue, **du** green, **er** teal, **sie** purple, **John** orange, a child, and a formal **Sie**. The same marks recur: a dashed arrow for giving, ✗ for not, ? for questions, ! for must, ♥ for want, and a clock with an arrow back (past) or ahead (future). Pictures show in Learn and Build, on the front of EN → DE cards, and only on the back of DE → EN and Listen cards so they don't give the meaning away.
 

@@ -220,6 +220,7 @@ input[type="text"] {
 .kasten-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
 .kasten-head h2 { font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); margin: 0; }
 .kasten-head h2 span { color: var(--margin); }
+.kasten-head h2 .gl { color: var(--muted); font-weight: 500; text-transform: none; letter-spacing: 0; font-size: .95rem; }
 .kasten-tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .btn.mini { font-size: .85rem; padding: 3px 10px; border-width: 1.5px; }
 .btn.mini.armed { background: var(--bad); border-color: var(--bad); color: var(--card); }
@@ -423,6 +424,8 @@ const card = s => cards()[s.key] || { box: 0, due: 0 };
 const byId = id => SENTENCES.find(s => s.id === id);
 
 const $ = (sel, el = document) => el.querySelector(sel);
+// Moving to another sentence starts at the top of the page, so the new card is in view.
+const toTop = () => window.scrollTo(0, 0);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pad = n => String(n).padStart(2, "0");
 
@@ -910,7 +913,7 @@ function grade(g) {
   persist();
   pr = { id: null, ahead: pr.ahead, last: s.id };
   state.word = null;
-  render();
+  render(); toTop();
 }
 
 /* ---------- Build (word order) ---------- */
@@ -1004,7 +1007,7 @@ function renderCells() {
   const started = SENTENCES.filter(s => card(s).box > 0).length;
   const solid = SENTENCES.filter(s => card(s).box >= 3).length;
   const due = SENTENCES.filter(s => { const c = card(s); return c.box > 0 && c.due <= now; }).length;
-  $("#kastentitle").innerHTML = srs || build ? `Karteikasten · <span>${DRILL[state.session].name}</span>` : "Sentences";
+  $("#kastentitle").innerHTML = srs || build ? `Karteikasten <em class="gl">(card box)</em> · <span>${DRILL[state.session].name}</span>` : "Sentences";
   $("#summary").textContent = srs ? `${started}/${TOTAL} started · ${solid} solid · ${due} due now`
     : build ? drillStats("build").text[0] : "Tap a number to open that sentence.";
   $("#clear").hidden = !(srs || build);
@@ -1060,7 +1063,7 @@ document.addEventListener("click", e => {
     state.idx = id - 1; state.word = null;
     if (state.session === "build") newBuild(id);
     else if (deck()) pr = { id, revealed: false, typed: "", hinted: false, ahead: true };
-    persist(); render(); autoplayListen(); return;
+    persist(); render(); toTop(); autoplayListen(); return;
   }
   if (t.dataset.grade) { grade(t.dataset.grade); autoplayListen(); return; }
   if (t.dataset.order) { state.order = t.dataset.order; persist(); render(); return; }
@@ -1069,10 +1072,10 @@ document.addEventListener("click", e => {
   switch (t.dataset.act) {
     case "speak": speak(currentText()); break;
     case "slow": state.slow = !state.slow; persist(); render(); break;
-    case "prev": if (state.idx > 0) { state.idx--; state.word = null; persist(); render(); } break;
-    case "next": if (state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); } break;
+    case "prev": if (state.idx > 0) { state.idx--; state.word = null; persist(); render(); toTop(); } break;
+    case "next": if (state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); toTop(); } break;
     case "hint": pr.typed = $("#typed") ? $("#typed").value : pr.typed; pr.hinted = true; render(); break;
-    case "ahead": pr = { id: null, ahead: true }; render(); autoplayListen(); break;
+    case "ahead": pr = { id: null, ahead: true }; render(); toTop(); autoplayListen(); break;
     case "flip": pr.revealed = true; render(); if (state.session !== "listen") speak(byId(pr.id).de); break;
     case "exit": state.session = null; pr = null; state.word = null; render(); window.scrollTo(0, 0); break;
     case "check":
@@ -1084,7 +1087,7 @@ document.addEventListener("click", e => {
     case "bnext": {
       const i = SENTENCES.findIndex(s => s.id === bd.id);
       newBuild(state.order === "seq" ? SENTENCES[(i + 1) % TOTAL].id : dealBuild(bd.id));
-      render(); break;
+      render(); toTop(); break;
     }
   }
 });
@@ -1092,8 +1095,8 @@ document.addEventListener("click", e => {
 document.addEventListener("keydown", e => {
   if (e.target.matches("input")) return;
   if (state.view === "learn") {
-    if (e.key === "ArrowRight" && state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); }
-    else if (e.key === "ArrowLeft" && state.idx > 0) { state.idx--; state.word = null; persist(); render(); }
+    if (e.key === "ArrowRight" && state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); toTop(); }
+    else if (e.key === "ArrowLeft" && state.idx > 0) { state.idx--; state.word = null; persist(); render(); toTop(); }
     else if (e.key === " " && !e.target.matches("button, summary")) { e.preventDefault(); speak(currentText()); }
   } else if (state.view === "practice" && state.session && e.key === "Escape") {
     state.session = null; pr = null; render();
