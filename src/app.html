@@ -287,7 +287,6 @@ input[type="text"] {
 .chk[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
 .chk[aria-pressed="true"]::after { content: "✓"; }
 .stable tr.off .rowbtn, .stable tr.off .n, .stable tr.off .play { opacity: .4; }
-.gradehelp { margin: 0; }
 
 /* Practice menu: one entry per drill */
 .chooser { display: grid; gap: 14px; }
@@ -321,20 +320,12 @@ input[type="text"] {
   aspect-ratio: 1; max-width: 100%; border-radius: 5px; border: 1.5px solid var(--line); background: var(--card);
   font-family: var(--mono); font-size: .78rem; color: var(--muted); cursor: pointer; font-variant-numeric: tabular-nums; padding: 0;
 }
-.cell[data-box="1"] { background: var(--b1); border-color: var(--b1); color: #fff; }
-.cell[data-box="2"] { background: var(--b2); border-color: var(--b2); color: #1a1a1a; }
-.cell[data-box="3"] { background: var(--b3); border-color: var(--b3); color: #1a1a1a; }
-.cell[data-box="4"] { background: var(--b4); border-color: var(--b4); color: #fff; }
-.cell[data-box="5"] { background: var(--b5); border-color: var(--b5); color: var(--card); }
+.cell[data-box="again"] { background: var(--b1); border-color: var(--b1); color: #fff; }
+.cell[data-box="good"] { background: var(--b4); border-color: var(--b4); color: #fff; }
 .cell.off { opacity: .3; }
 .cell.current { outline: 2px solid var(--margin); outline-offset: 2px; }
 .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--mono); font-size: .72rem; color: var(--muted); }
 .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; border: 1.5px solid var(--line); }
-.legend i[data-box="1"] { background: var(--b1); border-color: var(--b1); }
-.legend i[data-box="2"] { background: var(--b2); border-color: var(--b2); }
-.legend i[data-box="3"] { background: var(--b3); border-color: var(--b3); }
-.legend i[data-box="4"] { background: var(--b4); border-color: var(--b4); }
-.legend i[data-box="5"] { background: var(--b5); border-color: var(--b5); }
 
 footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
 .linkish { background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; font: inherit; padding: 0; }
@@ -383,15 +374,6 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
       </div>
     </div>
     <div id="groups" class="kasten"></div>
-    <div class="legend" id="legend">
-      <span><i></i>new</span>
-      <span><i data-box="1"></i>box 1</span>
-      <span><i data-box="2"></i>box 2</span>
-      <span><i data-box="3"></i>box 3</span>
-      <span><i data-box="4"></i>box 4</span>
-      <span><i data-box="5"></i>box 5 · solid</span>
-      <span>faded: not selected</span>
-    </div>
   </section>
 
   <footer>
@@ -842,9 +824,9 @@ function drillStats(id) {
     return { due: 0, text: [`${n}/${TOTAL} built correctly`] };
   }
   const prog = state.progress[id], r = state.rounds[id];
-  const solid = SENTENCES.filter(s => (prog[s.key] || {}).box >= 3).length;
+  const got = SENTENCES.filter(s => status(prog[s.key] || {}) === "good").length;
   const left = r ? r.queue.filter(isOn).length : selected().length;
-  return { due: left, text: [left ? `round ${r ? r.n : 1}` : `round ${r.n} done`, `${solid} solid`] };
+  return { due: left, text: [left ? `round ${r ? r.n : 1}` : `round ${r.n} done`, `${got} got it`] };
 }
 function renderChooser() {
   return `<section class="chooser">
@@ -871,15 +853,15 @@ function sessionBar() {
     <span class="hint">${[st.due ? `${st.due} left` : "", ...st.text].filter(Boolean).join(" · ")}</span>
   </div>`;
 }
-// Box a grade moves the card to: its level in the progress grid.
-function nextBox(c, g) { return g === "again" ? 1 : Math.min(5, Math.max(1, c.box + 1)); }
+// How a sentence went the last time it was graded in this drill: "good", "again" or null (not yet seen).
+// Older saves stored a box level instead; box 1 meant missed.
+const status = c => c.last || (c.box ? (c.box >= 2 ? "good" : "again") : null);
 function gradeButtons() {
   return `<p class="eyebrow">How did that go?</p>
     <div class="row">
       <button class="btn bad" data-grade="again">1 · Again</button>
       <button class="btn" data-grade="good">2 · Got it</button>
-    </div>
-    <p class="hint gradehelp">Again: back in a few cards · Got it: done for this round</p>`;
+    </div>`;
 }
 function flashFront(s) {
   if (state.session === "de") return `<span class="ask">What does it mean?</span><span class="prompt" lang="de">${esc(s.de)}</span>`;
@@ -958,7 +940,7 @@ function renderPractice() {
   }
   return `
   <article class="page">
-    ${header(s, c.box === 0 ? "New sentence" : `Review · box ${c.box}`)}
+    ${header(s, status(c) ? "Review" : "New sentence")}
     ${body}
   </article>`;
 }
@@ -973,7 +955,7 @@ function noneSelected() {
 }
 function grade(g) {
   const s = byId(pr.id), c = card(s), r = round();
-  cards()[s.key] = { box: nextBox(c, g) };
+  cards()[s.key] = { last: g === "again" ? "again" : "good" };
   const at = r.queue.indexOf(s.key);
   if (at >= 0) r.queue.splice(at, 1);
   if (g === "again") r.queue.splice(Math.min(r.queue.length, 3 + Math.floor(Math.random() * 3)), 0, s.key);
@@ -1070,16 +1052,15 @@ function renderCells() {
   $("#groups").innerHTML = Object.entries(DATA.sets).map(([set, name]) => {
     const list = SENTENCES.filter(s => s.set === set);
     return `<div class="setgroup"><h3>${esc(name)} · ${list.length}</h3><div class="cells">${list.map(s =>
-      `<button class="cell ${s.id === current ? "current" : ""} ${(srs || build) && !isOn(s.key) ? "off" : ""}" data-box="${srs ? card(s).box : build && state.built[s.key] ? "done" : ""}" data-jump="${s.id}" title="${esc(s.en)}">${s.id}</button>`).join("")}</div></div>`;
+      `<button class="cell ${s.id === current ? "current" : ""} ${(srs || build) && !isOn(s.key) ? "off" : ""}" data-box="${srs ? status(card(s)) || "" : build && state.built[s.key] ? "done" : ""}" data-jump="${s.id}" title="${esc(s.en)}">${s.id}</button>`).join("")}</div></div>`;
   }).join("");
-  const started = SENTENCES.filter(s => card(s).box > 0).length;
-  const solid = SENTENCES.filter(s => card(s).box >= 3).length;
+  const got = SENTENCES.filter(s => status(card(s)) === "good").length;
+  const missed = SENTENCES.filter(s => status(card(s)) === "again").length;
   const left = srs && state.rounds[deck()] ? state.rounds[deck()].queue.filter(isOn).length : selected().length;
   $("#kastentitle").innerHTML = srs || build ? `Karteikasten <em class="gl">(card box)</em> · <span>${DRILL[state.session].name}</span>` : "Sentences";
-  $("#summary").textContent = srs ? `${started}/${TOTAL} started · ${solid} solid · ${left} left in this round`
+  $("#summary").textContent = srs ? `${got} got it · ${missed} missed · ${left} left in this round`
     : build ? drillStats("build").text[0] : "Tap a number to open that sentence.";
   $("#clear").hidden = !(srs || build);
-  $("#legend").hidden = !srs;
 }
 function render() {
   document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === state.view)));
