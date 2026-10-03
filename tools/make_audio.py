@@ -46,8 +46,15 @@ async def main():
     data = json.loads((root / "data/sentences.json").read_text(encoding="utf-8"))
     (out / "s").mkdir(parents=True, exist_ok=True)
     (out / "w").mkdir(parents=True, exist_ok=True)
-    jobs = [(s["de"], out / "s" / f"{s['key']}.mp3", "sentences") for s in data["sentences"]]
-    words = sorted({t["w"].rstrip(",") for s in data["sentences"] for t in s["tokens"]})
+    # Every version of every sentence: der Apfel (the sentence itself) plus the Birne/Bonbon versions in "alt".
+    versions = []
+    for x in data["sentences"]:
+        versions.append((x["key"], x["de"], x["tokens"]))
+        for g, alt in x.get("alt", {}).items():
+            if "de" in alt:
+                versions.append((f"{x['key']}-{g}", alt["de"], alt["tokens"]))
+    jobs = [(de, out / "s" / f"{name}.mp3", "sentences") for name, de, _ in versions]
+    words = sorted({t["w"].rstrip(",") for _, _, toks in versions for t in toks})
     jobs += [(w, out / "w" / f"{i:03d}.mp3", "words") for i, w in enumerate(words, 1)]
 
     manifest = {"engine": args.engine, "voice": voice, "sentences": {}, "words": {}}
@@ -62,6 +69,9 @@ async def main():
 
     (out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     size = sum(p.stat().st_size for p in out.rglob("*.mp3"))
+    for old in (out / "s").glob("*.mp3"):     # drop clips for sentences that no longer exist
+        if old.relative_to(root).as_posix() not in manifest["sentences"].values():
+            old.unlink()
     print(f"{len(manifest['sentences'])} sentence clips, {len(words)} word clips, {size / 1024:.0f} KB ({args.engine}, {voice})")
 
 

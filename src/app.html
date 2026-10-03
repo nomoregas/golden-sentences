@@ -224,6 +224,17 @@ input[type="text"] {
 .kasten-tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .btn.mini { font-size: .85rem; padding: 3px 10px; border-width: 1.5px; }
 .btn.mini.armed { background: var(--bad); border-color: var(--bad); color: var(--card); }
+/* Object switch and Compare */
+.nounbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.cmpbox { display: grid; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--tint); }
+.cmprow { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 8px; }
+.cmprow .lab { font-family: var(--mono); font-size: .75rem; color: var(--muted); }
+.cmprow .lab.on { color: var(--ink); font-weight: 600; }
+.cmprow .txt { font-family: var(--serif); font-size: 1.05rem; color: var(--ink); }
+.cmprow mark { background: none; color: var(--margin); font-weight: 600; border-bottom: 2px solid var(--margin); }
+.cmprow button { background: none; border: 0; color: var(--ink); cursor: pointer; font: inherit; padding: 4px 6px; }
+@media (max-width: 480px) { .cmprow { grid-template-columns: 1fr auto; } .cmprow .lab { grid-column: 1 / -1; } }
+
 /* Scene pictures */
 .scene { display: block; width: 100%; max-width: 440px; height: auto; margin-inline: auto; background: var(--tint); border-radius: 10px; }
 .flash .scene { max-width: 320px; background: transparent; }
@@ -397,6 +408,8 @@ const saved = store.load();
 const state = {
   view: saved.view === "practice" || saved.view === "build" ? "practice" : saved.view === "table" ? "table" : "learn",
   tlang: ["en", "de", "both"].includes(saved.tlang) ? saved.tlang : "de",   // language shown in the Table
+  noun: ["m", "f", "n", "mix"].includes(saved.noun) ? saved.noun : "m",   // the story's object: der Apfel, die Birne, das Bonbon, or a mix
+  compare: !!saved.compare,          // Learn: show all three versions of the sentence
   session: null,                     // the drill the learner has entered (see DRILLS), or null for the practice menu
   idx: Number.isInteger(saved.idx) && saved.idx < TOTAL ? saved.idx : 0,
   // Progress is kept separately per practice type: sentence key -> { box, due }.
@@ -407,7 +420,7 @@ const state = {
   built: saved.built || {},          // Build: sentence key -> true once built correctly
   order: saved.order === "seq" ? "seq" : "shuffle", // which sentence comes next in Practice and Build
 };
-const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, built: state.built, order: state.order, tlang: state.tlang });
+const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, built: state.built, order: state.order, tlang: state.tlang, noun: state.noun, compare: state.compare });
 // Each drill is its own experience with its own progress.
 const DRILLS = [
   { id: "en", kind: "Flash cards", name: "EN → DE", desc: "See the English, say the German." },
@@ -421,7 +434,26 @@ const SRS = ["en", "de", "listen", "type"];     // drills scheduled with Leitner
 const deck = () => SRS.includes(state.session) ? state.session : null;
 const cards = () => deck() ? state.progress[deck()] : {};
 const card = s => cards()[s.key] || { box: 0, due: 0 };
-const byId = id => SENTENCES.find(s => s.id === id);
+// Every sentence exists for der Apfel (m), die Birne (f) and das Bonbon (n); "alt" holds what differs.
+const NOUN_IDS = ["m", "f", "n"];
+const mixPick = {};                // in Mix, the object each sentence is currently shown with
+const pickNoun = key => state.noun !== "mix" ? state.noun : (mixPick[key] ||= NOUN_IDS[Math.floor(Math.random() * 3)]);
+const verOf = (s, g) => ({ ...s, ...((s.alt && s.alt[g]) || {}), g });
+const view = s => verOf(s, pickNoun(s.key));
+const byId = id => view(SENTENCES.find(s => s.id === id));
+const nounSeg = () => `<div class="seg" role="group" aria-label="Object">${NOUN_IDS.map(g => seg("noun", g, DATA.nouns[g].label)).join("")}${seg("noun", "mix", "Mix")}</div>`;
+// All three versions of a sentence, with the words that change highlighted.
+function compareBox(s) {
+  const base = SENTENCES.find(x => x.key === s.key);
+  if (!base.alt) return `<div class="cmpbox"><span class="hint">This sentence is the same for all three: it doesn't depend on the object.</span></div>`;
+  const vs = NOUN_IDS.map(g => verOf(base, g));
+  const differs = i => new Set(vs.map(v => (v.tokens[i] || {}).w)).size > 1;
+  return `<div class="cmpbox">${vs.map(v => `<div class="cmprow">
+      <span class="lab ${v.g === s.g ? "on" : ""}">${DATA.nouns[v.g].label}</span>
+      <span class="txt" lang="de">${v.tokens.map((t, i) => differs(i) ? `<mark>${esc(t.w)}</mark>` : esc(t.w)).join(" ")}${v.de.slice(-1).match(/[.?!]/) ? v.de.slice(-1) : ""}</span>
+      <button data-sayde="${esc(v.de)}" aria-label="Play">▶</button>
+    </div>`).join("")}</div>`;
+}
 
 const $ = (sel, el = document) => el.querySelector(sel);
 // Moving to another sentence starts at the top of the page, so the new card is in view.
@@ -477,20 +509,37 @@ const CAST = {
   Sie: { c: "#6B7890", label: "Sie", formal: true },
 };
 const FRUIT = { red: "#D8413A", green: "#7CB342", blue: "#4A7BD0" };
+let fruitKind = "m";               // which object sceneSvg is drawing: apple, pear or wrapped sweet
 const GROUND = 132;
 function sApple(x, y, r, o = {}) {
-  if (o.core) return `<g>
+  const col = FRUIT[o.c || "red"];
+  if (o.core) {
+    if (fruitKind === "n") return `<g><path d="M${x - r * .9} ${y - r * .5} L${x - r * .2} ${y} L${x - r * .9} ${y + r * .5} Z M${x + r * .9} ${y - r * .5} L${x + r * .2} ${y} L${x + r * .9} ${y + r * .5} Z" fill="${col}" opacity=".8"/><path d="M${x - r * .25} ${y} h${r * .5}" stroke="${col}" stroke-width="3" stroke-linecap="round"/></g>`;
+    return `<g>
     <path d="M${x - r * .45} ${y - r} Q${x - r * .1} ${y} ${x - r * .45} ${y + r} L${x + r * .45} ${y + r} Q${x + r * .1} ${y} ${x + r * .45} ${y - r} Z" fill="#F2E2BD"/>
-    <ellipse cx="${x}" cy="${y - r}" rx="${r * .5}" ry="${r * .22}" fill="${FRUIT.red}"/><ellipse cx="${x}" cy="${y + r}" rx="${r * .5}" ry="${r * .22}" fill="${FRUIT.red}"/>
+    <ellipse cx="${x}" cy="${y - r}" rx="${r * .5}" ry="${r * .22}" fill="${col}"/><ellipse cx="${x}" cy="${y + r}" rx="${r * .5}" ry="${r * .22}" fill="${col}"/>
     <path d="M${x} ${y - r * 1.2} l1 ${-r * .4}" stroke="#6B4A2B" stroke-width="2"/></g>`;
-  const fill = o.outline ? "none" : FRUIT[o.c || "red"];
+  }
+  const fill = o.outline ? "none" : col;
   const stroke = o.outline ? `stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 3"` : "";
-  let g = `<g opacity="${o.ghost ? .45 : 1}">
-    <path d="M${x} ${y - r * .75} C${x - r * 1.25} ${y - r * 1.25} ${x - r * 1.2} ${y + r * .9} ${x - r * .35} ${y + r} C${x - r * .1} ${y + r * 1.05} ${x + r * .1} ${y + r * 1.05} ${x + r * .35} ${y + r}
+  const stem = (sx, sy) => `<path d="M${sx} ${sy} q1 ${-r * .45} ${r * .12} ${-r * .6}" stroke="#6B4A2B" stroke-width="${Math.max(1.5, r / 9)}" fill="none" stroke-linecap="round"/>`;
+  const leaf = (lx, ly) => o.outline ? "" : `<ellipse cx="${lx}" cy="${ly}" rx="${r * .32}" ry="${r * .14}" transform="rotate(-25 ${lx} ${ly})" fill="#5E9E3A"/>`;
+  const shine = (hx, hy) => o.outline ? "" : `<ellipse cx="${hx}" cy="${hy}" rx="${r * .14}" ry="${r * .26}" fill="#fff" opacity=".35"/>`;
+  let body;
+  if (fruitKind === "f") {          // pear: a big round bottom and a narrower top
+    body = `<circle cx="${x}" cy="${y + r * .3}" r="${r * .9}" fill="${fill}" ${stroke}/><circle cx="${x}" cy="${y - r * .45}" r="${r * .55}" fill="${fill}" ${stroke}/>
+      ${o.outline ? "" : `<path d="M${x - r * .5} ${y - r * .3} L${x - r * .75} ${y + r * .1} L${x + r * .75} ${y + r * .1} L${x + r * .5} ${y - r * .3} Z" fill="${fill}"/>`}
+      ${stem(x, y - r * .95)}${leaf(x + r * .3, y - r * 1.2)}${shine(x - r * .4, y + r * .2)}`;
+  } else if (fruitKind === "n") {   // sweet: a round centre in a twisted wrapper
+    body = `<path d="M${x - r * .7} ${y} L${x - r * 1.3} ${y - r * .5} L${x - r * 1.2} ${y} L${x - r * 1.3} ${y + r * .5} Z M${x + r * .7} ${y} L${x + r * 1.3} ${y - r * .5} L${x + r * 1.2} ${y} L${x + r * 1.3} ${y + r * .5} Z" fill="${fill}" opacity="${o.outline ? 1 : .8}" ${stroke}/>
+      <ellipse cx="${x}" cy="${y}" rx="${r * .85}" ry="${r * .68}" fill="${fill}" ${stroke}/>
+      ${o.outline ? "" : `<path d="M${x - r * .4} ${y - r * .5} Q${x - r * .1} ${y} ${x - r * .35} ${y + r * .55} M${x + r * .1} ${y - r * .62} Q${x + r * .4} ${y} ${x + r * .15} ${y + r * .62}" stroke="#fff" stroke-width="${Math.max(1.5, r / 8)}" opacity=".45" fill="none"/>`}`;
+  } else {                          // apple
+    body = `<path d="M${x} ${y - r * .75} C${x - r * 1.25} ${y - r * 1.25} ${x - r * 1.2} ${y + r * .9} ${x - r * .35} ${y + r} C${x - r * .1} ${y + r * 1.05} ${x + r * .1} ${y + r * 1.05} ${x + r * .35} ${y + r}
       C${x + r * 1.2} ${y + r * .9} ${x + r * 1.25} ${y - r * 1.25} ${x} ${y - r * .75} Z" fill="${fill}" ${stroke}/>
-    <path d="M${x} ${y - r * .7} q1 ${-r * .45} ${r * .12} ${-r * .6}" stroke="#6B4A2B" stroke-width="${Math.max(1.5, r / 9)}" fill="none" stroke-linecap="round"/>`;
-  if (!o.outline) g += `<ellipse cx="${x + r * .32}" cy="${y - r * .95}" rx="${r * .32}" ry="${r * .14}" transform="rotate(-25 ${x + r * .32} ${y - r * .95})" fill="#5E9E3A"/>
-    <ellipse cx="${x - r * .42}" cy="${y - r * .2}" rx="${r * .14}" ry="${r * .26}" fill="#fff" opacity=".35"/>`;
+      ${stem(x, y - r * .7)}${leaf(x + r * .32, y - r * .95)}${shine(x - r * .42, y - r * .2)}`;
+  }
+  let g = `<g opacity="${o.ghost ? .45 : 1}">${body}`;
   if (o.cross) g += `<path d="M${x - r} ${y - r} L${x + r} ${y + r} M${x + r} ${y - r} L${x - r} ${y + r}" stroke="#B8352B" stroke-width="4" stroke-linecap="round"/>`;
   if (o.star) g += `<path d="${starPath(x + r * .85, y - r * 1.05, r * .32)}" fill="#F2B233"/>`;
   if (o.price) g += `<g transform="translate(${x + r * .7} ${y - r * .2}) rotate(12)"><rect x="0" y="-8" width="24" height="16" rx="3" fill="#F7F3E6" stroke="#B89B5E"/><text x="12" y="4" font-size="10" font-weight="700" text-anchor="middle" fill="#6B4A2B">€</text></g>`;
@@ -575,9 +624,10 @@ function sClock(x, y, dir) {
     <path d="M${x} ${y - 7} V${y} L${x + 5} ${y + 3}" class="mut" stroke-width="1.8" stroke-linecap="round"/>
     <path d="M${ax} ${y} H${tip} M${tip - dir * 6} ${y - 6} L${tip} ${y} L${tip - dir * 6} ${y + 6}" class="mut" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
 }
-function sceneSvg(key) {
+function sceneSvg(key, g = "m") {
   const spec = SCENES[key];
   if (!spec) return "";
+  fruitKind = g;
   const parts = spec.map(e => {
     switch (e.t) {
       case "fig": return sFig(e);
@@ -662,13 +712,15 @@ const header = (s, label) => `<span class="num">${pad(s.id)}</span>
 
 /* ---------- Learn ---------- */
 function renderLearn() {
-  const s = SENTENCES[state.idx];
+  const s = view(SENTENCES[state.idx]);
   return `
   <article class="page">
     ${header(s, `${s.id} of ${TOTAL}`)}
-    ${sceneSvg(s.key)}
+    <div class="nounbar">${nounSeg()}<button class="btn mini" data-act="compare" aria-pressed="${state.compare}">${state.compare ? "Compare ✓" : "Compare"}</button></div>
+    ${sceneSvg(s.key, s.g)}
     <p class="en">${esc(s.en)}</p>
     ${deWords(s)}
+    ${state.compare ? compareBox(s) : ""}
     ${literal(s)}
     ${caseLegend()}
     <p class="note">${esc(s.note)}</p>
@@ -689,7 +741,7 @@ function renderLearn() {
 function renderTable() {
   const tlangSeg = `<div class="seg" role="group" aria-label="Language">${seg("tlang", "en", "English")}${seg("tlang", "de", "Deutsch")}${seg("tlang", "both", "Both")}</div>`;
   const rows = Object.entries(DATA.sets).map(([set, name]) => {
-    const list = SENTENCES.filter(s => s.set === set);
+    const list = SENTENCES.filter(s => s.set === set).map(view);
     return `<tr><th class="grp" colspan="3">${esc(name)} · ${list.length}</th></tr>` + list.map(s => `
       <tr data-row="${s.id}">
         <td class="n"><button data-open="${s.id}" title="Open in Learn">${pad(s.id)}</button></td>
@@ -702,7 +754,7 @@ function renderTable() {
       </tr>`).join("");
   }).join("");
   return `
-  <div class="tbar"><h2>All sentences</h2>${tlangSeg}</div>
+  <div class="tbar"><h2>All sentences</h2>${tlangSeg}${nounSeg()}</div>
   <p class="hint">Tap a sentence to see its translation · tap the number to open it in Learn</p>
   <table class="stable lang-${state.tlang}" id="stable"><tbody>${rows}</tbody></table>`;
 }
@@ -785,6 +837,7 @@ function drillStats(id) {
 function renderChooser() {
   return `<section class="chooser">
     <div class="chooser-head"><h2>Practice</h2>${orderToggle()}</div>
+    <div class="nounbar"><span class="hint">Object:</span>${nounSeg()}</div>
     <div class="drills">${DRILLS.map(d => {
       const st = drillStats(d.id);
       return `<button class="drill" data-enter="${d.id}">
@@ -825,7 +878,7 @@ function gradeButtons() {
 function flashFront(s) {
   if (state.session === "de") return `<span class="ask">What does it mean?</span><span class="prompt" lang="de">${esc(s.de)}</span>`;
   if (state.session === "listen") return `<span class="ask">Listen. What does it mean?</span><span class="big" aria-hidden="true">▶</span><span class="hint">tap ▶ Hören below to replay</span>`;
-  return `<span class="ask">Say it in German</span>${sceneSvg(s.key)}<span class="prompt en">${esc(s.en)}</span>`;
+  return `<span class="ask">Say it in German</span>${sceneSvg(s.key, s.g)}<span class="prompt en">${esc(s.en)}</span>`;
 }
 function renderPractice() {
   if (!pr || pr.id == null) pr = { id: nextDue(pr && pr.ahead, pr && pr.last), revealed: false, typed: "", hinted: false, ahead: pr && pr.ahead };
@@ -859,7 +912,7 @@ function renderPractice() {
     } else {
       body = `
         <div class="back">
-          ${state.session === "en" ? "" : sceneSvg(s.key)}
+          ${state.session === "en" ? "" : sceneSvg(s.key, s.g)}
           ${deWords(s)}
           <p class="en">${esc(s.en)}</p>
           <p class="note">${esc(s.note)}</p>
@@ -909,6 +962,7 @@ function autoplayListen() {
 function grade(g) {
   const s = byId(pr.id), c = card(s);
   const box = nextBox(c, g);
+  delete mixPick[s.key];
   cards()[s.key] = { box, due: Date.now() + (g === "again" ? MIN : INTERVAL[box]) };
   persist();
   pr = { id: null, ahead: pr.ahead, last: s.id };
@@ -944,6 +998,7 @@ function shuffle(arr) {
   return a;
 }
 function newBuild(id) {
+  delete mixPick[byId(id).key];
   const { toks, punct } = tokens(byId(id).de);
   const order = shuffle(toks.map((t, i) => i));
   bd = { id, target: toks, bank: order.map(i => ({ k: i, w: toks[i] })), placed: [], punct, checked: false, ok: false };
@@ -956,7 +1011,7 @@ function renderBuild() {
   return `
   <article class="page">
     ${header(s, "Put the words in order")}
-    ${sceneSvg(s.key)}
+    ${sceneSvg(s.key, s.g)}
     <p class="en">${esc(s.en)}</p>
     ${bd.checked ? "" : `
     <div class="slots ${slotCls}" id="slots" aria-label="Your sentence">
@@ -1033,6 +1088,12 @@ document.addEventListener("click", e => {
   const t = e.target.closest("button");
   if (!t) return;
   if (t.dataset.view) { state.view = t.dataset.view; state.session = null; state.word = null; persist(); render(); return; }
+  if (t.dataset.noun) {
+    state.noun = t.dataset.noun; persist();
+    if (bd) newBuild(bd.id);       // the puzzle's words change with the object
+    render(); return;
+  }
+  if (t.dataset.sayde) { speak(t.dataset.sayde); return; }
   if (t.dataset.tlang) {
     // Flip the language in place: no re-render, so the scroll position and open rows stay put.
     state.tlang = t.dataset.tlang; persist();
@@ -1072,6 +1133,7 @@ document.addEventListener("click", e => {
   switch (t.dataset.act) {
     case "speak": speak(currentText()); break;
     case "slow": state.slow = !state.slow; persist(); render(); break;
+    case "compare": state.compare = !state.compare; persist(); render(); break;
     case "prev": if (state.idx > 0) { state.idx--; state.word = null; persist(); render(); toTop(); } break;
     case "next": if (state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); toTop(); } break;
     case "hint": pr.typed = $("#typed") ? $("#typed").value : pr.typed; pr.hinted = true; render(); break;

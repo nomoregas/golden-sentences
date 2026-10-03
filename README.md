@@ -17,6 +17,12 @@ The app is published to GitHub Pages at **https://nomoregas.github.io/golden-sen
 
 Progress is stored on the device, separately for the installed app and for any other copy of the page.
 
+## One story, three genders
+
+The whole story is about one object, and you can switch it: **der Apfel**, **die Birne** or **das Bonbon** (or **Mix**, which picks one at random for each sentence). Every sentence, note, hint, common mistake, picture and recording follows the choice, so the same structures appear with masculine, feminine and neuter forms: *Ich muss ihn / sie / es ihm geben*, *keinen Apfel / keine Birne / kein Bonbon*, *Er ist nicht meiner / Sie ist nicht meine / Es ist nicht meins*. In Learn, **Compare** shows all three versions with the changed words highlighted.
+
+Sentences are templates (`tools/sentences_src.py`) with placeholders such as `{den} {Apfel}` or `{ihn}`; `tools/make_data.py` fills them in for each gender and checks every version. Run `python3 tools/make_data.py --review` to print all versions for proofreading.
+
 ## Modes
 
 **Learn**: a picture of the sentence, German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.

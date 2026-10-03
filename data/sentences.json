@@ -4,6 +4,20 @@
   "golden": "Golden expansion",
   "extra": "Gap fillers"
  },
+ "nouns": {
+  "m": {
+   "label": "der Apfel",
+   "en": "apple"
+  },
+  "f": {
+   "label": "die Birne",
+   "en": "pear"
+  },
+  "n": {
+   "label": "das Bonbon",
+   "en": "sweet"
+  }
+ },
  "sentences": [
   {
    "id": 1,
@@ -38,12 +52,78 @@
      "f": "MF"
     }
    ],
+   "note": "Apfel is masculine, so 'the' is der. After ist, the adjective takes no ending.",
+   "hint": "Apfel is masculine.",
    "topics": [
     "gender-articles",
     "predicate-adjective"
    ],
-   "note": "Apfel is masculine, so 'the' is der. After ist, the adjective takes no ending.",
-   "hint": "Apfel is masculine."
+   "alt": {
+    "f": {
+     "en": "The pear is red.",
+     "de": "Die Birne ist rot.",
+     "tokens": [
+      {
+       "w": "Die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "Birne is feminine, so 'the' is die. After ist, the adjective takes no ending.",
+     "hint": "Birne is feminine."
+    },
+    "n": {
+     "en": "The sweet is red.",
+     "de": "Das Bonbon ist rot.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "Bonbon is neuter, so 'the' is das. After ist, the adjective takes no ending.",
+     "hint": "Bonbon is neuter."
+    }
+   }
   },
   {
    "id": 2,
@@ -78,14 +158,86 @@
      "f": "MF"
     }
    ],
-   "topics": [
-    "genitive-s"
-   ],
    "note": "Names take -s for possession, with no apostrophe: Johns Apfel.",
    "hint": "No apostrophe in the possessive.",
    "mistake": {
     "wrong": "Es ist John's Apfel.",
     "why": "German doesn't use an apostrophe here: Johns."
+   },
+   "topics": [
+    "genitive-s"
+   ],
+   "alt": {
+    "f": {
+     "en": "It is John's pear.",
+     "de": "Es ist Johns Birne.",
+     "tokens": [
+      {
+       "w": "Es",
+       "g": "it",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Johns",
+       "g": "John's",
+       "c": "G",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "Names take -s for possession, with no apostrophe: Johns Birne.",
+     "mistake": {
+      "wrong": "Es ist John's Birne.",
+      "why": "German doesn't use an apostrophe here: Johns."
+     }
+    },
+    "n": {
+     "en": "It is John's sweet.",
+     "de": "Es ist Johns Bonbon.",
+     "tokens": [
+      {
+       "w": "Es",
+       "g": "it",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Johns",
+       "g": "John's",
+       "c": "G",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "Names take -s for possession, with no apostrophe: Johns Bonbon.",
+     "mistake": {
+      "wrong": "Es ist John's Bonbon.",
+      "why": "German doesn't use an apostrophe here: Johns."
+     }
+    }
    }
   },
   {
@@ -127,12 +279,90 @@
      "f": "MF"
     }
    ],
+   "note": "The apple is the thing given, so it's accusative: der becomes den. John receives it (dative). With two nouns, the dative comes first.",
+   "hint": "The apple is the object: accusative.",
    "topics": [
     "dative-accusative",
     "verb-second"
    ],
-   "note": "The apple is the thing given (accusative: der → den). John receives it (dative). With two nouns, the dative comes first.",
-   "hint": "der changes when the apple is the object."
+   "alt": {
+    "f": {
+     "en": "I give John the pear.",
+     "de": "Ich gebe John die Birne.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gebe",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "The pear is the thing given, so it's accusative: die stays die. John receives it (dative). With two nouns, the dative comes first.",
+     "hint": "The pear is the object: accusative."
+    },
+    "n": {
+     "en": "I give John the sweet.",
+     "de": "Ich gebe John das Bonbon.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gebe",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "The sweet is the thing given, so it's accusative: das stays das. John receives it (dative). With two nouns, the dative comes first.",
+     "hint": "The sweet is the object: accusative."
+    }
+   }
   },
   {
    "id": 4,
@@ -173,12 +403,88 @@
      "f": "MF"
     }
    ],
+   "note": "ihm is 'him' in the dative, the one receiving. den Apfel is the accusative object.",
+   "hint": "'him' as the receiver is dative.",
    "topics": [
     "personal-pronouns",
     "dative-accusative"
    ],
-   "note": "ihm is 'him' in the dative, the one receiving. den Apfel is the accusative object.",
-   "hint": "'him' as the receiver is dative."
+   "alt": {
+    "f": {
+     "en": "We give him the pear.",
+     "de": "Wir geben ihm die Birne.",
+     "tokens": [
+      {
+       "w": "Wir",
+       "g": "we",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "geben",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "ihm",
+       "g": "him",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "ihm is 'him' in the dative, the one receiving. die Birne is the accusative object."
+    },
+    "n": {
+     "en": "We give him the sweet.",
+     "de": "Wir geben ihm das Bonbon.",
+     "tokens": [
+      {
+       "w": "Wir",
+       "g": "we",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "geben",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "ihm",
+       "g": "him",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "ihm is 'him' in the dative, the one receiving. das Bonbon is the accusative object."
+    }
+   }
   },
   {
    "id": 5,
@@ -213,16 +519,88 @@
      "f": "MF"
     }
    ],
-   "topics": [
-    "stem-vowel-change",
-    "pronoun-gender",
-    "pronoun-order"
-   ],
    "note": "geben becomes gibt for er/sie/es. 'It' is the apple (masculine), so it's ihn. A pronoun object comes before a noun object.",
    "hint": "'it' = der Apfel, and geben changes its vowel.",
    "mistake": {
     "wrong": "Er gibt John ihn.",
     "why": "A pronoun object goes before a noun object: ihn John."
+   },
+   "topics": [
+    "stem-vowel-change",
+    "pronoun-gender",
+    "pronoun-order"
+   ],
+   "alt": {
+    "f": {
+     "de": "Er gibt sie John.",
+     "tokens": [
+      {
+       "w": "Er",
+       "g": "he",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gibt",
+       "g": "gives",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "D",
+       "f": "MF"
+      }
+     ],
+     "note": "geben becomes gibt for er/sie/es. 'It' is the pear (feminine), so it's sie. A pronoun object comes before a noun object.",
+     "hint": "'it' = die Birne, and geben changes its vowel.",
+     "mistake": {
+      "wrong": "Er gibt John sie.",
+      "why": "A pronoun object goes before a noun object: sie John."
+     }
+    },
+    "n": {
+     "de": "Er gibt es John.",
+     "tokens": [
+      {
+       "w": "Er",
+       "g": "he",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gibt",
+       "g": "gives",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "D",
+       "f": "MF"
+      }
+     ],
+     "note": "geben becomes gibt for er/sie/es. 'It' is the sweet (neuter), so it's es. A pronoun object comes before a noun object.",
+     "hint": "'it' = das Bonbon, and geben changes its vowel.",
+     "mistake": {
+      "wrong": "Er gibt John es.",
+      "why": "A pronoun object goes before a noun object: es John."
+     }
+    }
    }
   },
   {
@@ -258,15 +636,85 @@
      "f": "MF"
     }
    ],
-   "topics": [
-    "pronoun-order",
-    "personal-pronouns"
-   ],
    "note": "Two pronouns: accusative (ihn, the apple) before dative (ihm, him). Other dative pronouns slot in the same way: Sie gibt ihn uns (to us), mir (to me).",
    "hint": "Two pronouns: accusative first.",
    "mistake": {
     "wrong": "Sie gibt ihm ihn.",
     "why": "With two pronouns, the accusative comes first."
+   },
+   "topics": [
+    "pronoun-order",
+    "personal-pronouns"
+   ],
+   "alt": {
+    "f": {
+     "de": "Sie gibt sie ihm.",
+     "tokens": [
+      {
+       "w": "Sie",
+       "g": "she",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gibt",
+       "g": "gives",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "ihm",
+       "g": "him",
+       "c": "D",
+       "f": "MF"
+      }
+     ],
+     "note": "Two pronouns: accusative (sie, the pear) before dative (ihm, him). Other dative pronouns slot in the same way: Sie gibt sie uns (to us), mir (to me).",
+     "mistake": {
+      "wrong": "Sie gibt ihm sie.",
+      "why": "With two pronouns, the accusative comes first."
+     }
+    },
+    "n": {
+     "de": "Sie gibt es ihm.",
+     "tokens": [
+      {
+       "w": "Sie",
+       "g": "she",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gibt",
+       "g": "gives",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "ihm",
+       "g": "him",
+       "c": "D",
+       "f": "MF"
+      }
+     ],
+     "note": "Two pronouns: accusative (es, the sweet) before dative (ihm, him). Other dative pronouns slot in the same way: Sie gibt es uns (to us), mir (to me).",
+     "mistake": {
+      "wrong": "Sie gibt ihm es.",
+      "why": "With two pronouns, the accusative comes first."
+     }
+    }
    }
   },
   {
@@ -302,11 +750,73 @@
      "f": "MF"
     }
    ],
+   "note": "A yes/no question starts with the verb. No 'do' needed.",
+   "hint": "Start with the verb.",
    "topics": [
     "yes-no-question"
    ],
-   "note": "A yes/no question starts with the verb. No 'do' needed.",
-   "hint": "Start with the verb."
+   "alt": {
+    "f": {
+     "en": "Is the pear red?",
+     "de": "Ist die Birne rot?",
+     "tokens": [
+      {
+       "w": "Ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ]
+    },
+    "n": {
+     "en": "Is the sweet red?",
+     "de": "Ist das Bonbon rot?",
+     "tokens": [
+      {
+       "w": "Ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 8,
@@ -341,12 +851,78 @@
      "f": "MF"
     }
    ],
+   "note": "Apfel → Äpfel: the plural adds an umlaut. Every plural takes die. rot still has no ending after sind. Possessives take -e in the plural: meine Äpfel.",
+   "hint": "Plural: the plural adds an umlaut.",
    "topics": [
     "plural",
     "predicate-adjective"
    ],
-   "note": "Apfel → Äpfel: the plural adds an umlaut. Every plural takes die. rot still has no ending after sind. Possessives take -e in the plural: meine Äpfel.",
-   "hint": "The plural of Apfel has an umlaut."
+   "alt": {
+    "f": {
+     "en": "The pears are red.",
+     "de": "Die Birnen sind rot.",
+     "tokens": [
+      {
+       "w": "Die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Birnen",
+       "g": "pears",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "sind",
+       "g": "are",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "Birne → Birnen: the plural adds -n. Every plural takes die. rot still has no ending after sind. Possessives take -e in the plural: meine Birnen.",
+     "hint": "Plural: the plural adds -n."
+    },
+    "n": {
+     "en": "The sweets are red.",
+     "de": "Die Bonbons sind rot.",
+     "tokens": [
+      {
+       "w": "Die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbons",
+       "g": "sweets",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "sind",
+       "g": "are",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "Bonbon → Bonbons: the plural adds -s. Every plural takes die. rot still has no ending after sind. Possessives take -e in the plural: meine Bonbons.",
+     "hint": "Plural: the plural adds -s."
+    }
+   }
   },
   {
    "id": 9,
@@ -387,16 +963,96 @@
      "f": "RK"
     }
    ],
-   "topics": [
-    "modal-verbs",
-    "satzklammer",
-    "pronoun-order"
-   ],
    "note": "muss sits in position 2; geben goes to the very end. The two pronouns sit in between, accusative first.",
    "hint": "Modal second, infinitive last.",
    "mistake": {
     "wrong": "Ich muss geben ihn ihm.",
     "why": "The infinitive goes to the end of the sentence."
+   },
+   "topics": [
+    "modal-verbs",
+    "satzklammer",
+    "pronoun-order"
+   ],
+   "alt": {
+    "f": {
+     "de": "Ich muss sie ihm geben.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "muss",
+       "g": "must",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "ihm",
+       "g": "him",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "geben",
+       "g": "give",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich muss geben sie ihm.",
+      "why": "The infinitive goes to the end of the sentence."
+     }
+    },
+    "n": {
+     "de": "Ich muss es ihm geben.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "muss",
+       "g": "must",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "ihm",
+       "g": "him",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "geben",
+       "g": "give",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich muss geben es ihm.",
+      "why": "The infinitive goes to the end of the sentence."
+     }
+    }
    }
   },
   {
@@ -438,16 +1094,96 @@
      "f": "RK"
     }
    ],
-   "topics": [
-    "modal-verbs",
-    "pronoun-order",
-    "personal-pronouns"
-   ],
    "note": "ich will means 'I want'. Modals take a bare infinitive: no zu for English 'to'. ihr is 'to her'. With sie, the verb tells you who: sie will (she wants), sie wollen (they want).",
    "hint": "wollen, not werden. No zu.",
    "mistake": {
     "wrong": "Ich will zu ihn ihr geben.",
     "why": "Modal verbs take the infinitive without zu."
+   },
+   "topics": [
+    "modal-verbs",
+    "pronoun-order",
+    "personal-pronouns"
+   ],
+   "alt": {
+    "f": {
+     "de": "Ich will sie ihr geben.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "will",
+       "g": "want",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "ihr",
+       "g": "her",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "geben",
+       "g": "give",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich will zu sie ihr geben.",
+      "why": "Modal verbs take the infinitive without zu."
+     }
+    },
+    "n": {
+     "de": "Ich will es ihr geben.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "will",
+       "g": "want",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "ihr",
+       "g": "her",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "geben",
+       "g": "give",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich will zu es ihr geben.",
+      "why": "Modal verbs take the infinitive without zu."
+     }
+    }
    }
   },
   {
@@ -489,15 +1225,15 @@
      "f": "RK"
     }
    ],
-   "topics": [
-    "future-werden"
-   ],
    "note": "Future: werden in position 2, infinitive at the end. es is 'it' in the sense of 'the answer', not a thing, so it's neuter.",
    "hint": "The future uses werden.",
    "mistake": {
     "wrong": "Ich will es morgen wissen.",
     "why": "ich will means 'I want'. The future uses werden."
-   }
+   },
+   "topics": [
+    "future-werden"
+   ]
   },
   {
    "id": 12,
@@ -544,15 +1280,109 @@
      "f": "RK"
     }
    ],
-   "topics": [
-    "modal-verbs",
-    "negation-nicht"
-   ],
    "note": "kann in position 2, essen at the end, nicht directly before essen.",
    "hint": "nicht goes right before the infinitive.",
    "mistake": {
     "wrong": "Ich kann nicht den Apfel essen.",
     "why": "Not wrong, but it means 'not the apple (something else)'. For plain negation, nicht goes before essen."
+   },
+   "topics": [
+    "modal-verbs",
+    "negation-nicht"
+   ],
+   "alt": {
+    "f": {
+     "en": "I can't eat the pear.",
+     "de": "Ich kann die Birne nicht essen.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "kann",
+       "g": "can",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich kann nicht die Birne essen.",
+      "why": "Not wrong, but it means 'not the pear (something else)'. For plain negation, nicht goes before essen."
+     }
+    },
+    "n": {
+     "en": "I can't eat the sweet.",
+     "de": "Ich kann das Bonbon nicht essen.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "kann",
+       "g": "can",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich kann nicht das Bonbon essen.",
+      "why": "Not wrong, but it means 'not the sweet (something else)'. For plain negation, nicht goes before essen."
+     }
+    }
    }
   },
   {
@@ -594,15 +1424,99 @@
      "f": "RK"
     }
    ],
-   "topics": [
-    "perfekt",
-    "satzklammer"
-   ],
    "note": "Perfekt: haben in position 2, participle gegessen at the end. This is also how German says 'I ate the apple' in conversation.",
    "hint": "haben second, participle last.",
    "mistake": {
     "wrong": "Ich habe gegessen den Apfel.",
     "why": "The participle goes to the end."
+   },
+   "topics": [
+    "perfekt",
+    "satzklammer"
+   ],
+   "alt": {
+    "f": {
+     "en": "I have eaten the pear.",
+     "de": "Ich habe die Birne gegessen.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "habe",
+       "g": "have",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Perfekt: haben in position 2, participle gegessen at the end. This is also how German says 'I ate the pear' in conversation.",
+     "mistake": {
+      "wrong": "Ich habe gegessen die Birne.",
+      "why": "The participle goes to the end."
+     }
+    },
+    "n": {
+     "en": "I have eaten the sweet.",
+     "de": "Ich habe das Bonbon gegessen.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "habe",
+       "g": "have",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Perfekt: haben in position 2, participle gegessen at the end. This is also how German says 'I ate the sweet' in conversation.",
+     "mistake": {
+      "wrong": "Ich habe gegessen das Bonbon.",
+      "why": "The participle goes to the end."
+     }
+    }
    }
   },
   {
@@ -638,12 +1552,76 @@
      "f": "MF"
     }
    ],
+   "note": "Apfel is masculine (der), so the indefinite article in the nominative is ein. Das here means 'this' and doesn't change with gender.",
+   "hint": "'this is' is always das ist.",
    "topics": [
     "das-demonstrative",
     "gender-articles"
    ],
-   "note": "Apfel is masculine (der), so the indefinite article in the nominative is ein. Das here means 'this' and doesn't change with gender.",
-   "hint": "'this is' is always das ist."
+   "alt": {
+    "f": {
+     "en": "This is a pear.",
+     "de": "Das ist eine Birne.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "this",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "eine",
+       "g": "a",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "Birne is feminine (die), so the indefinite article in the nominative is eine. Das here means 'this' and doesn't change with gender."
+    },
+    "n": {
+     "en": "This is a sweet.",
+     "de": "Das ist ein Bonbon.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "this",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "ein",
+       "g": "a",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "Bonbon is neuter (das), so the indefinite article in the nominative is ein. Das here means 'this' and doesn't change with gender."
+    }
+   }
   },
   {
    "id": 15,
@@ -684,12 +1662,88 @@
      "f": "MF"
     }
    ],
+   "note": "The apple is the accusative object, so sein takes -en: seinen, like einen.",
+   "hint": "sein takes the same ending as ein would.",
    "topics": [
     "possessive-endings",
     "dative-accusative"
    ],
-   "note": "The apple is the accusative object, so sein takes -en: seinen, like einen.",
-   "hint": "sein takes the same ending as ein would."
+   "alt": {
+    "f": {
+     "en": "I give John his pear.",
+     "de": "Ich gebe John seine Birne.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gebe",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "seine",
+       "g": "his",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "The pear is the accusative object, so sein takes -e: seine, like eine."
+    },
+    "n": {
+     "en": "I give John his sweet.",
+     "de": "Ich gebe John sein Bonbon.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gebe",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "sein",
+       "g": "his",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "The sweet is the accusative object, so sein takes no ending: sein, like ein."
+    }
+   }
   },
   {
    "id": 16,
@@ -742,12 +1796,112 @@
      "f": "MF"
     }
    ],
+   "note": "aber doesn't take a slot, so the order after it is normal V2. To negate the whole statement, nicht goes after the definite object (Sie will den Apfel nicht); auch nicht = 'not either'.",
+   "hint": "aber doesn't count as position 1.",
    "topics": [
     "conjunction-position-zero",
     "negation-nicht"
    ],
-   "note": "aber doesn't take a slot, so the order after it is normal V2. To negate the whole statement, nicht goes after the definite object (Sie will den Apfel nicht); auch nicht = 'not either'.",
-   "hint": "aber doesn't count as position 1."
+   "alt": {
+    "f": {
+     "en": "But I do not want the pear either.",
+     "de": "Aber ich will die Birne auch nicht.",
+     "tokens": [
+      {
+       "w": "Aber",
+       "g": "but",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "will",
+       "g": "want",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "auch",
+       "g": "also",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "aber doesn't take a slot, so the order after it is normal V2. To negate the whole statement, nicht goes after the definite object (Sie will die Birne nicht); auch nicht = 'not either'."
+    },
+    "n": {
+     "en": "But I do not want the sweet either.",
+     "de": "Aber ich will das Bonbon auch nicht.",
+     "tokens": [
+      {
+       "w": "Aber",
+       "g": "but",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "will",
+       "g": "want",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "auch",
+       "g": "also",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "aber doesn't take a slot, so the order after it is normal V2. To negate the whole statement, nicht goes after the definite object (Sie will das Bonbon nicht); auch nicht = 'not either'."
+    }
+   }
   },
   {
    "id": 17,
@@ -782,15 +1936,87 @@
      "f": "MF"
     }
    ],
+   "note": "'It' is er because it refers to der Apfel. The standalone possessive shows the gender too: meiner.",
+   "hint": "'it' is still der Apfel.",
+   "mistake": {
+    "wrong": "Er ist nicht mein.",
+    "why": "Standing alone, the possessive needs a gender ending: meiner."
+   },
    "topics": [
     "pronoun-gender",
     "possessive-endings"
    ],
-   "note": "'It' is er because it refers to der Apfel. The standalone possessive shows the gender too: meiner.",
-   "hint": "'it' is still der Apfel.",
-   "mistake": {
-    "wrong": "Es ist nicht meins.",
-    "why": "That works for a neuter noun (das Kind). For der Apfel, use er … meiner."
+   "alt": {
+    "f": {
+     "de": "Sie ist nicht meine.",
+     "tokens": [
+      {
+       "w": "Sie",
+       "g": "it",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "meine",
+       "g": "mine",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "'It' is sie because it refers to die Birne. The standalone possessive shows the gender too: meine.",
+     "hint": "'it' is still die Birne.",
+     "mistake": {
+      "wrong": "Sie ist nicht mein.",
+      "why": "Standing alone, the possessive needs a gender ending: meine."
+     }
+    },
+    "n": {
+     "de": "Es ist nicht meins.",
+     "tokens": [
+      {
+       "w": "Es",
+       "g": "it",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "meins",
+       "g": "mine",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "'It' is es because it refers to das Bonbon. The standalone possessive shows the gender too: meins.",
+     "hint": "'it' is still das Bonbon.",
+     "mistake": {
+      "wrong": "Es ist nicht mein.",
+      "why": "Standing alone, the possessive needs a gender ending: meins."
+     }
+    }
    }
   },
   {
@@ -844,13 +2070,115 @@
      "f": "RK"
     }
    ],
+   "note": "werden + infinitive for the future. After den, the adjective takes the weak ending -en: den roten Apfel. Add a receiver and it goes before the apple: Ich werde dir den roten Apfel geben.",
+   "hint": "Adjective after den ends in -en.",
    "topics": [
     "future-werden",
     "adjective-endings",
     "negation-nicht"
    ],
-   "note": "werden + infinitive for the future. After den, the adjective takes the weak ending -en: den roten Apfel. Add a receiver and it goes before the apple: Ich werde dir den roten Apfel geben.",
-   "hint": "Adjective after den ends in -en."
+   "alt": {
+    "f": {
+     "en": "I will not take the red pear.",
+     "de": "Ich werde die rote Birne nicht nehmen.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "werde",
+       "g": "will",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "rote",
+       "g": "red",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "nehmen",
+       "g": "take",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "werden + infinitive for the future. After die, the adjective takes the weak ending -e: die rote Birne. Add a receiver and it goes before the pear: Ich werde dir die rote Birne geben.",
+     "hint": "Adjective after die ends in -e."
+    },
+    "n": {
+     "en": "I will not take the red sweet.",
+     "de": "Ich werde das rote Bonbon nicht nehmen.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "werde",
+       "g": "will",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "rote",
+       "g": "red",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "nehmen",
+       "g": "take",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "werden + infinitive for the future. After das, the adjective takes the weak ending -e: das rote Bonbon. Add a receiver and it goes before the sweet: Ich werde dir das rote Bonbon geben.",
+     "hint": "Adjective after das ends in -e."
+    }
+   }
   },
   {
    "id": 19,
@@ -885,12 +2213,74 @@
      "f": "MF"
     }
    ],
+   "note": "Verb first for a yes/no question. möchtest ('would you like') is the polite everyday way to offer something.",
+   "hint": "Offer politely with möchte.",
    "topics": [
     "yes-no-question",
     "mochte"
    ],
-   "note": "Verb first for a yes/no question. möchtest ('would you like') is the polite everyday way to offer something.",
-   "hint": "Offer politely with möchte."
+   "alt": {
+    "f": {
+     "en": "Do you want a pear?",
+     "de": "Möchtest du eine Birne?",
+     "tokens": [
+      {
+       "w": "Möchtest",
+       "g": "would-like",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "eine",
+       "g": "a",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    },
+    "n": {
+     "en": "Do you want a sweet?",
+     "de": "Möchtest du ein Bonbon?",
+     "tokens": [
+      {
+       "w": "Möchtest",
+       "g": "would-like",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "ein",
+       "g": "a",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 20,
@@ -919,11 +2309,63 @@
      "f": "MF"
     }
    ],
+   "note": "welch- declines like der. It stands for a masculine accusative (den Apfel), so it's welchen.",
+   "hint": "welch- ends like den.",
    "topics": [
     "w-question"
    ],
-   "note": "welch- declines like der. It stands for a masculine accusative (den Apfel), so it's welchen.",
-   "hint": "welch- ends like den."
+   "alt": {
+    "f": {
+     "de": "Welche möchtest du?",
+     "tokens": [
+      {
+       "w": "Welche",
+       "g": "which-one",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "möchtest",
+       "g": "would-like",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "welch- declines like der. It stands for a feminine accusative (die Birne), so it's welche.",
+     "hint": "welch- ends like die."
+    },
+    "n": {
+     "de": "Welches möchtest du?",
+     "tokens": [
+      {
+       "w": "Welches",
+       "g": "which-one",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "möchtest",
+       "g": "would-like",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "welch- declines like der. It stands for a neuter accusative (das Bonbon), so it's welches.",
+     "hint": "welch- ends like das."
+    }
+   }
   },
   {
    "id": 21,
@@ -958,12 +2400,74 @@
      "f": "MF"
     }
    ],
+   "note": "war is the simple past of sein. Spoken German uses war, not ist gewesen, for everyday 'was'.",
+   "hint": "Simple past of sein.",
    "topics": [
     "praeteritum",
     "genitive-s"
    ],
-   "note": "war is the simple past of sein. Spoken German uses war, not ist gewesen, for everyday 'was'.",
-   "hint": "Simple past of sein."
+   "alt": {
+    "f": {
+     "en": "It was John's pear.",
+     "de": "Es war Johns Birne.",
+     "tokens": [
+      {
+       "w": "Es",
+       "g": "it",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "war",
+       "g": "was",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Johns",
+       "g": "John's",
+       "c": "G",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "MF"
+      }
+     ]
+    },
+    "n": {
+     "en": "It was John's sweet.",
+     "de": "Es war Johns Bonbon.",
+     "tokens": [
+      {
+       "w": "Es",
+       "g": "it",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "war",
+       "g": "was",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Johns",
+       "g": "John's",
+       "c": "G",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "MF"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 22,
@@ -1034,15 +2538,155 @@
      "f": "NF"
     }
    ],
-   "topics": [
-    "subordinate-verb-final",
-    "perfekt"
-   ],
    "note": "The main clause is Perfekt (hat … gesagt). dass sends will to the end of its clause.",
    "hint": "dass sends the verb to the end.",
    "mistake": {
     "wrong": "…, dass er will ihn nicht mehr.",
     "why": "After dass the conjugated verb goes last."
+   },
+   "topics": [
+    "subordinate-verb-final",
+    "perfekt"
+   ],
+   "alt": {
+    "f": {
+     "de": "Aber er hat gesagt, dass er sie nicht mehr will.",
+     "tokens": [
+      {
+       "w": "Aber",
+       "g": "but",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "er",
+       "g": "he",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "hat",
+       "g": "has",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "gesagt,",
+       "g": "said",
+       "c": "v",
+       "f": "RK"
+      },
+      {
+       "w": "dass",
+       "g": "that",
+       "c": "-",
+       "f": "NF"
+      },
+      {
+       "w": "er",
+       "g": "he",
+       "c": "N",
+       "f": "NF"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "A",
+       "f": "NF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "NF"
+      },
+      {
+       "w": "mehr",
+       "g": "anymore",
+       "c": "-",
+       "f": "NF"
+      },
+      {
+       "w": "will",
+       "g": "wants",
+       "c": "v",
+       "f": "NF"
+      }
+     ],
+     "mistake": {
+      "wrong": "…, dass er will sie nicht mehr.",
+      "why": "After dass the conjugated verb goes last."
+     }
+    },
+    "n": {
+     "de": "Aber er hat gesagt, dass er es nicht mehr will.",
+     "tokens": [
+      {
+       "w": "Aber",
+       "g": "but",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "er",
+       "g": "he",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "hat",
+       "g": "has",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "gesagt,",
+       "g": "said",
+       "c": "v",
+       "f": "RK"
+      },
+      {
+       "w": "dass",
+       "g": "that",
+       "c": "-",
+       "f": "NF"
+      },
+      {
+       "w": "er",
+       "g": "he",
+       "c": "N",
+       "f": "NF"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "A",
+       "f": "NF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "NF"
+      },
+      {
+       "w": "mehr",
+       "g": "anymore",
+       "c": "-",
+       "f": "NF"
+      },
+      {
+       "w": "will",
+       "g": "wants",
+       "c": "v",
+       "f": "NF"
+      }
+     ],
+     "mistake": {
+      "wrong": "…, dass er will es nicht mehr.",
+      "why": "After dass the conjugated verb goes last."
+     }
+    }
    }
   },
   {
@@ -1084,15 +2728,97 @@
      "f": "MF"
     }
    ],
-   "topics": [
-    "verb-second",
-    "dative-verbs"
-   ],
    "note": "jetzt takes position 1, so the verb comes next and the subject er follows it. gehören takes a dative: 'belongs to you'.",
    "hint": "Start with jetzt; the verb still comes second.",
    "mistake": {
     "wrong": "Jetzt er gehört also dir.",
     "why": "The verb must be second: Jetzt gehört er."
+   },
+   "topics": [
+    "verb-second",
+    "dative-verbs"
+   ],
+   "alt": {
+    "f": {
+     "de": "Jetzt gehört sie also dir.",
+     "tokens": [
+      {
+       "w": "Jetzt",
+       "g": "now",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "gehört",
+       "g": "belongs",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "also",
+       "g": "so",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "dir",
+       "g": "to-you",
+       "c": "D",
+       "f": "MF"
+      }
+     ],
+     "note": "jetzt takes position 1, so the verb comes next and the subject sie follows it. gehören takes a dative: 'belongs to you'.",
+     "mistake": {
+      "wrong": "Jetzt sie gehört also dir.",
+      "why": "The verb must be second: Jetzt gehört sie."
+     }
+    },
+    "n": {
+     "de": "Jetzt gehört es also dir.",
+     "tokens": [
+      {
+       "w": "Jetzt",
+       "g": "now",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "gehört",
+       "g": "belongs",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "also",
+       "g": "so",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "dir",
+       "g": "to-you",
+       "c": "D",
+       "f": "MF"
+      }
+     ],
+     "note": "jetzt takes position 1, so the verb comes next and the subject es follows it. gehören takes a dative: 'belongs to you'.",
+     "mistake": {
+      "wrong": "Jetzt es gehört also dir.",
+      "why": "The verb must be second: Jetzt gehört es."
+     }
+    }
    }
   },
   {
@@ -1128,12 +2854,72 @@
      "f": "RK"
     }
    ],
+   "note": "solltest (subjunctive of sollen) gives advice: 'you should'. du sollst is closer to 'you're supposed to'.",
+   "hint": "Advice uses sollte.",
    "topics": [
     "konjunktiv-2",
     "modal-verbs"
    ],
-   "note": "solltest (subjunctive of sollen) gives advice: 'you should'. du sollst is closer to 'you're supposed to'.",
-   "hint": "Advice uses sollte."
+   "alt": {
+    "f": {
+     "de": "Du solltest sie essen.",
+     "tokens": [
+      {
+       "w": "Du",
+       "g": "you",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "solltest",
+       "g": "should",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ]
+    },
+    "n": {
+     "de": "Du solltest es essen.",
+     "tokens": [
+      {
+       "w": "Du",
+       "g": "you",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "solltest",
+       "g": "should",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 25,
@@ -1180,13 +2966,99 @@
      "f": "RK"
     }
    ],
+   "note": "warum first, hast second, gegessen last. nicht comes right before the participle. The yes/no version just starts with the verb: Hast du den Apfel gegessen?",
+   "hint": "Question word, then hast.",
    "topics": [
     "w-question",
     "perfekt",
     "negation-nicht"
    ],
-   "note": "warum first, hast second, gegessen last. nicht comes right before the participle. The yes/no version just starts with the verb: Hast du den Apfel gegessen?",
-   "hint": "Question word, then hast."
+   "alt": {
+    "f": {
+     "de": "Warum hast du sie nicht gegessen?",
+     "tokens": [
+      {
+       "w": "Warum",
+       "g": "why",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "hast",
+       "g": "have",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "warum first, hast second, gegessen last. nicht comes right before the participle. The yes/no version just starts with the verb: Hast du die Birne gegessen?"
+    },
+    "n": {
+     "de": "Warum hast du es nicht gegessen?",
+     "tokens": [
+      {
+       "w": "Warum",
+       "g": "why",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "hast",
+       "g": "have",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "warum first, hast second, gegessen last. nicht comes right before the participle. The yes/no version just starts with the verb: Hast du das Bonbon gegessen?"
+    }
+   }
   },
   {
    "id": 26,
@@ -1245,13 +3117,121 @@
      "f": "MF"
     }
    ],
+   "note": "The wenn-clause puts würdest last. The whole clause fills position 1, so the main clause starts with its verb: wärst du.",
+   "hint": "After the wenn-clause, the verb comes next.",
    "topics": [
     "konjunktiv-2",
     "subordinate-verb-final",
     "verb-second"
    ],
-   "note": "The wenn-clause puts würdest last. The whole clause fills position 1, so the main clause starts with its verb: wärst du.",
-   "hint": "After the wenn-clause, the verb comes next."
+   "alt": {
+    "f": {
+     "de": "Wenn du sie essen würdest, wärst du glücklich.",
+     "tokens": [
+      {
+       "w": "Wenn",
+       "g": "if",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "würdest,",
+       "g": "would",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "wärst",
+       "g": "would-be",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "glücklich",
+       "g": "happy",
+       "c": "-",
+       "f": "MF"
+      }
+     ]
+    },
+    "n": {
+     "de": "Wenn du es essen würdest, wärst du glücklich.",
+     "tokens": [
+      {
+       "w": "Wenn",
+       "g": "if",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "würdest,",
+       "g": "would",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "wärst",
+       "g": "would-be",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "du",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "glücklich",
+       "g": "happy",
+       "c": "-",
+       "f": "MF"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 27,
@@ -1292,12 +3272,86 @@
      "f": "RK"
     }
    ],
+   "note": "alle goes straight before the noun. No word for 'of'.",
+   "hint": "No 'of' after alle.",
    "topics": [
     "future-werden",
     "plural"
    ],
-   "note": "alle goes straight before the noun. No word for 'of'.",
-   "hint": "No 'of' after alle."
+   "alt": {
+    "f": {
+     "en": "They will eat all of the pears.",
+     "de": "Sie werden alle Birnen essen.",
+     "tokens": [
+      {
+       "w": "Sie",
+       "g": "they",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "werden",
+       "g": "will",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "alle",
+       "g": "all",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birnen",
+       "g": "pears",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ]
+    },
+    "n": {
+     "en": "They will eat all of the sweets.",
+     "de": "Sie werden alle Bonbons essen.",
+     "tokens": [
+      {
+       "w": "Sie",
+       "g": "they",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "werden",
+       "g": "will",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "alle",
+       "g": "all",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbons",
+       "g": "sweets",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 28,
@@ -1350,12 +3404,110 @@
      "f": "RK"
     }
    ],
+   "note": "'There are' is es gibt, even for plurals. The object is accusative. 'to eat' is zu essen.",
+   "hint": "'there are' is es gibt.",
    "topics": [
     "es-gibt",
     "zu-infinitive"
    ],
-   "note": "'There are' is es gibt, even for plurals. The object is accusative. 'to eat' is zu essen.",
-   "hint": "'there are' is es gibt."
+   "alt": {
+    "f": {
+     "en": "And there are a lot of pears to eat.",
+     "de": "Und es gibt viele Birnen zu essen.",
+     "tokens": [
+      {
+       "w": "Und",
+       "g": "and",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gibt",
+       "g": "gives",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "viele",
+       "g": "many",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birnen",
+       "g": "pears",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "zu",
+       "g": "to",
+       "c": "-",
+       "f": "RK"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ]
+    },
+    "n": {
+     "en": "And there are a lot of sweets to eat.",
+     "de": "Und es gibt viele Bonbons zu essen.",
+     "tokens": [
+      {
+       "w": "Und",
+       "g": "and",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gibt",
+       "g": "gives",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "viele",
+       "g": "many",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbons",
+       "g": "sweets",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "zu",
+       "g": "to",
+       "c": "-",
+       "f": "RK"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 29,
@@ -1402,12 +3554,12 @@
      "f": "MF"
     }
    ],
+   "note": "die meisten = 'most'. von takes the dative: ihnen. Swap in other amounts: einige von ihnen (some), ein paar von ihnen (a few; ein Paar with a capital P is 'a pair').",
+   "hint": "von takes the dative.",
    "topics": [
     "comparison",
     "dative-prepositions"
-   ],
-   "note": "die meisten = 'most'. von takes the dative: ihnen. Swap in other amounts: einige von ihnen (some), ein paar von ihnen (a few; ein Paar with a capital P is 'a pair').",
-   "hint": "von takes the dative."
+   ]
   },
   {
    "id": 30,
@@ -1454,12 +3606,102 @@
      "f": "MF"
     }
    ],
+   "note": "der Äpfel is genitive plural ('of the apples'). keiner is singular, so the verb is ist. 'One of the apples' works the same way: einer der Äpfel.",
+   "hint": "keiner is singular.",
    "topics": [
     "kein",
     "genitive"
    ],
-   "note": "der Äpfel is genitive plural ('of the apples'). keiner is singular, so the verb is ist. 'One of the apples' works the same way: einer der Äpfel.",
-   "hint": "keiner is singular."
+   "alt": {
+    "f": {
+     "en": "And none of the pears are blue.",
+     "de": "Und keine der Birnen ist blau.",
+     "tokens": [
+      {
+       "w": "Und",
+       "g": "and",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "keine",
+       "g": "none",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "der",
+       "g": "of-the",
+       "c": "G",
+       "f": "VF"
+      },
+      {
+       "w": "Birnen",
+       "g": "pears",
+       "c": "G",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "blau",
+       "g": "blue",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "der Birnen is genitive plural ('of the pears'). keine is singular, so the verb is ist. 'One of the pears' works the same way: eine der Birnen.",
+     "hint": "keine is singular."
+    },
+    "n": {
+     "en": "And none of the sweets are blue.",
+     "de": "Und keins der Bonbons ist blau.",
+     "tokens": [
+      {
+       "w": "Und",
+       "g": "and",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "keins",
+       "g": "none",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "der",
+       "g": "of-the",
+       "c": "G",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbons",
+       "g": "sweets",
+       "c": "G",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "blau",
+       "g": "blue",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "der Bonbons is genitive plural ('of the sweets'). keins is singular, so the verb is ist. 'One of the sweets' works the same way: eins der Bonbons.",
+     "hint": "keins is singular."
+    }
+   }
   },
   {
    "id": 31,
@@ -1506,12 +3748,100 @@
      "f": "MF"
     }
    ],
+   "note": "No article before a plural noun, so every adjective takes the strong ending -e (also: Kleine Äpfel sind auch gut). Das sind = 'these are'.",
+   "hint": "No article, so each adjective ends in -e.",
    "topics": [
     "adjective-endings",
     "das-demonstrative"
    ],
-   "note": "No article before a plural noun, so every adjective takes the strong ending -e (also: Kleine Äpfel sind auch gut). Das sind = 'these are'.",
-   "hint": "No article, so each adjective ends in -e."
+   "alt": {
+    "f": {
+     "en": "These are beautiful, big, red pears.",
+     "de": "Das sind schöne, große, rote Birnen.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "these",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "sind",
+       "g": "are",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "schöne,",
+       "g": "beautiful",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "große,",
+       "g": "big",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "rote",
+       "g": "red",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "Birnen",
+       "g": "pears",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "No article before a plural noun, so every adjective takes the strong ending -e (also: Kleine Birnen sind auch gut). Das sind = 'these are'."
+    },
+    "n": {
+     "en": "These are beautiful, big, red sweets.",
+     "de": "Das sind schöne, große, rote Bonbons.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "these",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "sind",
+       "g": "are",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "schöne,",
+       "g": "beautiful",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "große,",
+       "g": "big",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "rote",
+       "g": "red",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbons",
+       "g": "sweets",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "No article before a plural noun, so every adjective takes the strong ending -e (also: Kleine Bonbons sind auch gut). Das sind = 'these are'."
+    }
+   }
   },
   {
    "id": 32,
@@ -1570,13 +3900,13 @@
      "f": "NF"
     }
    ],
+   "note": "so viele … wie = 'as many as'. The wie-clause sends willst to the end.",
+   "hint": "'as many as' is so viele wie.",
    "topics": [
     "modal-verbs",
     "comparison",
     "subordinate-verb-final"
-   ],
-   "note": "so viele … wie = 'as many as'. The wie-clause sends willst to the end.",
-   "hint": "'as many as' is so viele wie."
+   ]
   },
   {
    "id": 33,
@@ -1623,16 +3953,16 @@
      "f": "RK"
     }
    ],
-   "topics": [
-    "subordinate-verb-final",
-    "accusative-prepositions"
-   ],
    "note": "weil sends habe to the end. für takes the accusative. On its own like this, it's a spoken answer to 'Warum?'.",
    "hint": "weil sends the verb to the end.",
    "mistake": {
     "wrong": "Weil ich habe genug für alle.",
     "why": "Common in casual speech, but standard German puts the verb last after weil."
-   }
+   },
+   "topics": [
+    "subordinate-verb-final",
+    "accusative-prepositions"
+   ]
   },
   {
    "id": 34,
@@ -1667,11 +3997,73 @@
      "f": "MF"
     }
    ],
+   "note": "jeder is singular, so the verb is mag (from mögen, 'to like').",
+   "hint": "'everyone' is singular.",
    "topics": [
     "mochte"
    ],
-   "note": "jeder is singular, so the verb is mag (from mögen, 'to like').",
-   "hint": "'everyone' is singular."
+   "alt": {
+    "f": {
+     "en": "Almost everyone likes pears.",
+     "de": "Fast jeder mag Birnen.",
+     "tokens": [
+      {
+       "w": "Fast",
+       "g": "almost",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "jeder",
+       "g": "everyone",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "mag",
+       "g": "likes",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Birnen",
+       "g": "pears",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    },
+    "n": {
+     "en": "Almost everyone likes sweets.",
+     "de": "Fast jeder mag Bonbons.",
+     "tokens": [
+      {
+       "w": "Fast",
+       "g": "almost",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "jeder",
+       "g": "everyone",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "mag",
+       "g": "likes",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Bonbons",
+       "g": "sweets",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 35,
@@ -1712,12 +4104,12 @@
      "f": "MF"
     }
    ],
+   "note": "Superlatives used as nouns: die größten, die besten. groß adds an umlaut; gut is irregular (besser, best-).",
+   "hint": "gut → besser → best-.",
    "topics": [
     "comparison",
     "adjective-endings"
-   ],
-   "note": "Superlatives used as nouns: die größten, die besten. groß adds an umlaut; gut is irregular (besser, best-).",
-   "hint": "gut → besser → best-."
+   ]
   },
   {
    "id": 36,
@@ -1764,12 +4156,100 @@
      "f": "MF"
     }
    ],
+   "note": "After die (plural), the adjective takes -en: die großen Äpfel. gut → besser.",
+   "hint": "After die (plural), the adjective ends in -en.",
    "topics": [
     "comparison",
     "adjective-endings"
    ],
-   "note": "After die (plural), the adjective takes -en: die großen Äpfel. gut → besser.",
-   "hint": "After die (plural), the adjective ends in -en."
+   "alt": {
+    "f": {
+     "en": "But the big pears are better.",
+     "de": "Aber die großen Birnen sind besser.",
+     "tokens": [
+      {
+       "w": "Aber",
+       "g": "but",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "großen",
+       "g": "big",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Birnen",
+       "g": "pears",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "sind",
+       "g": "are",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "besser",
+       "g": "better",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "After die (plural), the adjective takes -en: die großen Birnen. gut → besser."
+    },
+    "n": {
+     "en": "But the big sweets are better.",
+     "de": "Aber die großen Bonbons sind besser.",
+     "tokens": [
+      {
+       "w": "Aber",
+       "g": "but",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "großen",
+       "g": "big",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbons",
+       "g": "sweets",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "sind",
+       "g": "are",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "besser",
+       "g": "better",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "After die (plural), the adjective takes -en: die großen Bonbons. gut → besser."
+    }
+   }
   },
   {
    "id": 37,
@@ -1810,20 +4290,94 @@
      "f": "MF"
     }
    ],
+   "note": "Kind is neuter (das Kind), even though a child is a person: grammatical gender doesn't follow meaning. essen changes its vowel like geben: er isst.",
+   "hint": "Kind is neuter; essen → isst.",
    "topics": [
     "gender-articles",
     "stem-vowel-change"
    ],
-   "note": "Every earlier sentence uses der Apfel. Kind is neuter (das Kind); Banane is feminine (die Banane). essen changes its vowel like geben: er isst.",
-   "hint": "Kind is neuter; essen → isst."
+   "alt": {
+    "f": {
+     "en": "The child eats the pear.",
+     "de": "Das Kind isst die Birne.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Kind",
+       "g": "child",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "isst",
+       "g": "eats",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    },
+    "n": {
+     "en": "The child eats the sweet.",
+     "de": "Das Kind isst das Bonbon.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Kind",
+       "g": "child",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "isst",
+       "g": "eats",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 38,
    "key": "X3",
    "set": "extra",
    "source": "Added",
-   "en": "I give the child the banana.",
-   "de": "Ich gebe dem Kind die Banane.",
+   "en": "I give the child the apple.",
+   "de": "Ich gebe dem Kind den Apfel.",
    "tokens": [
     {
      "w": "Ich",
@@ -1850,27 +4404,123 @@
      "f": "MF"
     },
     {
-     "w": "die",
+     "w": "den",
      "g": "the",
      "c": "A",
      "f": "MF"
     },
     {
-     "w": "Banane",
-     "g": "banana",
+     "w": "Apfel",
+     "g": "apple",
      "c": "A",
      "f": "MF"
     }
    ],
+   "note": "The child receives it: neuter dative, das Kind → dem Kind. The apple is the thing given: den Apfel.",
+   "hint": "Neuter dative is dem.",
+   "mistake": {
+    "wrong": "Ich gebe der Kind den Apfel.",
+    "why": "Kind is neuter, so the dative is dem."
+   },
    "topics": [
     "dative-accusative",
     "gender-articles"
    ],
-   "note": "Neuter dative: das → dem. Feminine accusative stays die.",
-   "hint": "Neuter dative is dem.",
-   "mistake": {
-    "wrong": "Ich gebe der Kind die Banane.",
-    "why": "Kind is neuter, so the dative is dem."
+   "alt": {
+    "f": {
+     "en": "I give the child the pear.",
+     "de": "Ich gebe dem Kind die Birne.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gebe",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "dem",
+       "g": "the",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "Kind",
+       "g": "child",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "The child receives it: neuter dative, das Kind → dem Kind. The pear is the thing given: die Birne.",
+     "mistake": {
+      "wrong": "Ich gebe der Kind die Birne.",
+      "why": "Kind is neuter, so the dative is dem."
+     }
+    },
+    "n": {
+     "en": "I give the child the sweet.",
+     "de": "Ich gebe dem Kind das Bonbon.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gebe",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "dem",
+       "g": "the",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "Kind",
+       "g": "child",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "The child receives it: neuter dative, das Kind → dem Kind. The sweet is the thing given: das Bonbon.",
+     "mistake": {
+      "wrong": "Ich gebe der Kind das Bonbon.",
+      "why": "Kind is neuter, so the dative is dem."
+     }
+    }
    }
   },
   {
@@ -1906,14 +4556,86 @@
      "f": "MF"
     }
    ],
-   "topics": [
-    "kein"
-   ],
    "note": "To negate a noun with ein, use kein, with the same ending: einen → keinen.",
    "hint": "Negate ein with kein.",
    "mistake": {
     "wrong": "Ich habe nicht einen Apfel.",
     "why": "Use kein to negate a noun with ein: keinen Apfel."
+   },
+   "topics": [
+    "kein"
+   ],
+   "alt": {
+    "f": {
+     "en": "I don't have a pear.",
+     "de": "Ich habe keine Birne.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "habe",
+       "g": "have",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "keine",
+       "g": "no",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "To negate a noun with ein, use kein, with the same ending: eine → keine.",
+     "mistake": {
+      "wrong": "Ich habe nicht eine Birne.",
+      "why": "Use kein to negate a noun with ein: keine Birne."
+     }
+    },
+    "n": {
+     "en": "I don't have a sweet.",
+     "de": "Ich habe kein Bonbon.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "habe",
+       "g": "have",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "kein",
+       "g": "no",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "To negate a noun with ein, use kein, with the same ending: ein → kein.",
+     "mistake": {
+      "wrong": "Ich habe nicht ein Bonbon.",
+      "why": "Use kein to negate a noun with ein: kein Bonbon."
+     }
+    }
    }
   },
   {
@@ -1949,11 +4671,73 @@
      "f": "MF"
     }
    ],
+   "note": "du-command: take du gibst, drop du and -st → Gib!",
+   "hint": "Command form of du gibst.",
    "topics": [
     "imperative"
    ],
-   "note": "du-command: take du gibst, drop du and -st → Gib!",
-   "hint": "Command form of du gibst."
+   "alt": {
+    "f": {
+     "en": "Give me the pear!",
+     "de": "Gib mir die Birne!",
+     "tokens": [
+      {
+       "w": "Gib",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "mir",
+       "g": "me",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    },
+    "n": {
+     "en": "Give me the sweet!",
+     "de": "Gib mir das Bonbon!",
+     "tokens": [
+      {
+       "w": "Gib",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "mir",
+       "g": "me",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 41,
@@ -1988,12 +4772,74 @@
      "f": "MF"
     }
    ],
+   "note": "Formal 'you' is Sie, always capitalised, with the same verb form as 'they': möchten.",
+   "hint": "Formal Sie uses the 'they' verb form.",
    "topics": [
     "formal-sie",
     "mochte"
    ],
-   "note": "Formal 'you' is Sie, always capitalised, with the same verb form as 'they': möchten.",
-   "hint": "Formal Sie uses the 'they' verb form."
+   "alt": {
+    "f": {
+     "en": "Would you like a pear? (formal)",
+     "de": "Möchten Sie eine Birne?",
+     "tokens": [
+      {
+       "w": "Möchten",
+       "g": "would-like",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Sie",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "eine",
+       "g": "a",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    },
+    "n": {
+     "en": "Would you like a sweet? (formal)",
+     "de": "Möchten Sie ein Bonbon?",
+     "tokens": [
+      {
+       "w": "Möchten",
+       "g": "would-like",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Sie",
+       "g": "you",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "ein",
+       "g": "a",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 42,
@@ -2046,14 +4892,120 @@
      "f": "MF"
     }
    ],
-   "topics": [
-    "two-way-prepositions"
-   ],
    "note": "Movement to a place (where to?) → auf + accusative: auf den Tisch.",
    "hint": "Movement: auf + accusative.",
    "mistake": {
     "wrong": "Ich lege den Apfel auf dem Tisch.",
     "why": "legen is movement to a place, so auf takes the accusative: den Tisch."
+   },
+   "topics": [
+    "two-way-prepositions"
+   ],
+   "alt": {
+    "f": {
+     "en": "I put the pear on the table.",
+     "de": "Ich lege die Birne auf den Tisch.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "lege",
+       "g": "lay",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "auf",
+       "g": "on",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "den",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Tisch",
+       "g": "table",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich lege die Birne auf dem Tisch.",
+      "why": "legen is movement to a place, so auf takes the accusative: den Tisch."
+     }
+    },
+    "n": {
+     "en": "I put the sweet on the table.",
+     "de": "Ich lege das Bonbon auf den Tisch.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "lege",
+       "g": "lay",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "auf",
+       "g": "on",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "den",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Tisch",
+       "g": "table",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich lege das Bonbon auf dem Tisch.",
+      "why": "legen is movement to a place, so auf takes the accusative: den Tisch."
+     }
+    }
    }
   },
   {
@@ -2101,19 +5053,105 @@
      "f": "MF"
     }
    ],
+   "note": "Location (where?) → auf + dative: auf dem Tisch. Compare legen (put) and liegen (lie).",
+   "hint": "Location: auf + dative.",
    "topics": [
     "two-way-prepositions"
    ],
-   "note": "Location (where?) → auf + dative: auf dem Tisch. Compare legen (put) and liegen (lie).",
-   "hint": "Location: auf + dative."
+   "alt": {
+    "f": {
+     "en": "The pear is lying on the table.",
+     "de": "Die Birne liegt auf dem Tisch.",
+     "tokens": [
+      {
+       "w": "Die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "liegt",
+       "g": "lies",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "auf",
+       "g": "on",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "dem",
+       "g": "the",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "Tisch",
+       "g": "table",
+       "c": "D",
+       "f": "MF"
+      }
+     ]
+    },
+    "n": {
+     "en": "The sweet is lying on the table.",
+     "de": "Das Bonbon liegt auf dem Tisch.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "liegt",
+       "g": "lies",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "auf",
+       "g": "on",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "dem",
+       "g": "the",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "Tisch",
+       "g": "table",
+       "c": "D",
+       "f": "MF"
+      }
+     ]
+    }
+   }
   },
   {
    "id": 44,
    "key": "X9",
    "set": "extra",
    "source": "Added",
-   "en": "The apple fell from the tree.",
-   "de": "Der Apfel ist vom Baum gefallen.",
+   "en": "The apple fell off the table.",
+   "de": "Der Apfel ist vom Tisch gefallen.",
    "tokens": [
     {
      "w": "Der",
@@ -2140,8 +5178,8 @@
      "f": "MF"
     },
     {
-     "w": "Baum",
-     "g": "tree",
+     "w": "Tisch",
+     "g": "table",
      "c": "D",
      "f": "MF"
     },
@@ -2152,15 +5190,109 @@
      "f": "RK"
     }
    ],
+   "note": "fallen is movement, so its Perfekt uses sein. vom = von dem (von takes the dative).",
+   "hint": "fallen takes sein.",
+   "mistake": {
+    "wrong": "Der Apfel hat vom Tisch gefallen.",
+    "why": "Verbs of movement form the Perfekt with sein."
+   },
    "topics": [
     "perfekt-sein",
     "dative-prepositions"
    ],
-   "note": "fallen is movement, so its Perfekt uses sein. vom = von dem (von takes the dative).",
-   "hint": "fallen takes sein.",
-   "mistake": {
-    "wrong": "Der Apfel hat vom Baum gefallen.",
-    "why": "Verbs of movement form the Perfekt with sein."
+   "alt": {
+    "f": {
+     "en": "The pear fell off the table.",
+     "de": "Die Birne ist vom Tisch gefallen.",
+     "tokens": [
+      {
+       "w": "Die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "vom",
+       "g": "from-the",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "Tisch",
+       "g": "table",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "gefallen",
+       "g": "fallen",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Die Birne hat vom Tisch gefallen.",
+      "why": "Verbs of movement form the Perfekt with sein."
+     }
+    },
+    "n": {
+     "en": "The sweet fell off the table.",
+     "de": "Das Bonbon ist vom Tisch gefallen.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "vom",
+       "g": "from-the",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "Tisch",
+       "g": "table",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "gefallen",
+       "g": "fallen",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Das Bonbon hat vom Tisch gefallen.",
+      "why": "Verbs of movement form the Perfekt with sein."
+     }
+    }
    }
   },
   {
@@ -2208,15 +5340,109 @@
      "f": "RK"
     }
    ],
-   "topics": [
-    "separable-verbs",
-    "future-werden"
-   ],
    "note": "mitbringen splits: bringe in position 2, mit at the end. Present tense + morgen is the usual way to talk about the future.",
    "hint": "mitbringen splits apart.",
    "mistake": {
     "wrong": "Ich mitbringe morgen einen Apfel.",
     "why": "The prefix separates and goes to the end: bringe … mit."
+   },
+   "topics": [
+    "separable-verbs",
+    "future-werden"
+   ],
+   "alt": {
+    "f": {
+     "en": "I'll bring a pear along tomorrow.",
+     "de": "Ich bringe morgen eine Birne mit.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "bringe",
+       "g": "bring",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "morgen",
+       "g": "tomorrow",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "eine",
+       "g": "a",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "mit",
+       "g": "along",
+       "c": "-",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich mitbringe morgen eine Birne.",
+      "why": "The prefix separates and goes to the end: bringe … mit."
+     }
+    },
+    "n": {
+     "en": "I'll bring a sweet along tomorrow.",
+     "de": "Ich bringe morgen ein Bonbon mit.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "bringe",
+       "g": "bring",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "morgen",
+       "g": "tomorrow",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "ein",
+       "g": "a",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "mit",
+       "g": "along",
+       "c": "-",
+       "f": "RK"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich mitbringe morgen ein Bonbon.",
+      "why": "The prefix separates and goes to the end: bringe … mit."
+     }
+    }
    }
   },
   {
@@ -2276,12 +5502,126 @@
      "f": "MF"
     }
    ],
+   "note": "den is masculine (der Apfel) and accusative (I bought it). habe goes to the end of the relative clause.",
+   "hint": "'that' takes the gender of Apfel: den.",
    "topics": [
     "relative-clauses",
     "subordinate-verb-final"
    ],
-   "note": "den is masculine (der Apfel) and accusative (I bought it). habe goes to the end of the relative clause.",
-   "hint": "'that' = der/den/dem, matching Apfel."
+   "alt": {
+    "f": {
+     "en": "The pear that I bought is red.",
+     "de": "Die Birne, die ich gekauft habe, ist rot.",
+     "tokens": [
+      {
+       "w": "Die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Birne,",
+       "g": "pear",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "die",
+       "g": "that",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gekauft",
+       "g": "bought",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "habe,",
+       "g": "have",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "die is feminine (die Birne) and accusative (I bought it). habe goes to the end of the relative clause.",
+     "hint": "'that' takes the gender of Birne: die."
+    },
+    "n": {
+     "en": "The sweet that I bought is red.",
+     "de": "Das Bonbon, das ich gekauft habe, ist rot.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbon,",
+       "g": "sweet",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "das",
+       "g": "that",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gekauft",
+       "g": "bought",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "habe,",
+       "g": "have",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "das is neuter (das Bonbon) and accusative (I bought it). habe goes to the end of the relative clause.",
+     "hint": "'that' takes the gender of Bonbon: das."
+    }
+   }
   },
   {
    "id": 47,
@@ -2328,14 +5668,108 @@
      "f": "MF"
     }
    ],
-   "topics": [
-    "reflexive-verbs"
-   ],
    "note": "sich freuen auf + accusative = 'to look forward to'. The reflexive mich matches ich.",
    "hint": "freuen needs mich.",
    "mistake": {
     "wrong": "Ich freue auf den Apfel.",
     "why": "sich freuen is reflexive: Ich freue mich."
+   },
+   "topics": [
+    "reflexive-verbs"
+   ],
+   "alt": {
+    "f": {
+     "en": "I'm looking forward to the pear.",
+     "de": "Ich freue mich auf die Birne.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "freue",
+       "g": "look-forward",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "mich",
+       "g": "myself",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "auf",
+       "g": "to",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich freue auf die Birne.",
+      "why": "sich freuen is reflexive: Ich freue mich."
+     }
+    },
+    "n": {
+     "en": "I'm looking forward to the sweet.",
+     "de": "Ich freue mich auf das Bonbon.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "freue",
+       "g": "look-forward",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "mich",
+       "g": "myself",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "auf",
+       "g": "to",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "mistake": {
+      "wrong": "Ich freue auf das Bonbon.",
+      "why": "sich freuen is reflexive: Ich freue mich."
+     }
+    }
    }
   },
   {
@@ -2401,12 +5835,136 @@
      "f": "MF"
     }
    ],
+   "note": "Time (jeden Tag) before place (in der Küche). The new object (einen Apfel) comes late. in + dative for location.",
+   "hint": "Time comes before place.",
    "topics": [
     "word-order-tekamolo",
     "two-way-prepositions"
    ],
-   "note": "Time (jeden Tag) before place (in der Küche). The new object (einen Apfel) comes late. in + dative for location.",
-   "hint": "Time comes before place."
+   "alt": {
+    "f": {
+     "en": "I eat a pear in the kitchen every day.",
+     "de": "Ich esse jeden Tag in der Küche eine Birne.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "esse",
+       "g": "eat",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "jeden",
+       "g": "every",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Tag",
+       "g": "day",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "in",
+       "g": "in",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "der",
+       "g": "the",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "Küche",
+       "g": "kitchen",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "eine",
+       "g": "a",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "Time (jeden Tag) before place (in der Küche). The new object (eine Birne) comes late. in + dative for location."
+    },
+    "n": {
+     "en": "I eat a sweet in the kitchen every day.",
+     "de": "Ich esse jeden Tag in der Küche ein Bonbon.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "esse",
+       "g": "eat",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "jeden",
+       "g": "every",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Tag",
+       "g": "day",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "in",
+       "g": "in",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "der",
+       "g": "the",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "Küche",
+       "g": "kitchen",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "ein",
+       "g": "a",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "Time (jeden Tag) before place (in der Küche). The new object (ein Bonbon) comes late. in + dative for location."
+    }
+   }
   }
  ]
 }
