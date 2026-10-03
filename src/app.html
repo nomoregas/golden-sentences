@@ -786,8 +786,7 @@ function pick(list, lastId) {
   return pool[Math.floor(Math.random() * pool.length)].id;
 }
 // Practice works in rounds: every selected sentence once, in the chosen order.
-// Again puts a card back a few cards later; Got it and Easy finish it for this
-// round (Easy moves it up two boxes in the progress grid instead of one).
+// Again puts a card back a few cards later; Got it finishes it for this round.
 const isOn = key => !state.off.includes(key);
 const selected = () => SENTENCES.filter(s => isOn(s.key));
 function ordered(list) {
@@ -797,7 +796,7 @@ function ordered(list) {
   return out;
 }
 function newRound(prev) {
-  return { n: (prev ? prev.n : 0) + 1, queue: ordered(selected()).map(s => s.key), stats: { again: 0, good: 0, easy: 0 } };
+  return { n: (prev ? prev.n : 0) + 1, queue: ordered(selected()).map(s => s.key), stats: { again: 0, good: 0 } };
 }
 const round = () => state.rounds[deck()] ||= newRound();
 function nextCard() {
@@ -873,15 +872,14 @@ function sessionBar() {
   </div>`;
 }
 // Box a grade moves the card to: its level in the progress grid.
-function nextBox(c, g) { return g === "again" ? 1 : g === "good" ? Math.min(5, Math.max(1, c.box + 1)) : Math.min(5, c.box + 2); }
+function nextBox(c, g) { return g === "again" ? 1 : Math.min(5, Math.max(1, c.box + 1)); }
 function gradeButtons() {
   return `<p class="eyebrow">How did that go?</p>
     <div class="row">
       <button class="btn bad" data-grade="again">1 · Again</button>
       <button class="btn" data-grade="good">2 · Got it</button>
-      <button class="btn good" data-grade="easy">3 · Easy</button>
     </div>
-    <p class="hint gradehelp">Again: back in a few cards · Got it: done for this round · Easy: done, and counts as known sooner</p>`;
+    <p class="hint gradehelp">Again: back in a few cards · Got it: done for this round</p>`;
 }
 function flashFront(s) {
   if (state.session === "de") return `<span class="ask">What does it mean?</span><span class="prompt" lang="de">${esc(s.de)}</span>`;
@@ -897,7 +895,7 @@ function renderPractice() {
     <article class="page empty">
       <span class="num">✓</span>
       <h2>Runde ${r.n} geschafft.</h2>
-      <p class="note">Round ${r.n} done: ${st.again} again, ${st.good} got it, ${st.easy} easy.</p>
+      <p class="note">Round ${r.n} done: ${st.again} again, ${st.good} got it.</p>
       <div class="row"><button class="btn solid" data-act="nextround">Start round ${r.n + 1}</button></div>
     </article>`;
   }
@@ -1191,7 +1189,7 @@ document.addEventListener("keydown", e => {
   } else if (deck() && pr && pr.id != null && !pr.revealed && state.session !== "type" && e.key === " " && !e.target.matches("button")) {
     e.preventDefault(); pr.revealed = true; render(); if (state.session !== "listen") speak(byId(pr.id).de);
   } else if (deck() && pr && pr.revealed) {
-    const g = { "1": "again", "2": "good", "3": "easy" }[e.key];
+    const g = { "1": "again", "2": "good" }[e.key];
     if (g) grade(g);
   }
 });
