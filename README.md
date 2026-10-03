@@ -27,7 +27,7 @@ Sentences are templates (`tools/sentences_src.py`) with placeholders such as `{d
 
 **Learn**: a picture of the sentence, German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
 
-**Table**: all 48 sentences at once, switchable between English, Deutsch and Both without losing your place. Tap a sentence to peek at its translation, ▶ to hear it, or its number to open it in Learn.
+**Table**: all 48 sentences at once, switchable between English, Deutsch and Both without losing your place. Tick the sentences you want to practise (or **All** / **None**); every drill uses only the ticked ones. Tap a sentence to peek at its translation, ▶ to hear it, or its number to open it in Learn.
 
 **Practice** opens a menu of drills. Each one is entered on its own, with its own progress, and shows what's due, new and solid:
 
@@ -39,7 +39,7 @@ Sentences are templates (`tools/sentences_src.py`) with placeholders such as `{d
 | Type it | Type the German and see it compared word by word |
 | Build | Put shuffled German words back in order, then see the sentence frame (Vorfeld · verb · Mittelfeld · verb end), the model behind German word order |
 
-The four card drills are scheduled with a Leitner card box (*Karteikasten*, "card box"): box 1 comes back in 10 minutes, box 5 in 3 weeks, and each grade button shows when the card will return. Build tracks which sentences you've built correctly. Sentences come in random order, or **In order** (1 → 48). Inside a drill, **Clear** resets that drill; the footer's **Reset all progress** resets everything.
+The card drills work in rounds: each round goes through every selected sentence once (shuffled, or **In order**). **Again** puts the card back a few cards later in the same round, **Got it** finishes it for the round, and **Easy** also keeps it out of the next round. The progress grid (*Karteikasten*, "card box") colours each sentence by how well you know it. Build tracks which sentences you've built correctly. Inside a drill, **Clear** resets that drill; the footer's **Reset all progress** resets everything.
 
 Pictures: every sentence has a small scene (`data/scenes.json`, drawn as SVG by the app) with a fixed cast, each person in one colour: **ich** blue, **du** green, **er** teal, **sie** purple, **John** orange, a child, and a formal **Sie**. The same marks recur: a dashed arrow for giving, ✗ for not, ? for questions, ! for must, ♥ for want, and a clock with an arrow back (past) or ahead (future). Pictures show in Learn and Build, on the front of EN → DE cards, and only on the back of DE → EN and Listen cards so they don't give the meaning away.
 

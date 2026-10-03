@@ -277,6 +277,18 @@ input[type="text"] {
 .stable.lang-en .peek .rowbtn .de, .stable.lang-de .peek .rowbtn .en { font-size: .95rem; }
 .stable.lang-de .rowbtn .de { order: -1; }
 
+/* Table: choosing sentences for practice */
+.selbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.stable .sel { width: 40px; }
+.chk {
+  width: 22px; height: 22px; margin: 12px 0 0 10px; border-radius: 5px; border: 2px solid var(--muted); background: var(--card);
+  cursor: pointer; padding: 0; display: grid; place-items: center; color: var(--card); font: 700 14px/1 var(--mono);
+}
+.chk[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
+.chk[aria-pressed="true"]::after { content: "✓"; }
+.stable tr.off .rowbtn, .stable tr.off .n, .stable tr.off .play { opacity: .4; }
+.gradehelp { margin: 0; }
+
 /* Practice menu: one entry per drill */
 .chooser { display: grid; gap: 14px; }
 .chooser-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
@@ -314,6 +326,7 @@ input[type="text"] {
 .cell[data-box="3"] { background: var(--b3); border-color: var(--b3); color: #1a1a1a; }
 .cell[data-box="4"] { background: var(--b4); border-color: var(--b4); color: #fff; }
 .cell[data-box="5"] { background: var(--b5); border-color: var(--b5); color: var(--card); }
+.cell.off { opacity: .3; }
 .cell.current { outline: 2px solid var(--margin); outline-offset: 2px; }
 .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--mono); font-size: .72rem; color: var(--muted); }
 .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; border: 1.5px solid var(--line); }
@@ -372,11 +385,12 @@ footer { font-family: var(--mono); font-size: .72rem; color: var(--muted); displ
     <div id="groups" class="kasten"></div>
     <div class="legend" id="legend">
       <span><i></i>new</span>
-      <span><i data-box="1"></i>box 1 · again soon</span>
-      <span><i data-box="2"></i>box 2 · 1 day</span>
-      <span><i data-box="3"></i>box 3 · 3 days</span>
-      <span><i data-box="4"></i>box 4 · 1 week</span>
-      <span><i data-box="5"></i>box 5 · 3 weeks</span>
+      <span><i data-box="1"></i>box 1</span>
+      <span><i data-box="2"></i>box 2</span>
+      <span><i data-box="3"></i>box 3</span>
+      <span><i data-box="4"></i>box 4</span>
+      <span><i data-box="5"></i>box 5 · solid</span>
+      <span>faded: not selected</span>
     </div>
   </section>
 
@@ -395,9 +409,6 @@ const TOTAL = SENTENCES.length;
 const CASE_NAME = { N: "nominative", A: "accusative", D: "dative", G: "genitive", v: "verb" };
 const FIELD_NAME = { KF: "Konj.", VF: "Vorfeld", LK: "Verb", MF: "Mittelfeld", RK: "Verb end", NF: "Nachfeld" };
 
-// Leitner intervals per box, in ms. Box 0 = never practised.
-const MIN = 60e3, DAY = 864e5;
-const INTERVAL = [0, 10 * MIN, DAY, 3 * DAY, 7 * DAY, 21 * DAY];
 const KEY = "goldene-saetze:v2";
 
 const store = {
@@ -410,6 +421,8 @@ const state = {
   tlang: ["en", "de", "both"].includes(saved.tlang) ? saved.tlang : "de",   // language shown in the Table
   noun: ["m", "f", "n"].includes(saved.noun) ? saved.noun : "m",   // the story's object: der Apfel, die Birne or das Bonbon
   compare: !!saved.compare,          // Learn: show all three versions of the sentence
+  off: Array.isArray(saved.off) ? saved.off : [],   // sentence keys left out of practice (chosen in the Table)
+  rounds: saved.rounds || {},        // per card drill: { n, queue: [keys], sitOut: [keys], stats }
   session: null,                     // the drill the learner has entered (see DRILLS), or null for the practice menu
   idx: Number.isInteger(saved.idx) && saved.idx < TOTAL ? saved.idx : 0,
   // Progress is kept separately per practice type: sentence key -> { box, due }.
@@ -420,7 +433,7 @@ const state = {
   built: saved.built || {},          // Build: sentence key -> true once built correctly
   order: saved.order === "seq" ? "seq" : "shuffle", // which sentence comes next in Practice and Build
 };
-const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, built: state.built, order: state.order, tlang: state.tlang, noun: state.noun, compare: state.compare });
+const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, built: state.built, order: state.order, tlang: state.tlang, noun: state.noun, compare: state.compare, off: state.off, rounds: state.rounds });
 // Each drill is its own experience with its own progress.
 const DRILLS = [
   { id: "en", kind: "Flash cards", name: "EN → DE", desc: "See the English, say the German." },
@@ -736,12 +749,14 @@ function renderLearn() {
 }
 
 /* ---------- Table: all sentences at once ---------- */
+const selCount = () => `Practising ${selected().length} of ${TOTAL}`;
 function renderTable() {
   const tlangSeg = `<div class="seg" role="group" aria-label="Language">${seg("tlang", "en", "English")}${seg("tlang", "de", "Deutsch")}${seg("tlang", "both", "Both")}</div>`;
   const rows = Object.entries(DATA.sets).map(([set, name]) => {
     const list = SENTENCES.filter(s => s.set === set).map(view);
-    return `<tr><th class="grp" colspan="3">${esc(name)} · ${list.length}</th></tr>` + list.map(s => `
-      <tr data-row="${s.id}">
+    return `<tr><th class="grp" colspan="4">${esc(name)} · ${list.length}</th></tr>` + list.map(s => `
+      <tr data-row="${s.id}" class="${isOn(s.key) ? "" : "off"}">
+        <td class="sel"><button class="chk" data-sel="${s.key}" aria-pressed="${isOn(s.key)}" aria-label="Practise this sentence"></button></td>
         <td class="n"><button data-open="${s.id}" title="Open in Learn">${pad(s.id)}</button></td>
         <td><button class="rowbtn" data-peek="${s.id}">
           <span class="en">${esc(s.en)}</span>
@@ -752,8 +767,11 @@ function renderTable() {
       </tr>`).join("");
   }).join("");
   return `
-  <div class="tbar"><h2>All sentences</h2>${tlangSeg}${nounSeg()}</div>
-  <p class="hint">Tap a sentence to see its translation · tap the number to open it in Learn</p>
+  <div class="tbar"><h2>All sentences</h2>${tlangSeg}</div>
+  <div class="nounbar">${nounSeg()}</div>
+  <div class="selbar"><span class="hint" id="selcount">${selCount()}</span>
+    <button class="btn mini" data-selall="1">All</button><button class="btn mini" data-selall="0">None</button></div>
+  <p class="hint">Tick the sentences to practise · tap a sentence to see its translation · tap the number to open it in Learn</p>
   <table class="stable lang-${state.tlang}" id="stable"><tbody>${rows}</tbody></table>`;
 }
 
@@ -767,26 +785,28 @@ function pick(list, lastId) {
   const pool = list.length > 1 ? list.filter(s => s.id !== lastId) : list;
   return pool[Math.floor(Math.random() * pool.length)].id;
 }
-function nextDue(ahead, lastId) {
-  const now = Date.now();
-  const seen = SENTENCES.filter(s => card(s).box > 0);
-  const dueSeen = seen.filter(s => card(s).due <= now).sort((a, b) => card(a).due - card(b).due);
-  if (dueSeen.length) return pick(dueSeen, lastId);
-  const fresh = SENTENCES.filter(s => card(s).box === 0);
-  if (fresh.length) return pick(fresh, lastId);
-  if (ahead && seen.length) return seen.slice().sort((a, b) => card(a).due - card(b).due)[0].id;
-  return null;
+// Practice works in rounds: every selected sentence once, in the chosen order.
+// Again puts a card back a few cards later; Got it finishes it for this round;
+// Easy also keeps it out of the next round.
+const isOn = key => !state.off.includes(key);
+const selected = () => SENTENCES.filter(s => isOn(s.key));
+function ordered(list) {
+  if (state.order === "seq") return list.slice().sort((a, b) => a.id - b.id);
+  const out = list.slice();
+  for (let i = out.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [out[i], out[j]] = [out[j], out[i]]; }
+  return out;
 }
-function soonest() {
-  const dues = SENTENCES.map(card).filter(c => c.box > 0).map(c => c.due);
-  return dues.length ? Math.min(...dues) : null;
+function newRound(prev) {
+  const sit = new Set(prev ? prev.sitOut : []);
+  let pool = selected().filter(s => !sit.has(s.key));
+  if (!pool.length) pool = selected();
+  return { n: (prev ? prev.n : 0) + 1, queue: ordered(pool).map(s => s.key), sitOut: [], stats: { again: 0, good: 0, easy: 0 } };
 }
-function when(ts) {
-  const d = ts - Date.now();
-  if (d < MIN) return "in under a minute";
-  if (d < 60 * MIN) return `in ${Math.round(d / MIN)} min`;
-  if (d < DAY) return `in ${Math.round(d / 36e5)} h`;
-  return `in ${Math.round(d / DAY)} day${Math.round(d / DAY) === 1 ? "" : "s"}`;
+const round = () => state.rounds[deck()] ||= newRound();
+function nextCard() {
+  const r = round();
+  while (r.queue.length && !isOn(r.queue[0])) r.queue.shift();   // skip sentences unticked mid-round
+  return r.queue.length ? SENTENCES.find(s => s.key === r.queue[0]).id : null;
 }
 const words = s => s.toLowerCase().replace(/[.,?!;:„“"»«]/g, " ").split(/\s+/).filter(Boolean);
 
@@ -825,24 +845,23 @@ function drillStats(id) {
     const n = SENTENCES.filter(s => state.built[s.key]).length;
     return { due: 0, text: [`${n}/${TOTAL} built correctly`] };
   }
-  const prog = state.progress[id], now = Date.now();
-  const c = s => prog[s.key] || { box: 0, due: 0 };
-  const due = SENTENCES.filter(s => c(s).box > 0 && c(s).due <= now).length;
-  const fresh = SENTENCES.filter(s => c(s).box === 0).length;
-  const solid = SENTENCES.filter(s => c(s).box >= 3).length;
-  return { due, text: [`${fresh} new`, `${solid} solid`] };
+  const prog = state.progress[id], r = state.rounds[id];
+  const solid = SENTENCES.filter(s => (prog[s.key] || {}).box >= 3).length;
+  const left = r ? r.queue.filter(isOn).length : selected().length;
+  return { due: left, text: [left ? `round ${r ? r.n : 1}` : `round ${r.n} done`, `${solid} solid`] };
 }
 function renderChooser() {
   return `<section class="chooser">
     <div class="chooser-head"><h2>Practice</h2>${orderToggle()}</div>
     <div class="nounbar"><span class="hint">Object:</span>${nounSeg()}</div>
+    <p class="hint">Practising ${selected().length} of ${TOTAL} sentences · <button class="linkish" data-view="table">choose them in the Table</button></p>
     <div class="drills">${DRILLS.map(d => {
       const st = drillStats(d.id);
       return `<button class="drill" data-enter="${d.id}">
         <span class="kind">${d.kind}</span>
         <span class="name">${d.name}</span>
         <span class="desc">${d.desc}</span>
-        <span class="stat">${st.due ? `<span class="due">${st.due} due</span>` : ""}${st.text.map(t => `<span>${t}</span>`).join("")}</span>
+        <span class="stat">${st.due ? `<span class="due">${st.due} left</span>` : ""}${st.text.map(t => `<span>${t}</span>`).join("")}</span>
         <span class="go" aria-hidden="true">→</span>
       </button>`;
     }).join("")}</div>
@@ -853,25 +872,19 @@ function sessionBar() {
   return `<div class="sessionbar">
     <button class="btn icon" data-act="exit">← Practice</button>
     <div class="title"><span>${d.kind}</span><strong>${d.name}</strong></div>
-    <span class="hint">${[st.due ? `${st.due} due` : "", ...st.text].filter(Boolean).join(" · ")}</span>
+    <span class="hint">${[st.due ? `${st.due} left` : "", ...st.text].filter(Boolean).join(" · ")}</span>
   </div>`;
 }
-// Box a grade would move the current card to, and how long until it comes back.
+// Box a grade moves the card to: its level in the progress grid.
 function nextBox(c, g) { return g === "again" ? 1 : g === "good" ? Math.min(5, Math.max(1, c.box + 1)) : Math.min(5, c.box + 2); }
-function waitLabel(c, g) {
-  const ms = g === "again" ? MIN : INTERVAL[nextBox(c, g)];
-  if (ms < 60 * MIN) return `${Math.round(ms / MIN)} min`;
-  const d = Math.round(ms / DAY);
-  return d % 7 === 0 ? `${d / 7} week${d === 7 ? "" : "s"}` : `${d} day${d === 1 ? "" : "s"}`;
-}
 function gradeButtons() {
-  const c = card(byId(pr.id));
   return `<p class="eyebrow">How did that go?</p>
     <div class="row">
-      <button class="btn bad" data-grade="again">1 · Again<small>${waitLabel(c, "again")}</small></button>
-      <button class="btn" data-grade="good">2 · Got it<small>${waitLabel(c, "good")}</small></button>
-      <button class="btn good" data-grade="easy">3 · Easy<small>${waitLabel(c, "easy")}</small></button>
-    </div>`;
+      <button class="btn bad" data-grade="again">1 · Again</button>
+      <button class="btn" data-grade="good">2 · Got it</button>
+      <button class="btn good" data-grade="easy">3 · Easy</button>
+    </div>
+    <p class="hint gradehelp">Again: back in a few cards · Got it: done for this round · Easy: also skips the next round</p>`;
 }
 function flashFront(s) {
   if (state.session === "de") return `<span class="ask">What does it mean?</span><span class="prompt" lang="de">${esc(s.de)}</span>`;
@@ -879,15 +892,16 @@ function flashFront(s) {
   return `<span class="ask">Say it in German</span>${sceneSvg(s.key, s.g)}<span class="prompt en">${esc(s.en)}</span>`;
 }
 function renderPractice() {
-  if (!pr || pr.id == null) pr = { id: nextDue(pr && pr.ahead, pr && pr.last), revealed: false, typed: "", hinted: false, ahead: pr && pr.ahead };
+  if (!selected().length) return noneSelected();
+  if (!pr || pr.id == null) pr = { id: nextCard(), revealed: false, typed: "", hinted: false };
   if (pr.id == null) {
-    const t = soonest();
+    const r = round(), st = r.stats;
     return `
     <article class="page empty">
       <span class="num">✓</span>
-      <h2>Alles erledigt.</h2>
-      <p class="note">Nothing is due right now. Your next review is ${t ? when(t) : "whenever you like"}.</p>
-      <div class="row"><button class="btn solid" data-act="ahead">Review anyway</button></div>
+      <h2>Runde ${r.n} geschafft.</h2>
+      <p class="note">Round ${r.n} done: ${st.again} again, ${st.good} got it, ${st.easy} easy.${r.sitOut.length ? ` ${r.sitOut.length} sentence${r.sitOut.length === 1 ? "" : "s"} marked Easy will sit out the next round.` : ""}</p>
+      <div class="row"><button class="btn solid" data-act="nextround">Start round ${r.n + 1}</button></div>
     </article>`;
   }
   const s = byId(pr.id);
@@ -957,12 +971,21 @@ function renderPractice() {
 function autoplayListen() {
   if (state.view === "practice" && state.session === "listen" && pr && pr.id != null && !pr.revealed) speak(byId(pr.id).de);
 }
+function noneSelected() {
+  return `<article class="page empty"><span class="num">—</span><h2>Keine Sätze.</h2>
+    <p class="note">No sentences are selected for practice. Tick the ones you want in the Table.</p>
+    <div class="row"><button class="btn solid" data-view="table">Open the Table</button></div></article>`;
+}
 function grade(g) {
-  const s = byId(pr.id), c = card(s);
-  const box = nextBox(c, g);
-  cards()[s.key] = { box, due: Date.now() + (g === "again" ? MIN : INTERVAL[box]) };
+  const s = byId(pr.id), c = card(s), r = round();
+  cards()[s.key] = { box: nextBox(c, g) };
+  const at = r.queue.indexOf(s.key);
+  if (at >= 0) r.queue.splice(at, 1);
+  if (g === "again") r.queue.splice(Math.min(r.queue.length, 3 + Math.floor(Math.random() * 3)), 0, s.key);
+  if (g === "easy") r.sitOut.push(s.key);
+  r.stats[g]++;
   persist();
-  pr = { id: null, ahead: pr.ahead, last: s.id };
+  pr = { id: null, last: s.id };
   state.word = null;
   render(); toTop();
 }
@@ -972,7 +995,7 @@ let bd = null; // { id, target, bank, placed, punct, checked, ok }
 let buildDeck = [];  // shuffled sentence ids still to come in Build, so each appears once per round
 function dealBuild(lastId) {
   if (!buildDeck.length) {
-    buildDeck = SENTENCES.map(s => s.id);
+    buildDeck = selected().map(s => s.id);
     for (let i = buildDeck.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [buildDeck[i], buildDeck[j]] = [buildDeck[j], buildDeck[i]]; }
     if (buildDeck.length > 1 && buildDeck[buildDeck.length - 1] === lastId) buildDeck.unshift(buildDeck.pop()); // no repeat across rounds
   }
@@ -1001,7 +1024,8 @@ function newBuild(id) {
   state.word = null;
 }
 function renderBuild() {
-  if (!bd) newBuild(state.order === "seq" ? SENTENCES[state.idx].id : dealBuild());
+  if (!selected().length) return noneSelected();
+  if (!bd) newBuild(state.order === "seq" ? (selected().find(s => s.id >= SENTENCES[state.idx].id) || selected()[0]).id : dealBuild());
   const s = byId(bd.id);
   const slotCls = bd.checked ? (bd.ok ? "ok" : "no") : "";
   return `
@@ -1052,14 +1076,13 @@ function renderCells() {
   $("#groups").innerHTML = Object.entries(DATA.sets).map(([set, name]) => {
     const list = SENTENCES.filter(s => s.set === set);
     return `<div class="setgroup"><h3>${esc(name)} · ${list.length}</h3><div class="cells">${list.map(s =>
-      `<button class="cell ${s.id === current ? "current" : ""}" data-box="${srs ? card(s).box : build && state.built[s.key] ? "done" : ""}" data-jump="${s.id}" title="${esc(s.en)}">${s.id}</button>`).join("")}</div></div>`;
+      `<button class="cell ${s.id === current ? "current" : ""} ${(srs || build) && !isOn(s.key) ? "off" : ""}" data-box="${srs ? card(s).box : build && state.built[s.key] ? "done" : ""}" data-jump="${s.id}" title="${esc(s.en)}">${s.id}</button>`).join("")}</div></div>`;
   }).join("");
-  const now = Date.now();
   const started = SENTENCES.filter(s => card(s).box > 0).length;
   const solid = SENTENCES.filter(s => card(s).box >= 3).length;
-  const due = SENTENCES.filter(s => { const c = card(s); return c.box > 0 && c.due <= now; }).length;
+  const left = srs && state.rounds[deck()] ? state.rounds[deck()].queue.filter(isOn).length : selected().length;
   $("#kastentitle").innerHTML = srs || build ? `Karteikasten <em class="gl">(card box)</em> · <span>${DRILL[state.session].name}</span>` : "Sentences";
-  $("#summary").textContent = srs ? `${started}/${TOTAL} started · ${solid} solid · ${due} due now`
+  $("#summary").textContent = srs ? `${started}/${TOTAL} started · ${solid} solid · ${left} left in this round`
     : build ? drillStats("build").text[0] : "Tap a number to open that sentence.";
   $("#clear").hidden = !(srs || build);
   $("#legend").hidden = !srs;
@@ -1090,6 +1113,16 @@ document.addEventListener("click", e => {
     render(); return;
   }
   if (t.dataset.sayde) { speak(t.dataset.sayde); return; }
+  if (t.dataset.sel) {
+    // Toggle in place so the Table keeps its scroll position.
+    const k = t.dataset.sel, on = isOn(k);
+    state.off = on ? [...state.off, k] : state.off.filter(x => x !== k);
+    persist(); buildDeck = [];
+    t.setAttribute("aria-pressed", String(!on)); t.closest("tr").classList.toggle("off", on);
+    $("#selcount").textContent = selCount();
+    return;
+  }
+  if (t.dataset.selall) { state.off = t.dataset.selall === "1" ? [] : SENTENCES.map(s => s.key); persist(); buildDeck = []; render(); return; }
   if (t.dataset.tlang) {
     // Flip the language in place: no re-render, so the scroll position and open rows stay put.
     state.tlang = t.dataset.tlang; persist();
@@ -1119,7 +1152,7 @@ document.addEventListener("click", e => {
     const id = +t.dataset.jump;
     state.idx = id - 1; state.word = null;
     if (state.session === "build") newBuild(id);
-    else if (deck()) pr = { id, revealed: false, typed: "", hinted: false, ahead: true };
+    else if (deck()) pr = { id, revealed: false, typed: "", hinted: false };
     persist(); render(); toTop(); autoplayListen(); return;
   }
   if (t.dataset.grade) { grade(t.dataset.grade); autoplayListen(); return; }
@@ -1133,7 +1166,7 @@ document.addEventListener("click", e => {
     case "prev": if (state.idx > 0) { state.idx--; state.word = null; persist(); render(); toTop(); } break;
     case "next": if (state.idx < TOTAL - 1) { state.idx++; state.word = null; persist(); render(); toTop(); } break;
     case "hint": pr.typed = $("#typed") ? $("#typed").value : pr.typed; pr.hinted = true; render(); break;
-    case "ahead": pr = { id: null, ahead: true }; render(); toTop(); autoplayListen(); break;
+    case "nextround": state.rounds[deck()] = newRound(round()); persist(); pr = null; render(); toTop(); autoplayListen(); break;
     case "flip": pr.revealed = true; render(); if (state.session !== "listen") speak(byId(pr.id).de); break;
     case "exit": state.session = null; pr = null; state.word = null; render(); window.scrollTo(0, 0); break;
     case "check":
@@ -1144,7 +1177,8 @@ document.addEventListener("click", e => {
     case "clear": bd.bank.push(...bd.placed); bd.placed = []; render(); break;
     case "bnext": {
       const i = SENTENCES.findIndex(s => s.id === bd.id);
-      newBuild(state.order === "seq" ? SENTENCES[(i + 1) % TOTAL].id : dealBuild(bd.id));
+      const on = selected();
+      newBuild(state.order === "seq" ? (on.find(s => s.id > bd.id) || on[0]).id : dealBuild(bd.id));
       render(); toTop(); break;
     }
   }
@@ -1180,10 +1214,10 @@ function confirmTap(b, idle, armedText, doneText, action) {
 }
 $("#clear").addEventListener("click", e => confirmTap(e.currentTarget, () => "Clear",
   `Tap again to clear ${DRILL[state.session].name}`, "Cleared",
-  () => { if (state.session === "build") state.built = {}; else state.progress[deck()] = {}; }));
+  () => { if (state.session === "build") state.built = {}; else { state.progress[deck()] = {}; delete state.rounds[deck()]; } }));
 $("#reset").addEventListener("click", e => confirmTap(e.currentTarget, () => "Reset all progress",
   "Tap again to erase progress for every practice type", "All progress erased",
-  () => { state.progress = { en: {}, de: {}, listen: {}, type: {} }; state.built = {}; }));
+  () => { state.progress = { en: {}, de: {}, listen: {}, type: {} }; state.built = {}; state.rounds = {}; }));
 
 render();
 </script>
