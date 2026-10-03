@@ -422,7 +422,7 @@ const state = {
   noun: ["m", "f", "n"].includes(saved.noun) ? saved.noun : "m",   // the story's object: der Apfel, die Birne or das Bonbon
   compare: !!saved.compare,          // Learn: show all three versions of the sentence
   off: Array.isArray(saved.off) ? saved.off : [],   // sentence keys left out of practice (chosen in the Table)
-  rounds: saved.rounds || {},        // per card drill: { n, queue: [keys], sitOut: [keys], stats }
+  rounds: saved.rounds || {},        // per card drill: { n, queue: [keys], stats }
   session: null,                     // the drill the learner has entered (see DRILLS), or null for the practice menu
   idx: Number.isInteger(saved.idx) && saved.idx < TOTAL ? saved.idx : 0,
   // Progress is kept separately per practice type: sentence key -> { box, due }.
@@ -786,8 +786,8 @@ function pick(list, lastId) {
   return pool[Math.floor(Math.random() * pool.length)].id;
 }
 // Practice works in rounds: every selected sentence once, in the chosen order.
-// Again puts a card back a few cards later; Got it finishes it for this round;
-// Easy also keeps it out of the next round.
+// Again puts a card back a few cards later; Got it and Easy finish it for this
+// round (Easy moves it up two boxes in the progress grid instead of one).
 const isOn = key => !state.off.includes(key);
 const selected = () => SENTENCES.filter(s => isOn(s.key));
 function ordered(list) {
@@ -797,10 +797,7 @@ function ordered(list) {
   return out;
 }
 function newRound(prev) {
-  const sit = new Set(prev ? prev.sitOut : []);
-  let pool = selected().filter(s => !sit.has(s.key));
-  if (!pool.length) pool = selected();
-  return { n: (prev ? prev.n : 0) + 1, queue: ordered(pool).map(s => s.key), sitOut: [], stats: { again: 0, good: 0, easy: 0 } };
+  return { n: (prev ? prev.n : 0) + 1, queue: ordered(selected()).map(s => s.key), stats: { again: 0, good: 0, easy: 0 } };
 }
 const round = () => state.rounds[deck()] ||= newRound();
 function nextCard() {
@@ -884,7 +881,7 @@ function gradeButtons() {
       <button class="btn" data-grade="good">2 · Got it</button>
       <button class="btn good" data-grade="easy">3 · Easy</button>
     </div>
-    <p class="hint gradehelp">Again: back in a few cards · Got it: done for this round · Easy: also skips the next round</p>`;
+    <p class="hint gradehelp">Again: back in a few cards · Got it: done for this round · Easy: done, and counts as known sooner</p>`;
 }
 function flashFront(s) {
   if (state.session === "de") return `<span class="ask">What does it mean?</span><span class="prompt" lang="de">${esc(s.de)}</span>`;
@@ -900,7 +897,7 @@ function renderPractice() {
     <article class="page empty">
       <span class="num">✓</span>
       <h2>Runde ${r.n} geschafft.</h2>
-      <p class="note">Round ${r.n} done: ${st.again} again, ${st.good} got it, ${st.easy} easy.${r.sitOut.length ? ` ${r.sitOut.length} sentence${r.sitOut.length === 1 ? "" : "s"} marked Easy will sit out the next round.` : ""}</p>
+      <p class="note">Round ${r.n} done: ${st.again} again, ${st.good} got it, ${st.easy} easy.</p>
       <div class="row"><button class="btn solid" data-act="nextround">Start round ${r.n + 1}</button></div>
     </article>`;
   }
@@ -982,7 +979,6 @@ function grade(g) {
   const at = r.queue.indexOf(s.key);
   if (at >= 0) r.queue.splice(at, 1);
   if (g === "again") r.queue.splice(Math.min(r.queue.length, 3 + Math.floor(Math.random() * 3)), 0, s.key);
-  if (g === "easy") r.sitOut.push(s.key);
   r.stats[g]++;
   persist();
   pr = { id: null, last: s.id };
