@@ -408,7 +408,7 @@ const saved = store.load();
 const state = {
   view: saved.view === "practice" || saved.view === "build" ? "practice" : saved.view === "table" ? "table" : "learn",
   tlang: ["en", "de", "both"].includes(saved.tlang) ? saved.tlang : "de",   // language shown in the Table
-  noun: ["m", "f", "n", "mix"].includes(saved.noun) ? saved.noun : "m",   // the story's object: der Apfel, die Birne, das Bonbon, or a mix
+  noun: ["m", "f", "n"].includes(saved.noun) ? saved.noun : "m",   // the story's object: der Apfel, die Birne or das Bonbon
   compare: !!saved.compare,          // Learn: show all three versions of the sentence
   session: null,                     // the drill the learner has entered (see DRILLS), or null for the practice menu
   idx: Number.isInteger(saved.idx) && saved.idx < TOTAL ? saved.idx : 0,
@@ -436,12 +436,10 @@ const cards = () => deck() ? state.progress[deck()] : {};
 const card = s => cards()[s.key] || { box: 0, due: 0 };
 // Every sentence exists for der Apfel (m), die Birne (f) and das Bonbon (n); "alt" holds what differs.
 const NOUN_IDS = ["m", "f", "n"];
-const mixPick = {};                // in Mix, the object each sentence is currently shown with
-const pickNoun = key => state.noun !== "mix" ? state.noun : (mixPick[key] ||= NOUN_IDS[Math.floor(Math.random() * 3)]);
 const verOf = (s, g) => ({ ...s, ...((s.alt && s.alt[g]) || {}), g });
-const view = s => verOf(s, pickNoun(s.key));
+const view = s => verOf(s, state.noun);
 const byId = id => view(SENTENCES.find(s => s.id === id));
-const nounSeg = () => `<div class="seg" role="group" aria-label="Object">${NOUN_IDS.map(g => seg("noun", g, DATA.nouns[g].label)).join("")}${seg("noun", "mix", "Mix")}</div>`;
+const nounSeg = () => `<div class="seg" role="group" aria-label="Object">${NOUN_IDS.map(g => seg("noun", g, DATA.nouns[g].label)).join("")}</div>`;
 // All three versions of a sentence, with the words that change highlighted.
 function compareBox(s) {
   const base = SENTENCES.find(x => x.key === s.key);
@@ -962,7 +960,6 @@ function autoplayListen() {
 function grade(g) {
   const s = byId(pr.id), c = card(s);
   const box = nextBox(c, g);
-  delete mixPick[s.key];
   cards()[s.key] = { box, due: Date.now() + (g === "again" ? MIN : INTERVAL[box]) };
   persist();
   pr = { id: null, ahead: pr.ahead, last: s.id };
@@ -998,7 +995,6 @@ function shuffle(arr) {
   return a;
 }
 function newBuild(id) {
-  delete mixPick[byId(id).key];
   const { toks, punct } = tokens(byId(id).de);
   const order = shuffle(toks.map((t, i) => i));
   bd = { id, target: toks, bank: order.map(i => ({ k: i, w: toks[i] })), placed: [], punct, checked: false, ok: false };
