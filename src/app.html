@@ -88,6 +88,8 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 
 .eyebrow { font-family: var(--display); font-weight: 600; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
 .eyebrow b { color: var(--margin); font-weight: 600; }
+.lvl { font-family: var(--mono); font-size: .72rem; letter-spacing: 0; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 4px; padding: 0 5px; vertical-align: 1px; }
+.grp .grpsel { float: right; font-family: var(--mono); font-size: .72rem; letter-spacing: 0; text-transform: none; font-weight: 400; }
 .en { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--muted); margin: 0; }
 .de { font-family: var(--serif); font-weight: 600; font-size: clamp(1.55rem, 4.6vw, 2.1rem); line-height: 1.35; color: var(--ink); margin: 0; text-wrap: balance; }
 .note { margin: 0; max-width: 62ch; font-size: .98rem; }
@@ -401,6 +403,7 @@ const saved = store.load();
 const state = {
   view: saved.view === "practice" || saved.view === "build" ? "practice" : saved.view === "table" ? "table" : "learn",
   tlang: ["en", "de", "both"].includes(saved.tlang) ? saved.tlang : "de",   // language shown in the Table
+  tgroup: saved.tgroup === "level" ? "level" : "story",   // Table grouping: story sets or CEFR level
   noun: ["m", "f", "n"].includes(saved.noun) ? saved.noun : "m",   // the story's object: der Apfel, die Birne or das Bonbon
   compare: !!saved.compare,          // Learn: show all three versions of the sentence
   off: Array.isArray(saved.off) ? saved.off : [],   // sentence keys left out of practice (chosen in the Table)
@@ -415,7 +418,7 @@ const state = {
   built: saved.built || {},          // Build: sentence key -> true once built correctly
   order: saved.order === "seq" ? "seq" : "shuffle", // which sentence comes next in Practice and Build
 };
-const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, built: state.built, order: state.order, tlang: state.tlang, noun: state.noun, compare: state.compare, off: state.off, rounds: state.rounds });
+const persist = () => store.save({ view: state.view, idx: state.idx, progress: state.progress, slow: state.slow, built: state.built, order: state.order, tlang: state.tlang, tgroup: state.tgroup, noun: state.noun, compare: state.compare, off: state.off, rounds: state.rounds });
 // Each drill is its own experience with its own progress.
 const DRILLS = [
   { id: "en", kind: "Flash cards", name: "EN → DE", desc: "See the English, say the German." },
@@ -498,7 +501,7 @@ const SCENES = /*__SCENES__*/{};
 // A fixed cast so every picture tells the same story: each person keeps one colour and label.
 const CAST = {
   ich: { c: "#3D6FD1", label: "ich" }, du: { c: "#5B9A2F", label: "du" }, er: { c: "#1F9A8A", label: "er" },
-  sie: { c: "#9A5BC9", label: "sie" }, John: { c: "#E08A1E", label: "John" }, Kind: { c: "#E0668F", label: "Kind", s: .72 },
+  sie: { c: "#9A5BC9", label: "sie" }, John: { c: "#E08A1E", label: "John" }, Anna: { c: "#C4A11C", label: "Anna" }, Kind: { c: "#E0668F", label: "Kind", s: .72 },
   Sie: { c: "#6B7890", label: "Sie", formal: true },
 };
 const FRUIT = { red: "#D8413A", green: "#7CB342", blue: "#4A7BD0" };
@@ -701,7 +704,7 @@ function frameDiagram(s) {
   }).join("")}</div></div>`;
 }
 const header = (s, label) => `<span class="num">${pad(s.id)}</span>
-  <p class="eyebrow">${label} · <b>${esc(DATA.sets[s.set])}</b></p>`;
+  <p class="eyebrow">${label} · <b>${esc(DATA.sets[s.set])}</b> · <span class="lvl" title="CEFR level">${s.level}</span></p>`;
 
 /* ---------- Learn ---------- */
 function renderLearn() {
@@ -731,26 +734,31 @@ function renderLearn() {
 }
 
 /* ---------- Table: all sentences at once ---------- */
+const LEVEL_NAME = { A1: "beginner", A2: "elementary", B1: "intermediate" };
 const selCount = () => `Practising ${selected().length} of ${TOTAL}`;
 function renderTable() {
   const tlangSeg = `<div class="seg" role="group" aria-label="Language">${seg("tlang", "en", "English")}${seg("tlang", "de", "Deutsch")}${seg("tlang", "both", "Both")}</div>`;
-  const rows = Object.entries(DATA.sets).map(([set, name]) => {
-    const list = SENTENCES.filter(s => s.set === set).map(view);
-    return `<tr><th class="grp" colspan="4">${esc(name)} · ${list.length}</th></tr>` + list.map(s => `
+  const groups = state.tgroup === "level"
+    ? DATA.levels.map(lv => [`${lv} · ${LEVEL_NAME[lv]}`, SENTENCES.filter(s => s.level === lv)])
+    : Object.entries(DATA.sets).map(([set, name]) => [name, SENTENCES.filter(s => s.set === set)]);
+  const groupSeg = `<div class="seg" role="group" aria-label="Group by">${seg("tgroup", "story", "By story")}${seg("tgroup", "level", "By level")}</div>`;
+  const rows = groups.map(([name, members]) => {
+    const list = members.map(view);
+    return `<tr><th class="grp" colspan="4">${esc(name)} · ${list.length}<button class="linkish grpsel" data-selonly="${list.map(s => s.key).join(",")}">practise only these</button></th></tr>` + list.map(s => `
       <tr data-row="${s.id}" class="${isOn(s.key) ? "" : "off"}">
         <td class="sel"><button class="chk" data-sel="${s.key}" aria-pressed="${isOn(s.key)}" aria-label="Practise this sentence"></button></td>
         <td class="n"><button data-open="${s.id}" title="Open in Learn">${pad(s.id)}</button></td>
         <td><button class="rowbtn" data-peek="${s.id}">
           <span class="en">${esc(s.en)}</span>
           <span class="de" lang="de">${esc(s.de)}</span>
-          <span class="tg">${esc(TOPICS[s.topics[0]].title)}</span>
+          <span class="tg">${s.level} · ${esc(TOPICS[s.topics[0]].title)}</span>
         </button></td>
         <td class="play"><button data-say="${s.id}" aria-label="Play">▶</button></td>
       </tr>`).join("");
   }).join("");
   return `
   <div class="tbar"><h2>All sentences</h2>${tlangSeg}</div>
-  <div class="nounbar">${nounSeg()}</div>
+  <div class="nounbar">${nounSeg()}${groupSeg}</div>
   <div class="selbar"><span class="hint" id="selcount">${selCount()}</span>
     <button class="btn mini" data-selall="1">All</button><button class="btn mini" data-selall="0">None</button></div>
   <p class="hint">Tick the sentences to practise · tap a sentence to see its translation · tap the number to open it in Learn</p>
@@ -1097,6 +1105,8 @@ document.addEventListener("click", e => {
     $("#selcount").textContent = selCount();
     return;
   }
+  if (t.dataset.selonly) { const keep = t.dataset.selonly.split(","); state.off = SENTENCES.map(s => s.key).filter(k => !keep.includes(k)); persist(); buildDeck = []; render(); return; }
+  if (t.dataset.tgroup) { state.tgroup = t.dataset.tgroup; persist(); render(); return; }
   if (t.dataset.selall) { state.off = t.dataset.selall === "1" ? [] : SENTENCES.map(s => s.key); persist(); buildDeck = []; render(); return; }
   if (t.dataset.tlang) {
     // Flip the language in place: no re-render, so the scroll position and open rows stay put.

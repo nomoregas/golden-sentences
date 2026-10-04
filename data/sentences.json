@@ -18,12 +18,18 @@
    "en": "sweet"
   }
  },
+ "levels": [
+  "A1",
+  "A2",
+  "B1"
+ ],
  "sentences": [
   {
    "id": 1,
    "key": "F1",
    "set": "ferriss",
    "source": "Ferriss #1",
+   "level": "A1",
    "en": "The apple is red.",
    "de": "Der Apfel ist rot.",
    "tokens": [
@@ -130,6 +136,7 @@
    "key": "F2",
    "set": "ferriss",
    "source": "Ferriss #2",
+   "level": "A1",
    "en": "It is John's apple.",
    "de": "Es ist Johns Apfel.",
    "tokens": [
@@ -245,6 +252,7 @@
    "key": "F3",
    "set": "ferriss",
    "source": "Ferriss #3",
+   "level": "A2",
    "en": "I give John the apple.",
    "de": "Ich gebe John den Apfel.",
    "tokens": [
@@ -369,6 +377,7 @@
    "key": "F4",
    "set": "ferriss",
    "source": "Ferriss #4",
+   "level": "A2",
    "en": "We give him the apple.",
    "de": "Wir geben ihm den Apfel.",
    "tokens": [
@@ -491,6 +500,7 @@
    "key": "F5",
    "set": "ferriss",
    "source": "Ferriss #5",
+   "level": "A2",
    "en": "He gives it to John.",
    "de": "Er gibt ihn John.",
    "tokens": [
@@ -608,6 +618,7 @@
    "key": "F6",
    "set": "ferriss",
    "source": "Ferriss #6",
+   "level": "A2",
    "en": "She gives it to him.",
    "de": "Sie gibt ihn ihm.",
    "tokens": [
@@ -722,6 +733,7 @@
    "key": "F7",
    "set": "ferriss",
    "source": "Ferriss #7",
+   "level": "A1",
    "en": "Is the apple red?",
    "de": "Ist der Apfel rot?",
    "tokens": [
@@ -823,6 +835,7 @@
    "key": "F8",
    "set": "ferriss",
    "source": "Ferriss #8",
+   "level": "A1",
    "en": "The apples are red.",
    "de": "Die Äpfel sind rot.",
    "tokens": [
@@ -929,6 +942,7 @@
    "key": "F9",
    "set": "ferriss",
    "source": "Ferriss #9",
+   "level": "A2",
    "en": "I must give it to him.",
    "de": "Ich muss ihn ihm geben.",
    "tokens": [
@@ -1060,6 +1074,7 @@
    "key": "F10",
    "set": "ferriss",
    "source": "Ferriss #10",
+   "level": "A2",
    "en": "I want to give it to her.",
    "de": "Ich will ihn ihr geben.",
    "tokens": [
@@ -1191,6 +1206,7 @@
    "key": "F11",
    "set": "ferriss",
    "source": "Ferriss #11",
+   "level": "A2",
    "en": "I'm going to know tomorrow.",
    "de": "Ich werde es morgen wissen.",
    "tokens": [
@@ -1240,6 +1256,7 @@
    "key": "F12",
    "set": "ferriss",
    "source": "Ferriss #12",
+   "level": "A1",
    "en": "I can't eat the apple.",
    "de": "Ich kann den Apfel nicht essen.",
    "tokens": [
@@ -1390,6 +1407,7 @@
    "key": "F13",
    "set": "ferriss",
    "source": "Ferriss #13",
+   "level": "A1",
    "en": "I have eaten the apple.",
    "de": "Ich habe den Apfel gegessen.",
    "tokens": [
@@ -1524,6 +1542,7 @@
    "key": "G1",
    "set": "golden",
    "source": "Golden 41 #1",
+   "level": "A1",
    "en": "This is an apple.",
    "de": "Das ist ein Apfel.",
    "tokens": [
@@ -1628,6 +1647,7 @@
    "key": "G5",
    "set": "golden",
    "source": "Golden 41 #5",
+   "level": "A2",
    "en": "I give John his apple.",
    "de": "Ich gebe John seinen Apfel.",
    "tokens": [
@@ -1662,7 +1682,7 @@
      "f": "MF"
     }
    ],
-   "note": "The apple is the accusative object, so sein takes -en: seinen, like einen.",
+   "note": "The apple is the accusative object, so sein takes -en: seinen, like einen. For a woman's things, 'her' is ihr with the same endings: Ich gebe Anna ihren Apfel.",
    "hint": "sein takes the same ending as ein would.",
    "topics": [
     "possessive-endings",
@@ -1704,7 +1724,7 @@
        "f": "MF"
       }
      ],
-     "note": "The pear is the accusative object, so sein takes -e: seine, like eine."
+     "note": "The pear is the accusative object, so sein takes -e: seine, like eine. For a woman's things, 'her' is ihr with the same endings: Ich gebe Anna ihre Birne."
     },
     "n": {
      "en": "I give John his sweet.",
@@ -1741,7 +1761,7 @@
        "f": "MF"
       }
      ],
-     "note": "The sweet is the accusative object, so sein takes no ending: sein, like ein."
+     "note": "The sweet is the accusative object, so sein takes no ending: sein, like ein. For a woman's things, 'her' is ihr with the same endings: Ich gebe Anna ihr Bonbon."
     }
    }
   },
@@ -1750,6 +1770,7 @@
    "key": "G11",
    "set": "golden",
    "source": "Golden 41 #11",
+   "level": "A1",
    "en": "But I do not want the apple either.",
    "de": "Aber ich will den Apfel auch nicht.",
    "tokens": [
@@ -1908,6 +1929,7 @@
    "key": "G13",
    "set": "golden",
    "source": "Golden 41 #13",
+   "level": "B1",
    "en": "It's not mine.",
    "de": "Er ist nicht meiner.",
    "tokens": [
@@ -2024,6 +2046,7 @@
    "key": "G15",
    "set": "golden",
    "source": "Golden 41 #15",
+   "level": "B1",
    "en": "I will not take the red apple.",
    "de": "Ich werde den roten Apfel nicht nehmen.",
    "tokens": [
@@ -2185,6 +2208,7 @@
    "key": "G16",
    "set": "golden",
    "source": "Golden 41 #16",
+   "level": "A1",
    "en": "Do you want an apple?",
    "de": "Möchtest du einen Apfel?",
    "tokens": [
@@ -2287,6 +2311,7 @@
    "key": "G17",
    "set": "golden",
    "source": "Golden 41 #17",
+   "level": "A2",
    "en": "Which one do you want?",
    "de": "Welchen möchtest du?",
    "tokens": [
@@ -2372,6 +2397,7 @@
    "key": "G19",
    "set": "golden",
    "source": "Golden 41 #19",
+   "level": "A1",
    "en": "It was John's apple.",
    "de": "Es war Johns Apfel.",
    "tokens": [
@@ -2474,6 +2500,7 @@
    "key": "G20",
    "set": "golden",
    "source": "Golden 41 #20",
+   "level": "A2",
    "en": "But he said he doesn't want it anymore.",
    "de": "Aber er hat gesagt, dass er ihn nicht mehr will.",
    "tokens": [
@@ -2694,6 +2721,7 @@
    "key": "G21",
    "set": "golden",
    "source": "Golden 41 #21",
+   "level": "A2",
    "en": "So now it is yours.",
    "de": "Jetzt gehört er also dir.",
    "tokens": [
@@ -2826,6 +2854,7 @@
    "key": "G22",
    "set": "golden",
    "source": "Golden 41 #22",
+   "level": "B1",
    "en": "You should eat it.",
    "de": "Du solltest ihn essen.",
    "tokens": [
@@ -2926,6 +2955,7 @@
    "key": "G24",
    "set": "golden",
    "source": "Golden 41 #24",
+   "level": "A2",
    "en": "Why didn't you eat it?",
    "de": "Warum hast du ihn nicht gegessen?",
    "tokens": [
@@ -3065,6 +3095,7 @@
    "key": "G25",
    "set": "golden",
    "source": "Golden 41 #25",
+   "level": "B1",
    "en": "If you ate it, you would be happy.",
    "de": "Wenn du ihn essen würdest, wärst du glücklich.",
    "tokens": [
@@ -3238,6 +3269,7 @@
    "key": "G27",
    "set": "golden",
    "source": "Golden 41 #27",
+   "level": "A2",
    "en": "They will eat all of the apples.",
    "de": "Sie werden alle Äpfel essen.",
    "tokens": [
@@ -3358,6 +3390,7 @@
    "key": "G28",
    "set": "golden",
    "source": "Golden 41 #28",
+   "level": "B1",
    "en": "And there are a lot of apples to eat.",
    "de": "Und es gibt viele Äpfel zu essen.",
    "tokens": [
@@ -3514,6 +3547,7 @@
    "key": "G29",
    "set": "golden",
    "source": "Golden 41 #29",
+   "level": "A2",
    "en": "Most of them are red.",
    "de": "Die meisten von ihnen sind rot.",
    "tokens": [
@@ -3566,6 +3600,7 @@
    "key": "G31",
    "set": "golden",
    "source": "Golden 41 #31",
+   "level": "B1",
    "en": "And none of the apples are blue.",
    "de": "Und keiner der Äpfel ist blau.",
    "tokens": [
@@ -3708,6 +3743,7 @@
    "key": "G35",
    "set": "golden",
    "source": "Golden 41 #35",
+   "level": "B1",
    "en": "These are beautiful, big, red apples.",
    "de": "Das sind schöne, große, rote Äpfel.",
    "tokens": [
@@ -3848,6 +3884,7 @@
    "key": "G36",
    "set": "golden",
    "source": "Golden 41 #36",
+   "level": "B1",
    "en": "You can have as many as you want.",
    "de": "Du kannst so viele haben, wie du willst.",
    "tokens": [
@@ -3913,6 +3950,7 @@
    "key": "G37",
    "set": "golden",
    "source": "Golden 41 #37",
+   "level": "A2",
    "en": "Because I have enough for everyone.",
    "de": "Weil ich genug für alle habe.",
    "tokens": [
@@ -3969,6 +4007,7 @@
    "key": "G38",
    "set": "golden",
    "source": "Golden 41 #38",
+   "level": "A1",
    "en": "Almost everyone likes apples.",
    "de": "Fast jeder mag Äpfel.",
    "tokens": [
@@ -4070,6 +4109,7 @@
    "key": "G39",
    "set": "golden",
    "source": "Golden 41 #39",
+   "level": "A2",
    "en": "The biggest ones are the best.",
    "de": "Die größten sind die besten.",
    "tokens": [
@@ -4116,6 +4156,7 @@
    "key": "G41",
    "set": "golden",
    "source": "Golden 41 #41",
+   "level": "A2",
    "en": "But the big apples are better.",
    "de": "Aber die großen Äpfel sind besser.",
    "tokens": [
@@ -4256,6 +4297,7 @@
    "key": "X2",
    "set": "extra",
    "source": "Added",
+   "level": "A1",
    "en": "The child eats the apple.",
    "de": "Das Kind isst den Apfel.",
    "tokens": [
@@ -4376,6 +4418,7 @@
    "key": "X3",
    "set": "extra",
    "source": "Added",
+   "level": "A2",
    "en": "I give the child the apple.",
    "de": "Ich gebe dem Kind den Apfel.",
    "tokens": [
@@ -4528,6 +4571,7 @@
    "key": "X4",
    "set": "extra",
    "source": "Added",
+   "level": "A1",
    "en": "I don't have an apple.",
    "de": "Ich habe keinen Apfel.",
    "tokens": [
@@ -4643,6 +4687,7 @@
    "key": "X5",
    "set": "extra",
    "source": "Added",
+   "level": "A1",
    "en": "Give me the apple!",
    "de": "Gib mir den Apfel!",
    "tokens": [
@@ -4744,6 +4789,7 @@
    "key": "X6",
    "set": "extra",
    "source": "Added",
+   "level": "A1",
    "en": "Would you like an apple? (formal)",
    "de": "Möchten Sie einen Apfel?",
    "tokens": [
@@ -4846,6 +4892,7 @@
    "key": "X7",
    "set": "extra",
    "source": "Added",
+   "level": "A2",
    "en": "I put the apple on the table.",
    "de": "Ich lege den Apfel auf den Tisch.",
    "tokens": [
@@ -5013,6 +5060,7 @@
    "key": "X8",
    "set": "extra",
    "source": "Added",
+   "level": "A2",
    "en": "The apple is lying on the table.",
    "de": "Der Apfel liegt auf dem Tisch.",
    "tokens": [
@@ -5150,6 +5198,7 @@
    "key": "X9",
    "set": "extra",
    "source": "Added",
+   "level": "A2",
    "en": "The apple fell off the table.",
    "de": "Der Apfel ist vom Tisch gefallen.",
    "tokens": [
@@ -5300,6 +5349,7 @@
    "key": "X10",
    "set": "extra",
    "source": "Added",
+   "level": "A1",
    "en": "I'll bring an apple along tomorrow.",
    "de": "Ich bringe morgen einen Apfel mit.",
    "tokens": [
@@ -5450,6 +5500,7 @@
    "key": "X11",
    "set": "extra",
    "source": "Added",
+   "level": "B1",
    "en": "The apple that I bought is red.",
    "de": "Der Apfel, den ich gekauft habe, ist rot.",
    "tokens": [
@@ -5628,6 +5679,7 @@
    "key": "X12",
    "set": "extra",
    "source": "Added",
+   "level": "B1",
    "en": "I'm looking forward to the apple.",
    "de": "Ich freue mich auf den Apfel.",
    "tokens": [
@@ -5777,6 +5829,7 @@
    "key": "X13",
    "set": "extra",
    "source": "Added",
+   "level": "B1",
    "en": "I eat an apple in the kitchen every day.",
    "de": "Ich esse jeden Tag in der Küche einen Apfel.",
    "tokens": [
@@ -5963,6 +6016,275 @@
       }
      ],
      "note": "Time (jeden Tag) before place (in der Küche). The new object (ein Bonbon) comes late. in + dative for location."
+    }
+   }
+  },
+  {
+   "id": 49,
+   "key": "X14",
+   "set": "extra",
+   "source": "Added",
+   "level": "A2",
+   "en": "I give Anna her apple.",
+   "de": "Ich gebe Anna ihren Apfel.",
+   "tokens": [
+    {
+     "w": "Ich",
+     "g": "I",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "gebe",
+     "g": "give",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "Anna",
+     "g": "Anna",
+     "c": "D",
+     "f": "MF"
+    },
+    {
+     "w": "ihren",
+     "g": "her",
+     "c": "A",
+     "f": "MF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "A",
+     "f": "MF"
+    }
+   ],
+   "note": "Anna is a woman, so 'her' is ihr, which takes the same endings as ein: ihren, like einen. Compare John's: Ich gebe John seinen Apfel. Watch out: ihr also means 'to her', 'you' (plural) and, as Ihr, the formal 'your'.",
+   "hint": "'her' (belonging to her) is ihr.",
+   "mistake": {
+    "wrong": "Ich gebe Anna seinen Apfel.",
+    "why": "sein means 'his'. For something of Anna's, use ihr: ihren Apfel."
+   },
+   "topics": [
+    "possessive-endings",
+    "dative-accusative"
+   ],
+   "alt": {
+    "f": {
+     "en": "I give Anna her pear.",
+     "de": "Ich gebe Anna ihre Birne.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gebe",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Anna",
+       "g": "Anna",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "ihre",
+       "g": "her",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "Anna is a woman, so 'her' is ihr, which takes the same endings as ein: ihre, like eine. Compare John's: Ich gebe John seine Birne. Watch out: ihr also means 'to her', 'you' (plural) and, as Ihr, the formal 'your'.",
+     "mistake": {
+      "wrong": "Ich gebe Anna seine Birne.",
+      "why": "sein means 'his'. For something of Anna's, use ihr: ihre Birne."
+     }
+    },
+    "n": {
+     "en": "I give Anna her sweet.",
+     "de": "Ich gebe Anna ihr Bonbon.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "gebe",
+       "g": "give",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "Anna",
+       "g": "Anna",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "ihr",
+       "g": "her",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      }
+     ],
+     "note": "Anna is a woman, so 'her' is ihr, which takes the same endings as ein: ihr, like ein. Compare John's: Ich gebe John sein Bonbon. Watch out: ihr also means 'to her', 'you' (plural) and, as Ihr, the formal 'your'.",
+     "mistake": {
+      "wrong": "Ich gebe Anna sein Bonbon.",
+      "why": "sein means 'his'. For something of Anna's, use ihr: ihr Bonbon."
+     }
+    }
+   }
+  },
+  {
+   "id": 50,
+   "key": "X15",
+   "set": "extra",
+   "source": "Added",
+   "level": "B1",
+   "en": "She gave it to her.",
+   "de": "Sie hat ihn ihr gegeben.",
+   "tokens": [
+    {
+     "w": "Sie",
+     "g": "she",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "hat",
+     "g": "has",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "ihn",
+     "g": "it",
+     "c": "A",
+     "f": "MF"
+    },
+    {
+     "w": "ihr",
+     "g": "to-her",
+     "c": "D",
+     "f": "MF"
+    },
+    {
+     "w": "gegeben",
+     "g": "given",
+     "c": "v",
+     "f": "RK"
+    }
+   ],
+   "note": "Three pronouns in one sentence: sie (she, the one giving), ihn (it: the apple, accusative) and ihr (to her: Anna, dative). Accusative before dative. Perfekt: hat in position 2, gegeben at the end.",
+   "hint": "Accusative pronoun before dative.",
+   "mistake": {
+    "wrong": "Sie hat ihr ihn gegeben.",
+    "why": "With two pronouns, the accusative comes first: ihn ihr."
+   },
+   "topics": [
+    "pronoun-order",
+    "personal-pronouns",
+    "perfekt"
+   ],
+   "alt": {
+    "f": {
+     "de": "Sie hat sie ihr gegeben.",
+     "tokens": [
+      {
+       "w": "Sie",
+       "g": "she",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "hat",
+       "g": "has",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "ihr",
+       "g": "to-her",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "gegeben",
+       "g": "given",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Three pronouns in one sentence: sie (she, the one giving), sie (it: the pear, accusative) and ihr (to her: Anna, dative). Accusative before dative. Perfekt: hat in position 2, gegeben at the end.",
+     "mistake": {
+      "wrong": "Sie hat ihr sie gegeben.",
+      "why": "With two pronouns, the accusative comes first: sie ihr."
+     }
+    },
+    "n": {
+     "de": "Sie hat es ihr gegeben.",
+     "tokens": [
+      {
+       "w": "Sie",
+       "g": "she",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "hat",
+       "g": "has",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "ihr",
+       "g": "to-her",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "gegeben",
+       "g": "given",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Three pronouns in one sentence: sie (she, the one giving), es (it: the sweet, accusative) and ihr (to her: Anna, dative). Accusative before dative. Perfekt: hat in position 2, gegeben at the end.",
+     "mistake": {
+      "wrong": "Sie hat ihr es gegeben.",
+      "why": "With two pronouns, the accusative comes first: es ihr."
+     }
     }
    }
   }

@@ -32,7 +32,7 @@ FORMS = {
     # articles and determiners
     "Der": ("Der", "Die", "Das"), "der": ("der", "die", "das"), "den": ("den", "die", "das"),
     "ein": ("ein", "eine", "ein"), "einen": ("einen", "eine", "ein"), "keinen": ("keinen", "keine", "kein"),
-    "seinen": ("seinen", "seine", "sein"), "roten": ("roten", "rote", "rote"),
+    "seinen": ("seinen", "seine", "sein"), "ihren": ("ihren", "ihre", "ihr"), "roten": ("roten", "rote", "rote"),
     # pronouns standing for the object
     "Er": ("Er", "Sie", "Es"), "er": ("er", "sie", "es"), "ihn": ("ihn", "sie", "es"),
     "meiner": ("meiner", "meine", "meins"), "keiner": ("keiner", "keine", "keins"), "einer": ("einer", "eine", "eins"),
@@ -42,6 +42,7 @@ FORMS = {
     "der→den": ("der becomes den", "die stays die", "das stays das"),
     "weak": ("-en", "-e", "-e"),
     "sein-ending": ("takes -en: seinen, like einen", "takes -e: seine, like eine", "takes no ending: sein, like ein"),
+    "ihr-ending": ("ihren, like einen", "ihre, like eine", "ihr, like ein"),
     "plural-rule": ("the plural adds an umlaut", "the plural adds -n", "the plural adds -s"),
     # English
     "apple": ("apple", "pear", "sweet"), "apples": ("apples", "pears", "sweets"), "an": ("an", "a", "a"),
@@ -155,7 +156,7 @@ s("G1", "golden", "Golden 41 #1", "This is {an} {apple}.", "Das ist {ein} {Apfel
 s("G5", "golden", "Golden 41 #5", "I give John his {apple}.", "Ich gebe John {seinen} {Apfel}.",
   "Ich:I:N:VF gebe:give:v:LK John:John:D:MF {seinen}:his:A:MF {Apfel}:{apple}:A:MF",
   ["possessive-endings", "dative-accusative"],
-  "The {apple} is the accusative object, so sein {sein-ending}.",
+  "The {apple} is the accusative object, so sein {sein-ending}. For a woman's things, 'her' is ihr with the same endings: Ich gebe Anna {ihren} {Apfel}.",
   "sein takes the same ending as ein would.")
 s("G11", "golden", "Golden 41 #11", "But I do not want the {apple} either.", "Aber ich will {den} {Apfel} auch nicht.",
   "Aber:but:-:KF ich:I:N:VF will:want:v:LK {den}:the:A:MF {Apfel}:{apple}:A:MF auch:also:-:MF nicht:not:-:MF",
@@ -336,3 +337,23 @@ s("X13", "extra", "Added", "I eat {an} {apple} in the kitchen every day.", "Ich 
   ["word-order-tekamolo", "two-way-prepositions"],
   "Time (jeden Tag) before place (in der Küche). The new object ({einen} {Apfel}) comes late. in + dative for location.",
   "Time comes before place.")
+s("X14", "extra", "Added", "I give Anna her {apple}.", "Ich gebe Anna {ihren} {Apfel}.",
+  "Ich:I:N:VF gebe:give:v:LK Anna:Anna:D:MF {ihren}:her:A:MF {Apfel}:{apple}:A:MF",
+  ["possessive-endings", "dative-accusative"],
+  "Anna is a woman, so 'her' is ihr, which takes the same endings as ein: {ihr-ending}. Compare John's: Ich gebe John {seinen} {Apfel}. Watch out: ihr also means 'to her', 'you' (plural) and, as Ihr, the formal 'your'.",
+  "'her' (belonging to her) is ihr.",
+  {"wrong": "Ich gebe Anna {seinen} {Apfel}.", "why": "sein means 'his'. For something of Anna's, use ihr: {ihren} {Apfel}."})
+s("X15", "extra", "Added", "She gave it to her.", "Sie hat {ihn} ihr gegeben.",
+  "Sie:she:N:VF hat:has:v:LK {ihn}:it:A:MF ihr:to-her:D:MF gegeben:given:v:RK",
+  ["pronoun-order", "personal-pronouns", "perfekt"],
+  "Three pronouns in one sentence: sie (she, the one giving), {ihn} (it: the {apple}, accusative) and ihr (to her: Anna, dative). Accusative before dative. Perfekt: hat in position 2, gegeben at the end.",
+  "Accusative pronoun before dative.",
+  {"wrong": "Sie hat ihr {ihn} gegeben.", "why": "With two pronouns, the accusative comes first: {ihn} ihr."})
+
+# CEFR level of the grammar each sentence centres on. These sentences top out at B1:
+# B2 and C levels are about nuance and idiom rather than core sentence structure.
+LEVELS = {
+    "A1": "F1 F2 F7 F8 F12 F13 G1 G11 G16 G19 G38 X2 X4 X5 X6 X10",
+    "A2": "F3 F4 F5 F6 F9 F10 F11 G5 G17 G20 G21 G24 G27 G29 G37 G39 G41 X3 X7 X8 X9 X14",
+    "B1": "G13 G15 G22 G25 G28 G31 G35 G36 X11 X12 X13 X15",
+}

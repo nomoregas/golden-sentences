@@ -893,5 +893,55 @@
    "x": 150,
    "y": 38
   }
+ ],
+ "X14": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 75,
+   "pose": "give",
+   "hold": "apple"
+  },
+  {
+   "t": "arrow",
+   "x1": 125,
+   "x2": 220,
+   "y": 84
+  },
+  {
+   "t": "fig",
+   "who": "Anna",
+   "x": 250,
+   "dir": -1,
+   "think": "apple"
+  }
+ ],
+ "X15": [
+  {
+   "t": "fig",
+   "who": "sie",
+   "x": 75,
+   "pose": "give",
+   "hold": "apple"
+  },
+  {
+   "t": "arrow",
+   "x1": 125,
+   "x2": 220,
+   "y": 84
+  },
+  {
+   "t": "fig",
+   "who": "Anna",
+   "x": 250,
+   "dir": -1,
+   "face": "happy"
+  },
+  {
+   "t": "clock",
+   "x": 165,
+   "y": 118,
+   "dir": -1
+  }
  ]
 }

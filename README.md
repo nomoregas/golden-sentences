@@ -2,11 +2,11 @@
 
 A small study app for English speakers learning German through "golden sentences": short sentences that reuse the same apple and a handful of people, so each one isolates a single grammar point.
 
-48 sentences in three sets, each chosen to add something the others don't:
+50 sentences in three sets, each chosen to add something the others don't:
 
 - **Ferriss core (13):** Tim Ferriss's original deconstruction sentences, verbatim.
 - **Golden expansion (23):** from the 41 Golden Sentences, dropping the 18 that repeat Ferriss's originals or reuse another sentence's frame with one word swapped. Their small points live on in the notes.
-- **Gap fillers (12):** grammar neither list covers: feminine and neuter nouns, kein, commands, formal Sie, two-way prepositions, Perfekt with sein, separable and reflexive verbs, relative clauses, time-before-place.
+- **Gap fillers (14):** grammar neither list covers, including Anna (*Ich gebe Anna ihren Apfel*, the possessive *ihr*): feminine and neuter nouns, kein, commands, formal Sie, two-way prepositions, Perfekt with sein, separable and reflexive verbs, relative clauses, time-before-place.
 
 ## Install on your phone
 
@@ -27,7 +27,9 @@ Sentences are templates (`tools/sentences_src.py`) with placeholders such as `{d
 
 **Learn**: a picture of the sentence, German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
 
-**Table**: all 48 sentences at once, switchable between English, Deutsch and Both without losing your place. Tick the sentences you want to practise (or **All** / **None**); every drill uses only the ticked ones. Tap a sentence to peek at its translation, ▶ to hear it, or its number to open it in Learn.
+**Table**: all 50 sentences at once, switchable between English, Deutsch and Both without losing your place. Tick the sentences you want to practise (or **All** / **None**); every drill uses only the ticked ones. Tap a sentence to peek at its translation, ▶ to hear it, or its number to open it in Learn.
+
+Every sentence is tagged with the CEFR level of the grammar it centres on: **A1** (16), **A2** (22) or **B1** (12). They stop at B1 because B2 and C levels are about nuance and idiom rather than core sentence structure. The Table can group **By story** or **By level**, and each group has a *practise only these* link.
 
 **Practice** opens a menu of drills. Each one is entered on its own, with its own progress, and shows what's due, new and solid:
 
@@ -41,7 +43,7 @@ Sentences are templates (`tools/sentences_src.py`) with placeholders such as `{d
 
 The card drills work in rounds: each round goes through every selected sentence once (shuffled, or **In order**). **Again** puts the card back a few cards later in the same round, and **Got it** finishes it for the round. The progress grid (*Karteikasten*, "card box") shows how each sentence went the last time: green for got it, red for missed. Build tracks which sentences you've built correctly. Inside a drill, **Clear** resets that drill; the footer's **Reset all progress** resets everything.
 
-Pictures: every sentence has a small scene (`data/scenes.json`, drawn as SVG by the app) with a fixed cast, each person in one colour: **ich** blue, **du** green, **er** teal, **sie** purple, **John** orange, a child, and a formal **Sie**. The same marks recur: a dashed arrow for giving, ✗ for not, ? for questions, ! for must, ♥ for want, and a clock with an arrow back (past) or ahead (future). Pictures show in Learn and Build, on the front of EN → DE cards, and only on the back of DE → EN and Listen cards so they don't give the meaning away.
+Pictures: every sentence has a small scene (`data/scenes.json`, drawn as SVG by the app) with a fixed cast, each person in one colour: **ich** blue, **du** green, **er** teal, **sie** purple, **John** orange, **Anna** mustard, a child, and a formal **Sie**. The same marks recur: a dashed arrow for giving, ✗ for not, ? for questions, ! for must, ♥ for want, and a clock with an arrow back (past) or ahead (future). Pictures show in Learn and Build, on the front of EN → DE cards, and only on the back of DE → EN and Listen cards so they don't give the meaning away.
 
 Audio: every sentence and every word has a clip in `audio/`, embedded in the page so it plays anywhere, including in-app browsers with no speech voice. The committed clips use Microsoft's neural German voice Katja (`de-DE-KatjaNeural`, the voices behind Edge's Read Aloud; no API key). To regenerate them, for example after editing sentences or to switch voice, run the **Generate audio** workflow from the repo's Actions tab, or `python3 tools/make_audio.py --engine edge` on any machine with internet access. `--engine mbrola` is an offline fallback that sounds robotic. The Slow button plays clips at 70% speed. The browser's own voice is only a fallback for text without a clip.
 

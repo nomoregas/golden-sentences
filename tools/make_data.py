@@ -14,7 +14,7 @@ from pathlib import Path
 
 root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root / "tools"))
-from sentences_src import FORMS, NOUNS, S, SETS  # noqa: E402
+from sentences_src import FORMS, LEVELS, NOUNS, S, SETS  # noqa: E402
 
 topics = json.loads((root / "data/topics.json").read_text(encoding="utf-8"))
 CASES = {"N", "A", "D", "G", "v", "-"}
@@ -22,6 +22,10 @@ FIELDS = ["KF", "VF", "LK", "MF", "RK", "NF"]
 GENDERS = list(NOUNS)  # m, f, n
 PLACEHOLDER = re.compile(r"\{([^{}]+)\}")
 errors, out, seen = [], [], set()
+level_of = {k: lv for lv, keys in LEVELS.items() for k in keys.split()}
+for k in level_of:
+    if k not in {x["key"] for x in S}:
+        errors.append(f"LEVELS names unknown sentence {k}")
 
 
 def fill(text, g, key):
@@ -76,7 +80,9 @@ for i, x in enumerate(S, 1):
         errors.append(f"{k}: unknown set {x['set']!r}")
     versions = {g: build(x, g) for g in GENDERS}
     base = versions["m"]
-    rec = {"id": i, "key": k, "set": x["set"], "source": x["source"], **base, "topics": x["topics"]}
+    if k not in level_of:
+        errors.append(f"{k}: no level in LEVELS")
+    rec = {"id": i, "key": k, "set": x["set"], "source": x["source"], "level": level_of.get(k), **base, "topics": x["topics"]}
     alt = {}
     for g in GENDERS[1:]:
         diff = {f: v for f, v in versions[g].items() if v != base.get(f)}
@@ -94,10 +100,11 @@ if errors:
     sys.exit(1)
 
 (root / "data/sentences.json").write_text(
-    json.dumps({"sets": SETS, "nouns": NOUNS, "sentences": out}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    json.dumps({"sets": SETS, "nouns": NOUNS, "levels": list(LEVELS), "sentences": out}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 counts = {s: sum(1 for x in out if x["set"] == s) for s in SETS}
 swaps = sum(1 for x in out if "alt" in x)
-print(f"{len(out)} sentences {counts}, {swaps} change with the object, {len(topics)} topics")
+levels = {lv: sum(1 for x in out if x["level"] == lv) for lv in LEVELS}
+print(f"{len(out)} sentences {counts}, levels {levels}, {swaps} change with the object, {len(topics)} topics")
 
 if "--review" in sys.argv:
     for x in out:
