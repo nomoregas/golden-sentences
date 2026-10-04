@@ -943,5 +943,195 @@
    "y": 118,
    "dir": -1
   }
+ ],
+ "W1": [
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 160,
+   "pose": "eat",
+   "hold": "apple"
+  }
+ ],
+ "W2": [
+  {
+   "t": "apple",
+   "x": 150,
+   "y": 92,
+   "r": 26
+  },
+  {
+   "t": "badge",
+   "x": 198,
+   "y": 50,
+   "m": "ex"
+  }
+ ],
+ "W3": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 80,
+   "pose": "point",
+   "face": "happy"
+  },
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 245,
+   "dir": -1,
+   "pose": "eat",
+   "hold": "apple",
+   "face": "happy"
+  }
+ ],
+ "W4": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 95,
+   "face": "sad",
+   "think": "apple-smile"
+  },
+  {
+   "t": "clock",
+   "x": 250,
+   "y": 50,
+   "dir": -1
+  }
+ ],
+ "W5": [
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 90,
+   "say": "apple-x"
+  },
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 200,
+   "dir": 1
+  },
+  {
+   "t": "fig",
+   "who": "du",
+   "x": 265,
+   "dir": -1
+  }
+ ],
+ "W6": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 75,
+   "think": "q"
+  },
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 205,
+   "dir": -1,
+   "face": "happy"
+  },
+  {
+   "t": "apple",
+   "x": 262,
+   "y": 116,
+   "r": 15,
+   "core": true
+  },
+  {
+   "t": "clock",
+   "x": 140,
+   "y": 112,
+   "dir": -1
+  }
+ ],
+ "W7": [
+  {
+   "t": "fig",
+   "who": "ich",
+   "x": 130,
+   "pose": "eat",
+   "hold": "apple",
+   "mark": "no"
+  },
+  {
+   "t": "clock",
+   "x": 235,
+   "y": 55,
+   "dir": -1
+  }
+ ],
+ "W8": [
+  {
+   "t": "fig",
+   "who": "John",
+   "x": 75,
+   "pose": "reach",
+   "mark": "ex"
+  },
+  {
+   "t": "apple",
+   "x": 160,
+   "y": 96,
+   "r": 20
+  },
+  {
+   "t": "fig",
+   "who": "Anna",
+   "x": 245,
+   "dir": -1,
+   "pose": "reach",
+   "mark": "ex"
+  }
+ ],
+ "W9": [
+  {
+   "t": "apple",
+   "x": 85,
+   "y": 120,
+   "r": 11
+  },
+  {
+   "t": "apple",
+   "x": 155,
+   "y": 110,
+   "r": 19
+  },
+  {
+   "t": "apple",
+   "x": 240,
+   "y": 98,
+   "r": 28,
+   "star": true
+  }
+ ],
+ "W10": [
+  {
+   "t": "table",
+   "x": 120
+  },
+  {
+   "t": "apple",
+   "x": 140,
+   "y": 84,
+   "r": 13,
+   "ghost": true
+  },
+  {
+   "t": "fall",
+   "x1": 155,
+   "y1": 84,
+   "x2": 215,
+   "y2": 108
+  },
+  {
+   "t": "apple",
+   "x": 225,
+   "y": 116,
+   "r": 16
+  }
  ]
 }

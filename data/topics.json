@@ -4,12 +4,42 @@
     "summary": "Every noun is masculine (der), feminine (die) or neuter (das), and the article changes with case.",
     "body": "Learn each noun with its article: der Apfel, die Banane, das Kind. The gender is mostly arbitrary, so the article is part of the word. What changes is the article's form depending on the noun's job in the sentence (its case). Plural is always die in the nominative.",
     "table": {
-      "head": ["", "masc.", "fem.", "neut.", "plural"],
+      "head": [
+        "",
+        "masc.",
+        "fem.",
+        "neut.",
+        "plural"
+      ],
       "rows": [
-        ["Nominative", "der / ein", "die / eine", "das / ein", "die / –"],
-        ["Accusative", "den / einen", "die / eine", "das / ein", "die / –"],
-        ["Dative", "dem / einem", "der / einer", "dem / einem", "den / –"],
-        ["Genitive", "des / eines", "der / einer", "des / eines", "der / –"]
+        [
+          "Nominative",
+          "der / ein",
+          "die / eine",
+          "das / ein",
+          "die / –"
+        ],
+        [
+          "Accusative",
+          "den / einen",
+          "die / eine",
+          "das / ein",
+          "die / –"
+        ],
+        [
+          "Dative",
+          "dem / einem",
+          "der / einer",
+          "dem / einem",
+          "den / –"
+        ],
+        [
+          "Genitive",
+          "des / eines",
+          "der / einer",
+          "des / eines",
+          "der / –"
+        ]
       ]
     }
   },
@@ -43,17 +73,67 @@
     "summary": "Pronouns change form for nominative, accusative and dative.",
     "body": "English only distinguishes he/him. German has three forms for most persons, and the dative is the one learners forget: ihm (to him), ihr (to her), uns (to us), mir (to me), dir (to you).",
     "table": {
-      "head": ["", "Nom.", "Acc.", "Dat."],
+      "head": [
+        "",
+        "Nom.",
+        "Acc.",
+        "Dat."
+      ],
       "rows": [
-        ["I", "ich", "mich", "mir"],
-        ["you (inf.)", "du", "dich", "dir"],
-        ["he / it (m.)", "er", "ihn", "ihm"],
-        ["she / it (f.)", "sie", "sie", "ihr"],
-        ["it (n.)", "es", "es", "ihm"],
-        ["we", "wir", "uns", "uns"],
-        ["you (pl.)", "ihr", "euch", "euch"],
-        ["they", "sie", "sie", "ihnen"],
-        ["you (formal)", "Sie", "Sie", "Ihnen"]
+        [
+          "I",
+          "ich",
+          "mich",
+          "mir"
+        ],
+        [
+          "you (inf.)",
+          "du",
+          "dich",
+          "dir"
+        ],
+        [
+          "he / it (m.)",
+          "er",
+          "ihn",
+          "ihm"
+        ],
+        [
+          "she / it (f.)",
+          "sie",
+          "sie",
+          "ihr"
+        ],
+        [
+          "it (n.)",
+          "es",
+          "es",
+          "ihm"
+        ],
+        [
+          "we",
+          "wir",
+          "uns",
+          "uns"
+        ],
+        [
+          "you (pl.)",
+          "ihr",
+          "euch",
+          "euch"
+        ],
+        [
+          "they",
+          "sie",
+          "sie",
+          "ihnen"
+        ],
+        [
+          "you (formal)",
+          "Sie",
+          "Sie",
+          "Ihnen"
+        ]
       ]
     }
   },
@@ -92,13 +172,43 @@
     "summary": "müssen, können, wollen, sollen, dürfen, mögen + a bare infinitive at the end.",
     "body": "The modal is conjugated in position 2 and the main verb goes to the end as a plain infinitive, with no zu: Ich muss ihn ihm geben. Watch out: ich will means 'I want', not 'I will'. Modals are irregular in the singular: ich kann, du kannst, er kann.",
     "table": {
-      "head": ["", "ich / er", "du", "wir / sie"],
+      "head": [
+        "",
+        "ich / er",
+        "du",
+        "wir / sie"
+      ],
       "rows": [
-        ["must", "muss", "musst", "müssen"],
-        ["can", "kann", "kannst", "können"],
-        ["want", "will", "willst", "wollen"],
-        ["should", "soll", "sollst", "sollen"],
-        ["may", "darf", "darfst", "dürfen"]
+        [
+          "must",
+          "muss",
+          "musst",
+          "müssen"
+        ],
+        [
+          "can",
+          "kann",
+          "kannst",
+          "können"
+        ],
+        [
+          "want",
+          "will",
+          "willst",
+          "wollen"
+        ],
+        [
+          "should",
+          "soll",
+          "sollst",
+          "sollen"
+        ],
+        [
+          "may",
+          "darf",
+          "darfst",
+          "dürfen"
+        ]
       ]
     }
   },
@@ -236,5 +346,50 @@
     "title": "Time before place (TeKaMoLo)",
     "summary": "In the middle of the sentence: time, cause, manner, place.",
     "body": "Ich esse jeden Tag in der Küche einen Apfel. Time (jeden Tag) comes before place (in der Küche), the opposite of English 'in the kitchen every day'. New information, like an object with ein, tends to come late in the Mittelfeld."
+  },
+  "passive": {
+    "title": "Passive",
+    "summary": "werden + participle: what happens to something, not who does it.",
+    "body": "Der Apfel wird gegessen (the apple is being eaten). werden is conjugated in position 2 and the participle goes to the end. Add the doer with von + dative: von John. Past: Der Apfel wurde gegessen. With a modal, the end is participle + werden: Der Apfel muss gegessen werden."
+  },
+  "lassen": {
+    "title": "lassen",
+    "summary": "'let' or 'have something done', with a bare infinitive.",
+    "body": "lassen behaves like a modal: conjugated in position 2, the other verb as an infinitive at the end, no zu. Ich lasse John den Apfel essen (I let John eat the apple). Ich lasse das Auto reparieren (I have the car repaired)."
+  },
+  "konjunktiv-2-past": {
+    "title": "Past conditional",
+    "summary": "hätte / wäre + participle: what would have happened.",
+    "body": "For things that didn't happen: Wenn ich den Apfel gegessen hätte, wäre ich glücklich gewesen. Verbs that take haben in the Perfekt use hätte; verbs that take sein use wäre. With a modal: Ich hätte den Apfel essen sollen (I should have eaten the apple)."
+  },
+  "konjunktiv-1": {
+    "title": "Reported speech (Konjunktiv I)",
+    "summary": "er wolle, er habe, er sei: words reported, not vouched for.",
+    "body": "Konjunktiv I is built from the infinitive stem + -e for er/sie/es: wollen → er wolle, haben → er habe, können → er könne; sein is irregular: er sei. It's mostly written (news: Der Minister sagte, er sei zufrieden). Where it looks the same as the normal present, Konjunktiv II is used instead. In speech, people usually use dass + the normal form."
+  },
+  "modal-past-guess": {
+    "title": "'Must have', 'may have'",
+    "summary": "Modal + participle + haben/sein: a guess about the past.",
+    "body": "Er muss den Apfel gegessen haben (he must have eaten the apple). Er kann ihn gegessen haben (he may have). Er soll ihn gegessen haben (he's said to have). The modal is in the present; the past is in the participle + haben (or sein: Er muss gegangen sein)."
+  },
+  "double-infinitive": {
+    "title": "Double infinitive",
+    "summary": "Perfekt of a modal with another verb: two infinitives at the end.",
+    "body": "Ich habe den Apfel nicht essen können, not gekonnt. When the modal is used alone, it does take a participle: Ich habe es nicht gekonnt. In a verb-final clause, haben goes before the two infinitives: …, weil ich den Apfel nicht habe essen können. Many speakers avoid it with the simple past: Ich konnte ihn nicht essen."
+  },
+  "genitive-prepositions": {
+    "title": "Prepositions with the genitive",
+    "summary": "wegen, trotz, während, statt take the genitive.",
+    "body": "wegen des Apfels (because of the apple), trotz des Regens (despite the rain), während des Essens (during the meal). Masculine and neuter nouns usually add -s or -es. In everyday speech these often take the dative instead (wegen dem Apfel), but the genitive is the standard written form."
+  },
+  "je-desto": {
+    "title": "je … desto",
+    "summary": "'The more …, the more …': two comparatives, two word orders.",
+    "body": "Je größer der Apfel ist, desto besser schmeckt er. The je-clause works like a subordinate clause, with the verb last. desto + comparative starts the main clause and the verb follows immediately. umso can replace desto: je mehr, umso besser."
+  },
+  "participle-phrases": {
+    "title": "Extended participle phrases",
+    "summary": "A whole description packed between article and noun.",
+    "body": "Der vom Tisch gefallene Apfel = der Apfel, der vom Tisch gefallen ist. The participle (gefallen) gets an adjective ending (gefallene) and everything that belongs to it comes before it. Present participles work too: der schnell essende Junge (the boy who is eating fast). Common in news and academic writing; in speech, relative clauses are more usual."
   }
 }

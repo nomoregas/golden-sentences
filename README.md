@@ -2,11 +2,12 @@
 
 A small study app for English speakers learning German through "golden sentences": short sentences that reuse the same apple and a handful of people, so each one isolates a single grammar point.
 
-50 sentences in three sets, each chosen to add something the others don't:
+60 sentences in four sets, each chosen to add something the others don't:
 
 - **Ferriss core (13):** Tim Ferriss's original deconstruction sentences, verbatim.
 - **Golden expansion (23):** from the 41 Golden Sentences, dropping the 18 that repeat Ferriss's originals or reuse another sentence's frame with one word swapped. Their small points live on in the notes.
 - **Gap fillers (14):** grammar neither list covers, including Anna (*Ich gebe Anna ihren Apfel*, the possessive *ihr*): feminine and neuter nouns, kein, commands, formal Sie, two-way prepositions, Perfekt with sein, separable and reflexive verbs, relative clauses, time-before-place.
+- **Going further (10):** B1–C1 grammar in the same story: the passive (also with modals), *lassen*, the past conditional (*hätte … gegessen*), reported speech (*er wolle*), *muss … gegessen haben*, the double infinitive (*essen können*), *wegen* + genitive, *je … desto*, and an extended participle phrase (*der vom Tisch gefallene Apfel*).
 
 ## Install on your phone
 
@@ -27,9 +28,9 @@ Sentences are templates (`tools/sentences_src.py`) with placeholders such as `{d
 
 **Learn**: a picture of the sentence, German words underlined by case (tap one for its meaning), a word-for-word gloss, a short note, a common mistake, and expandable grammar topics with tables.
 
-**Table**: all 50 sentences at once, switchable between English, Deutsch and Both without losing your place. Tick the sentences you want to practise (or **All** / **None**); every drill uses only the ticked ones. Tap a sentence to peek at its translation, ▶ to hear it, or its number to open it in Learn.
+**Table**: all 60 sentences at once, switchable between English, Deutsch and Both without losing your place. Tick the sentences you want to practise (or **All** / **None**); every drill uses only the ticked ones. Tap a sentence to peek at its translation, ▶ to hear it, or its number to open it in Learn.
 
-Every sentence is tagged with the CEFR level of the grammar it centres on: **A1** (16), **A2** (22) or **B1** (12). The set currently stops at B1, the core of everyday German; B2 and C1 add further grammar (passive with modals, past conditional, reported speech, extended participle phrases) that isn't covered yet. The Table can group **By story** or **By level**, and each group has a *practise only these* link.
+Every sentence is tagged with the CEFR level of the grammar it centres on: **A1** (16), **A2** (22), **B1** (14), **B2** (7) or **C1** (1). The Table can group **By story** or **By level**, and each group has a *practise only these* link.
 
 **Practice** opens a menu of drills. Each one is entered on its own, with its own progress, and shows what's due, new and solid:
 

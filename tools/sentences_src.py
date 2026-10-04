@@ -31,6 +31,7 @@ FORMS = {
     "Apfel": ("Apfel", "Birne", "Bonbon"), "Äpfel": ("Äpfel", "Birnen", "Bonbons"),
     # articles and determiners
     "Der": ("Der", "Die", "Das"), "der": ("der", "die", "das"), "den": ("den", "die", "das"),
+    "dem": ("dem", "der", "dem"), "des": ("des", "der", "des"), "Apfels": ("Apfels", "Birne", "Bonbons"),
     "ein": ("ein", "eine", "ein"), "einen": ("einen", "eine", "ein"), "keinen": ("keinen", "keine", "kein"),
     "seinen": ("seinen", "seine", "sein"), "ihren": ("ihren", "ihre", "ihr"), "roten": ("roten", "rote", "rote"),
     # pronouns standing for the object
@@ -52,6 +53,7 @@ SETS = {
     "ferriss": "Ferriss core",
     "golden": "Golden expansion",
     "extra": "Gap fillers",
+    "further": "Going further",
 }
 
 S = []
@@ -350,10 +352,73 @@ s("X15", "extra", "Added", "She gave it to her.", "Sie hat {ihn} ihr gegeben.",
   "Accusative pronoun before dative.",
   {"wrong": "Sie hat ihr {ihn} gegeben.", "why": "With two pronouns, the accusative comes first: {ihn} ihr."})
 
-# CEFR level of the grammar each sentence centres on. The set currently tops out at B1;
-# B2/C1 grammar (passive with modals, Konjunktiv I and past II, participle phrases) isn't covered yet.
+
+# --------------------------------------------------------------------------
+# Going further: B1-C1 grammar the sets above don't reach, in the same story
+# --------------------------------------------------------------------------
+s("W1", "further", "Added", "The {apple} is being eaten by John.", "{Der} {Apfel} wird von John gegessen.",
+  "{Der}:the:N:VF {Apfel}:{apple}:N:VF wird:is-being:v:LK von:by:-:MF John:John:D:MF gegessen:eaten:v:RK",
+  ["passive", "satzklammer"],
+  "Passive: werden in position 2, the participle at the end. The {apple} is now the subject (nominative: {der} {Apfel}); whoever does it comes in with von + dative. The active version: John isst {den} {Apfel}.",
+  "Passive = werden + participle.",
+  {"wrong": "{Der} {Apfel} ist von John gegessen.", "why": "ist + participle describes the finished state. For the action, with who does it, use wird."})
+s("W2", "further", "Added", "The {apple} must be eaten.", "{Der} {Apfel} muss gegessen werden.",
+  "{Der}:the:N:VF {Apfel}:{apple}:N:VF muss:must:v:LK gegessen:eaten:v:RK werden:be:v:RK",
+  ["passive", "modal-verbs"],
+  "Passive with a modal: the modal in position 2, then participle + werden at the very end. Compare the active: Man muss {den} {Apfel} essen.",
+  "Participle + werden at the end.",
+  {"wrong": "{Der} {Apfel} muss werden gegessen.", "why": "The participle comes first: gegessen werden."})
+s("W3", "further", "Added", "I let John eat the {apple}.", "Ich lasse John {den} {Apfel} essen.",
+  "Ich:I:N:VF lasse:let:v:LK John:John:A:MF {den}:the:A:MF {Apfel}:{apple}:A:MF essen:eat:v:RK",
+  ["lassen"],
+  "lassen works like a modal: lassen in position 2, a bare infinitive at the end. It means 'let' or 'have something done': Ich lasse {den} {Apfel} waschen (I have the {apple} washed).",
+  "lassen + infinitive at the end, no zu.",
+  {"wrong": "Ich lasse John {den} {Apfel} zu essen.", "why": "lassen takes the infinitive without zu, like a modal."})
+s("W4", "further", "Added", "If I had eaten the {apple}, I would have been happy.", "Wenn ich {den} {Apfel} gegessen hätte, wäre ich glücklich gewesen.",
+  "Wenn:if:-:VF ich:I:N:VF {den}:the:A:VF {Apfel}:{apple}:A:VF gegessen:eaten:v:VF hätte,:had:v:VF wäre:would-be:v:LK ich:I:N:MF glücklich:happy:-:MF gewesen:been:v:RK",
+  ["konjunktiv-2-past", "subordinate-verb-final"],
+  "Past conditional: hätte or wäre + participle, for things that didn't happen. Compare the present version: Wenn du {ihn} essen würdest, wärst du glücklich. The wenn-clause fills position 1, so the main clause starts with its verb.",
+  "hätte / wäre + participle.",
+  {"wrong": "Wenn ich {den} {Apfel} gegessen hätte, ich wäre glücklich gewesen.", "why": "The wenn-clause takes position 1, so the verb comes next: wäre ich."})
+s("W5", "further", "Added", "He says he doesn't want the {apple}.", "Er sagt, er wolle {den} {Apfel} nicht.",
+  "Er:he:N:VF sagt,:says:v:LK er:he:N:NF wolle:wants:v:NF {den}:the:A:NF {Apfel}:{apple}:A:NF nicht:not:-:NF",
+  ["konjunktiv-1"],
+  "Reported speech (Konjunktiv I): er will becomes er wolle. It marks the words as his, not the speaker's claim, which is why news reports use it. In conversation, people usually say: Er sagt, dass er {den} {Apfel} nicht will.",
+  "Konjunktiv I: er wolle.")
+s("W6", "further", "Added", "He must have eaten the {apple}.", "Er muss {den} {Apfel} gegessen haben.",
+  "Er:he:N:VF muss:must:v:LK {den}:the:A:MF {Apfel}:{apple}:A:MF gegessen:eaten:v:RK haben:have:v:RK",
+  ["modal-past-guess"],
+  "A modal + participle + haben makes a guess about the past: 'must have …'. With können it's 'may have': Er kann {ihn} gegessen haben.",
+  "Modal … participle + haben.",
+  {"wrong": "Er muss {den} {Apfel} haben gegessen.", "why": "The participle comes before haben: gegessen haben."})
+s("W7", "further", "Added", "I wasn't able to eat the {apple}.", "Ich habe {den} {Apfel} nicht essen können.",
+  "Ich:I:N:VF habe:have:v:LK {den}:the:A:MF {Apfel}:{apple}:A:MF nicht:not:-:MF essen:eat:v:RK können:can:v:RK",
+  ["double-infinitive", "perfekt"],
+  "The Perfekt of a modal used with another verb ends in two infinitives (essen können), not gekonnt. In speech the simple past is more common: Ich konnte {den} {Apfel} nicht essen.",
+  "Two infinitives at the end.",
+  {"wrong": "Ich habe {den} {Apfel} nicht essen gekonnt.", "why": "With another verb, the modal stays an infinitive: essen können."})
+s("W8", "further", "Added", "They are arguing because of the {apple}.", "Wegen {des} {Apfels} streiten sie.",
+  "Wegen:because-of:-:VF {des}:the:G:VF {Apfels}:{apple}:G:VF streiten:argue:v:LK sie:they:N:MF",
+  ["genitive-prepositions", "verb-second"],
+  "wegen takes the genitive: {des} {Apfels}. Masculine and neuter nouns add -s in the genitive; feminine nouns don't change. In everyday speech you'll also hear wegen + dative: wegen {dem} {Apfel}.",
+  "wegen + genitive.")
+s("W9", "further", "Added", "The bigger the {apple}, the better it tastes.", "Je größer {der} {Apfel} ist, desto besser schmeckt {er}.",
+  "Je:the:-:KF größer:bigger:-:KF {der}:the:N:KF {Apfel}:{apple}:N:KF ist,:is:v:KF desto:the:-:VF besser:better:-:VF schmeckt:tastes:v:LK {er}:it:N:MF",
+  ["je-desto", "comparison"],
+  "je + comparative opens a clause with the verb at the end (ist). desto + comparative starts the main clause and the verb follows straight away: desto besser schmeckt {er}.",
+  "je … verb last; desto … verb next.",
+  {"wrong": "Je größer {der} {Apfel} ist, desto besser {er} schmeckt.", "why": "After desto + comparative, the verb comes next: desto besser schmeckt {er}."})
+s("W10", "further", "Added", "The {apple} that fell off the table is red.", "{Der} vom Tisch gefallene {Apfel} ist rot.",
+  "{Der}:the:N:VF vom:from-the:D:VF Tisch:table:D:VF gefallene:fallen:N:VF {Apfel}:{apple}:N:VF ist:is:v:LK rot:red:-:MF",
+  ["participle-phrases", "adjective-endings"],
+  "An extended participle phrase: everything between {der} and {Apfel} describes the {apple}, like a relative clause folded in front of the noun. The same meaning, spoken style: {Der} {Apfel}, {der} vom Tisch gefallen ist, ist rot. Typical of written German.",
+  "Everything between the article and the noun describes it.")
+
+# CEFR level of the grammar each sentence centres on.
 LEVELS = {
     "A1": "F1 F2 F7 F8 F12 F13 G1 G11 G16 G19 G38 X2 X4 X5 X6 X10",
     "A2": "F3 F4 F5 F6 F9 F10 F11 G5 G17 G20 G21 G24 G27 G29 G37 G39 G41 X3 X7 X8 X9 X14",
-    "B1": "G13 G15 G22 G25 G28 G31 G35 G36 X11 X12 X13 X15",
+    "B1": "G13 G15 G22 G25 G28 G31 G35 G36 X11 X12 X13 X15 W1 W3",
+    "B2": "W2 W4 W5 W6 W7 W8 W9",
+    "C1": "W10",
 }

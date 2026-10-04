@@ -734,7 +734,7 @@ function renderLearn() {
 }
 
 /* ---------- Table: all sentences at once ---------- */
-const LEVEL_NAME = { A1: "beginner", A2: "elementary", B1: "intermediate" };
+const LEVEL_NAME = { A1: "beginner", A2: "elementary", B1: "intermediate", B2: "upper intermediate", C1: "advanced" };
 const selCount = () => `Practising ${selected().length} of ${TOTAL}`;
 function renderTable() {
   const tlangSeg = `<div class="seg" role="group" aria-label="Language">${seg("tlang", "en", "English")}${seg("tlang", "de", "Deutsch")}${seg("tlang", "both", "Both")}</div>`;

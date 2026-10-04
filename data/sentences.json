@@ -2,7 +2,8 @@
  "sets": {
   "ferriss": "Ferriss core",
   "golden": "Golden expansion",
-  "extra": "Gap fillers"
+  "extra": "Gap fillers",
+  "further": "Going further"
  },
  "nouns": {
   "m": {
@@ -21,7 +22,9 @@
  "levels": [
   "A1",
   "A2",
-  "B1"
+  "B1",
+  "B2",
+  "C1"
  ],
  "sentences": [
   {
@@ -6285,6 +6288,1641 @@
       "wrong": "Sie hat ihr es gegeben.",
       "why": "With two pronouns, the accusative comes first: es ihr."
      }
+    }
+   }
+  },
+  {
+   "id": 51,
+   "key": "W1",
+   "set": "further",
+   "source": "Added",
+   "level": "B1",
+   "en": "The apple is being eaten by John.",
+   "de": "Der Apfel wird von John gegessen.",
+   "tokens": [
+    {
+     "w": "Der",
+     "g": "the",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "wird",
+     "g": "is-being",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "von",
+     "g": "by",
+     "c": "-",
+     "f": "MF"
+    },
+    {
+     "w": "John",
+     "g": "John",
+     "c": "D",
+     "f": "MF"
+    },
+    {
+     "w": "gegessen",
+     "g": "eaten",
+     "c": "v",
+     "f": "RK"
+    }
+   ],
+   "note": "Passive: werden in position 2, the participle at the end. The apple is now the subject (nominative: der Apfel); whoever does it comes in with von + dative. The active version: John isst den Apfel.",
+   "hint": "Passive = werden + participle.",
+   "mistake": {
+    "wrong": "Der Apfel ist von John gegessen.",
+    "why": "ist + participle describes the finished state. For the action, with who does it, use wird."
+   },
+   "topics": [
+    "passive",
+    "satzklammer"
+   ],
+   "alt": {
+    "f": {
+     "en": "The pear is being eaten by John.",
+     "de": "Die Birne wird von John gegessen.",
+     "tokens": [
+      {
+       "w": "Die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "wird",
+       "g": "is-being",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "von",
+       "g": "by",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Passive: werden in position 2, the participle at the end. The pear is now the subject (nominative: die Birne); whoever does it comes in with von + dative. The active version: John isst die Birne.",
+     "mistake": {
+      "wrong": "Die Birne ist von John gegessen.",
+      "why": "ist + participle describes the finished state. For the action, with who does it, use wird."
+     }
+    },
+    "n": {
+     "en": "The sweet is being eaten by John.",
+     "de": "Das Bonbon wird von John gegessen.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "wird",
+       "g": "is-being",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "von",
+       "g": "by",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "D",
+       "f": "MF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Passive: werden in position 2, the participle at the end. The sweet is now the subject (nominative: das Bonbon); whoever does it comes in with von + dative. The active version: John isst das Bonbon.",
+     "mistake": {
+      "wrong": "Das Bonbon ist von John gegessen.",
+      "why": "ist + participle describes the finished state. For the action, with who does it, use wird."
+     }
+    }
+   }
+  },
+  {
+   "id": 52,
+   "key": "W2",
+   "set": "further",
+   "source": "Added",
+   "level": "B2",
+   "en": "The apple must be eaten.",
+   "de": "Der Apfel muss gegessen werden.",
+   "tokens": [
+    {
+     "w": "Der",
+     "g": "the",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "muss",
+     "g": "must",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "gegessen",
+     "g": "eaten",
+     "c": "v",
+     "f": "RK"
+    },
+    {
+     "w": "werden",
+     "g": "be",
+     "c": "v",
+     "f": "RK"
+    }
+   ],
+   "note": "Passive with a modal: the modal in position 2, then participle + werden at the very end. Compare the active: Man muss den Apfel essen.",
+   "hint": "Participle + werden at the end.",
+   "mistake": {
+    "wrong": "Der Apfel muss werden gegessen.",
+    "why": "The participle comes first: gegessen werden."
+   },
+   "topics": [
+    "passive",
+    "modal-verbs"
+   ],
+   "alt": {
+    "f": {
+     "en": "The pear must be eaten.",
+     "de": "Die Birne muss gegessen werden.",
+     "tokens": [
+      {
+       "w": "Die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "muss",
+       "g": "must",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      },
+      {
+       "w": "werden",
+       "g": "be",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Passive with a modal: the modal in position 2, then participle + werden at the very end. Compare the active: Man muss die Birne essen.",
+     "mistake": {
+      "wrong": "Die Birne muss werden gegessen.",
+      "why": "The participle comes first: gegessen werden."
+     }
+    },
+    "n": {
+     "en": "The sweet must be eaten.",
+     "de": "Das Bonbon muss gegessen werden.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "muss",
+       "g": "must",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      },
+      {
+       "w": "werden",
+       "g": "be",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Passive with a modal: the modal in position 2, then participle + werden at the very end. Compare the active: Man muss das Bonbon essen.",
+     "mistake": {
+      "wrong": "Das Bonbon muss werden gegessen.",
+      "why": "The participle comes first: gegessen werden."
+     }
+    }
+   }
+  },
+  {
+   "id": 53,
+   "key": "W3",
+   "set": "further",
+   "source": "Added",
+   "level": "B1",
+   "en": "I let John eat the apple.",
+   "de": "Ich lasse John den Apfel essen.",
+   "tokens": [
+    {
+     "w": "Ich",
+     "g": "I",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "lasse",
+     "g": "let",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "John",
+     "g": "John",
+     "c": "A",
+     "f": "MF"
+    },
+    {
+     "w": "den",
+     "g": "the",
+     "c": "A",
+     "f": "MF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "A",
+     "f": "MF"
+    },
+    {
+     "w": "essen",
+     "g": "eat",
+     "c": "v",
+     "f": "RK"
+    }
+   ],
+   "note": "lassen works like a modal: lassen in position 2, a bare infinitive at the end. It means 'let' or 'have something done': Ich lasse den Apfel waschen (I have the apple washed).",
+   "hint": "lassen + infinitive at the end, no zu.",
+   "mistake": {
+    "wrong": "Ich lasse John den Apfel zu essen.",
+    "why": "lassen takes the infinitive without zu, like a modal."
+   },
+   "topics": [
+    "lassen"
+   ],
+   "alt": {
+    "f": {
+     "en": "I let John eat the pear.",
+     "de": "Ich lasse John die Birne essen.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "lasse",
+       "g": "let",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "lassen works like a modal: lassen in position 2, a bare infinitive at the end. It means 'let' or 'have something done': Ich lasse die Birne waschen (I have the pear washed).",
+     "mistake": {
+      "wrong": "Ich lasse John die Birne zu essen.",
+      "why": "lassen takes the infinitive without zu, like a modal."
+     }
+    },
+    "n": {
+     "en": "I let John eat the sweet.",
+     "de": "Ich lasse John das Bonbon essen.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "lasse",
+       "g": "let",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "John",
+       "g": "John",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "lassen works like a modal: lassen in position 2, a bare infinitive at the end. It means 'let' or 'have something done': Ich lasse das Bonbon waschen (I have the sweet washed).",
+     "mistake": {
+      "wrong": "Ich lasse John das Bonbon zu essen.",
+      "why": "lassen takes the infinitive without zu, like a modal."
+     }
+    }
+   }
+  },
+  {
+   "id": 54,
+   "key": "W4",
+   "set": "further",
+   "source": "Added",
+   "level": "B2",
+   "en": "If I had eaten the apple, I would have been happy.",
+   "de": "Wenn ich den Apfel gegessen hätte, wäre ich glücklich gewesen.",
+   "tokens": [
+    {
+     "w": "Wenn",
+     "g": "if",
+     "c": "-",
+     "f": "VF"
+    },
+    {
+     "w": "ich",
+     "g": "I",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "den",
+     "g": "the",
+     "c": "A",
+     "f": "VF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "A",
+     "f": "VF"
+    },
+    {
+     "w": "gegessen",
+     "g": "eaten",
+     "c": "v",
+     "f": "VF"
+    },
+    {
+     "w": "hätte,",
+     "g": "had",
+     "c": "v",
+     "f": "VF"
+    },
+    {
+     "w": "wäre",
+     "g": "would-be",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "ich",
+     "g": "I",
+     "c": "N",
+     "f": "MF"
+    },
+    {
+     "w": "glücklich",
+     "g": "happy",
+     "c": "-",
+     "f": "MF"
+    },
+    {
+     "w": "gewesen",
+     "g": "been",
+     "c": "v",
+     "f": "RK"
+    }
+   ],
+   "note": "Past conditional: hätte or wäre + participle, for things that didn't happen. Compare the present version: Wenn du ihn essen würdest, wärst du glücklich. The wenn-clause fills position 1, so the main clause starts with its verb.",
+   "hint": "hätte / wäre + participle.",
+   "mistake": {
+    "wrong": "Wenn ich den Apfel gegessen hätte, ich wäre glücklich gewesen.",
+    "why": "The wenn-clause takes position 1, so the verb comes next: wäre ich."
+   },
+   "topics": [
+    "konjunktiv-2-past",
+    "subordinate-verb-final"
+   ],
+   "alt": {
+    "f": {
+     "en": "If I had eaten the pear, I would have been happy.",
+     "de": "Wenn ich die Birne gegessen hätte, wäre ich glücklich gewesen.",
+     "tokens": [
+      {
+       "w": "Wenn",
+       "g": "if",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "hätte,",
+       "g": "had",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "wäre",
+       "g": "would-be",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "ich",
+       "g": "I",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "glücklich",
+       "g": "happy",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "gewesen",
+       "g": "been",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Past conditional: hätte or wäre + participle, for things that didn't happen. Compare the present version: Wenn du sie essen würdest, wärst du glücklich. The wenn-clause fills position 1, so the main clause starts with its verb.",
+     "mistake": {
+      "wrong": "Wenn ich die Birne gegessen hätte, ich wäre glücklich gewesen.",
+      "why": "The wenn-clause takes position 1, so the verb comes next: wäre ich."
+     }
+    },
+    "n": {
+     "en": "If I had eaten the sweet, I would have been happy.",
+     "de": "Wenn ich das Bonbon gegessen hätte, wäre ich glücklich gewesen.",
+     "tokens": [
+      {
+       "w": "Wenn",
+       "g": "if",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "VF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "hätte,",
+       "g": "had",
+       "c": "v",
+       "f": "VF"
+      },
+      {
+       "w": "wäre",
+       "g": "would-be",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "ich",
+       "g": "I",
+       "c": "N",
+       "f": "MF"
+      },
+      {
+       "w": "glücklich",
+       "g": "happy",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "gewesen",
+       "g": "been",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "Past conditional: hätte or wäre + participle, for things that didn't happen. Compare the present version: Wenn du es essen würdest, wärst du glücklich. The wenn-clause fills position 1, so the main clause starts with its verb.",
+     "mistake": {
+      "wrong": "Wenn ich das Bonbon gegessen hätte, ich wäre glücklich gewesen.",
+      "why": "The wenn-clause takes position 1, so the verb comes next: wäre ich."
+     }
+    }
+   }
+  },
+  {
+   "id": 55,
+   "key": "W5",
+   "set": "further",
+   "source": "Added",
+   "level": "B2",
+   "en": "He says he doesn't want the apple.",
+   "de": "Er sagt, er wolle den Apfel nicht.",
+   "tokens": [
+    {
+     "w": "Er",
+     "g": "he",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "sagt,",
+     "g": "says",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "er",
+     "g": "he",
+     "c": "N",
+     "f": "NF"
+    },
+    {
+     "w": "wolle",
+     "g": "wants",
+     "c": "v",
+     "f": "NF"
+    },
+    {
+     "w": "den",
+     "g": "the",
+     "c": "A",
+     "f": "NF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "A",
+     "f": "NF"
+    },
+    {
+     "w": "nicht",
+     "g": "not",
+     "c": "-",
+     "f": "NF"
+    }
+   ],
+   "note": "Reported speech (Konjunktiv I): er will becomes er wolle. It marks the words as his, not the speaker's claim, which is why news reports use it. In conversation, people usually say: Er sagt, dass er den Apfel nicht will.",
+   "hint": "Konjunktiv I: er wolle.",
+   "topics": [
+    "konjunktiv-1"
+   ],
+   "alt": {
+    "f": {
+     "en": "He says he doesn't want the pear.",
+     "de": "Er sagt, er wolle die Birne nicht.",
+     "tokens": [
+      {
+       "w": "Er",
+       "g": "he",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "sagt,",
+       "g": "says",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "er",
+       "g": "he",
+       "c": "N",
+       "f": "NF"
+      },
+      {
+       "w": "wolle",
+       "g": "wants",
+       "c": "v",
+       "f": "NF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "NF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "NF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "NF"
+      }
+     ],
+     "note": "Reported speech (Konjunktiv I): er will becomes er wolle. It marks the words as his, not the speaker's claim, which is why news reports use it. In conversation, people usually say: Er sagt, dass er die Birne nicht will."
+    },
+    "n": {
+     "en": "He says he doesn't want the sweet.",
+     "de": "Er sagt, er wolle das Bonbon nicht.",
+     "tokens": [
+      {
+       "w": "Er",
+       "g": "he",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "sagt,",
+       "g": "says",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "er",
+       "g": "he",
+       "c": "N",
+       "f": "NF"
+      },
+      {
+       "w": "wolle",
+       "g": "wants",
+       "c": "v",
+       "f": "NF"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "NF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "NF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "NF"
+      }
+     ],
+     "note": "Reported speech (Konjunktiv I): er will becomes er wolle. It marks the words as his, not the speaker's claim, which is why news reports use it. In conversation, people usually say: Er sagt, dass er das Bonbon nicht will."
+    }
+   }
+  },
+  {
+   "id": 56,
+   "key": "W6",
+   "set": "further",
+   "source": "Added",
+   "level": "B2",
+   "en": "He must have eaten the apple.",
+   "de": "Er muss den Apfel gegessen haben.",
+   "tokens": [
+    {
+     "w": "Er",
+     "g": "he",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "muss",
+     "g": "must",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "den",
+     "g": "the",
+     "c": "A",
+     "f": "MF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "A",
+     "f": "MF"
+    },
+    {
+     "w": "gegessen",
+     "g": "eaten",
+     "c": "v",
+     "f": "RK"
+    },
+    {
+     "w": "haben",
+     "g": "have",
+     "c": "v",
+     "f": "RK"
+    }
+   ],
+   "note": "A modal + participle + haben makes a guess about the past: 'must have …'. With können it's 'may have': Er kann ihn gegessen haben.",
+   "hint": "Modal … participle + haben.",
+   "mistake": {
+    "wrong": "Er muss den Apfel haben gegessen.",
+    "why": "The participle comes before haben: gegessen haben."
+   },
+   "topics": [
+    "modal-past-guess"
+   ],
+   "alt": {
+    "f": {
+     "en": "He must have eaten the pear.",
+     "de": "Er muss die Birne gegessen haben.",
+     "tokens": [
+      {
+       "w": "Er",
+       "g": "he",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "muss",
+       "g": "must",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      },
+      {
+       "w": "haben",
+       "g": "have",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "A modal + participle + haben makes a guess about the past: 'must have …'. With können it's 'may have': Er kann sie gegessen haben.",
+     "mistake": {
+      "wrong": "Er muss die Birne haben gegessen.",
+      "why": "The participle comes before haben: gegessen haben."
+     }
+    },
+    "n": {
+     "en": "He must have eaten the sweet.",
+     "de": "Er muss das Bonbon gegessen haben.",
+     "tokens": [
+      {
+       "w": "Er",
+       "g": "he",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "muss",
+       "g": "must",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "gegessen",
+       "g": "eaten",
+       "c": "v",
+       "f": "RK"
+      },
+      {
+       "w": "haben",
+       "g": "have",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "A modal + participle + haben makes a guess about the past: 'must have …'. With können it's 'may have': Er kann es gegessen haben.",
+     "mistake": {
+      "wrong": "Er muss das Bonbon haben gegessen.",
+      "why": "The participle comes before haben: gegessen haben."
+     }
+    }
+   }
+  },
+  {
+   "id": 57,
+   "key": "W7",
+   "set": "further",
+   "source": "Added",
+   "level": "B2",
+   "en": "I wasn't able to eat the apple.",
+   "de": "Ich habe den Apfel nicht essen können.",
+   "tokens": [
+    {
+     "w": "Ich",
+     "g": "I",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "habe",
+     "g": "have",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "den",
+     "g": "the",
+     "c": "A",
+     "f": "MF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "A",
+     "f": "MF"
+    },
+    {
+     "w": "nicht",
+     "g": "not",
+     "c": "-",
+     "f": "MF"
+    },
+    {
+     "w": "essen",
+     "g": "eat",
+     "c": "v",
+     "f": "RK"
+    },
+    {
+     "w": "können",
+     "g": "can",
+     "c": "v",
+     "f": "RK"
+    }
+   ],
+   "note": "The Perfekt of a modal used with another verb ends in two infinitives (essen können), not gekonnt. In speech the simple past is more common: Ich konnte den Apfel nicht essen.",
+   "hint": "Two infinitives at the end.",
+   "mistake": {
+    "wrong": "Ich habe den Apfel nicht essen gekonnt.",
+    "why": "With another verb, the modal stays an infinitive: essen können."
+   },
+   "topics": [
+    "double-infinitive",
+    "perfekt"
+   ],
+   "alt": {
+    "f": {
+     "en": "I wasn't able to eat the pear.",
+     "de": "Ich habe die Birne nicht essen können.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "habe",
+       "g": "have",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      },
+      {
+       "w": "können",
+       "g": "can",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "The Perfekt of a modal used with another verb ends in two infinitives (essen können), not gekonnt. In speech the simple past is more common: Ich konnte die Birne nicht essen.",
+     "mistake": {
+      "wrong": "Ich habe die Birne nicht essen gekonnt.",
+      "why": "With another verb, the modal stays an infinitive: essen können."
+     }
+    },
+    "n": {
+     "en": "I wasn't able to eat the sweet.",
+     "de": "Ich habe das Bonbon nicht essen können.",
+     "tokens": [
+      {
+       "w": "Ich",
+       "g": "I",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "habe",
+       "g": "have",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "A",
+       "f": "MF"
+      },
+      {
+       "w": "nicht",
+       "g": "not",
+       "c": "-",
+       "f": "MF"
+      },
+      {
+       "w": "essen",
+       "g": "eat",
+       "c": "v",
+       "f": "RK"
+      },
+      {
+       "w": "können",
+       "g": "can",
+       "c": "v",
+       "f": "RK"
+      }
+     ],
+     "note": "The Perfekt of a modal used with another verb ends in two infinitives (essen können), not gekonnt. In speech the simple past is more common: Ich konnte das Bonbon nicht essen.",
+     "mistake": {
+      "wrong": "Ich habe das Bonbon nicht essen gekonnt.",
+      "why": "With another verb, the modal stays an infinitive: essen können."
+     }
+    }
+   }
+  },
+  {
+   "id": 58,
+   "key": "W8",
+   "set": "further",
+   "source": "Added",
+   "level": "B2",
+   "en": "They are arguing because of the apple.",
+   "de": "Wegen des Apfels streiten sie.",
+   "tokens": [
+    {
+     "w": "Wegen",
+     "g": "because-of",
+     "c": "-",
+     "f": "VF"
+    },
+    {
+     "w": "des",
+     "g": "the",
+     "c": "G",
+     "f": "VF"
+    },
+    {
+     "w": "Apfels",
+     "g": "apple",
+     "c": "G",
+     "f": "VF"
+    },
+    {
+     "w": "streiten",
+     "g": "argue",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "sie",
+     "g": "they",
+     "c": "N",
+     "f": "MF"
+    }
+   ],
+   "note": "wegen takes the genitive: des Apfels. Masculine and neuter nouns add -s in the genitive; feminine nouns don't change. In everyday speech you'll also hear wegen + dative: wegen dem Apfel.",
+   "hint": "wegen + genitive.",
+   "topics": [
+    "genitive-prepositions",
+    "verb-second"
+   ],
+   "alt": {
+    "f": {
+     "en": "They are arguing because of the pear.",
+     "de": "Wegen der Birne streiten sie.",
+     "tokens": [
+      {
+       "w": "Wegen",
+       "g": "because-of",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "der",
+       "g": "the",
+       "c": "G",
+       "f": "VF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "G",
+       "f": "VF"
+      },
+      {
+       "w": "streiten",
+       "g": "argue",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "they",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "wegen takes the genitive: der Birne. Masculine and neuter nouns add -s in the genitive; feminine nouns don't change. In everyday speech you'll also hear wegen + dative: wegen der Birne."
+    },
+    "n": {
+     "en": "They are arguing because of the sweet.",
+     "de": "Wegen des Bonbons streiten sie.",
+     "tokens": [
+      {
+       "w": "Wegen",
+       "g": "because-of",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "des",
+       "g": "the",
+       "c": "G",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbons",
+       "g": "sweet",
+       "c": "G",
+       "f": "VF"
+      },
+      {
+       "w": "streiten",
+       "g": "argue",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "they",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "wegen takes the genitive: des Bonbons. Masculine and neuter nouns add -s in the genitive; feminine nouns don't change. In everyday speech you'll also hear wegen + dative: wegen dem Bonbon."
+    }
+   }
+  },
+  {
+   "id": 59,
+   "key": "W9",
+   "set": "further",
+   "source": "Added",
+   "level": "B2",
+   "en": "The bigger the apple, the better it tastes.",
+   "de": "Je größer der Apfel ist, desto besser schmeckt er.",
+   "tokens": [
+    {
+     "w": "Je",
+     "g": "the",
+     "c": "-",
+     "f": "KF"
+    },
+    {
+     "w": "größer",
+     "g": "bigger",
+     "c": "-",
+     "f": "KF"
+    },
+    {
+     "w": "der",
+     "g": "the",
+     "c": "N",
+     "f": "KF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "N",
+     "f": "KF"
+    },
+    {
+     "w": "ist,",
+     "g": "is",
+     "c": "v",
+     "f": "KF"
+    },
+    {
+     "w": "desto",
+     "g": "the",
+     "c": "-",
+     "f": "VF"
+    },
+    {
+     "w": "besser",
+     "g": "better",
+     "c": "-",
+     "f": "VF"
+    },
+    {
+     "w": "schmeckt",
+     "g": "tastes",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "er",
+     "g": "it",
+     "c": "N",
+     "f": "MF"
+    }
+   ],
+   "note": "je + comparative opens a clause with the verb at the end (ist). desto + comparative starts the main clause and the verb follows straight away: desto besser schmeckt er.",
+   "hint": "je … verb last; desto … verb next.",
+   "mistake": {
+    "wrong": "Je größer der Apfel ist, desto besser er schmeckt.",
+    "why": "After desto + comparative, the verb comes next: desto besser schmeckt er."
+   },
+   "topics": [
+    "je-desto",
+    "comparison"
+   ],
+   "alt": {
+    "f": {
+     "en": "The bigger the pear, the better it tastes.",
+     "de": "Je größer die Birne ist, desto besser schmeckt sie.",
+     "tokens": [
+      {
+       "w": "Je",
+       "g": "the",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "größer",
+       "g": "bigger",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "die",
+       "g": "the",
+       "c": "N",
+       "f": "KF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "KF"
+      },
+      {
+       "w": "ist,",
+       "g": "is",
+       "c": "v",
+       "f": "KF"
+      },
+      {
+       "w": "desto",
+       "g": "the",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "besser",
+       "g": "better",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "schmeckt",
+       "g": "tastes",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "sie",
+       "g": "it",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "je + comparative opens a clause with the verb at the end (ist). desto + comparative starts the main clause and the verb follows straight away: desto besser schmeckt sie.",
+     "mistake": {
+      "wrong": "Je größer die Birne ist, desto besser sie schmeckt.",
+      "why": "After desto + comparative, the verb comes next: desto besser schmeckt sie."
+     }
+    },
+    "n": {
+     "en": "The bigger the sweet, the better it tastes.",
+     "de": "Je größer das Bonbon ist, desto besser schmeckt es.",
+     "tokens": [
+      {
+       "w": "Je",
+       "g": "the",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "größer",
+       "g": "bigger",
+       "c": "-",
+       "f": "KF"
+      },
+      {
+       "w": "das",
+       "g": "the",
+       "c": "N",
+       "f": "KF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "KF"
+      },
+      {
+       "w": "ist,",
+       "g": "is",
+       "c": "v",
+       "f": "KF"
+      },
+      {
+       "w": "desto",
+       "g": "the",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "besser",
+       "g": "better",
+       "c": "-",
+       "f": "VF"
+      },
+      {
+       "w": "schmeckt",
+       "g": "tastes",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "es",
+       "g": "it",
+       "c": "N",
+       "f": "MF"
+      }
+     ],
+     "note": "je + comparative opens a clause with the verb at the end (ist). desto + comparative starts the main clause and the verb follows straight away: desto besser schmeckt es.",
+     "mistake": {
+      "wrong": "Je größer das Bonbon ist, desto besser es schmeckt.",
+      "why": "After desto + comparative, the verb comes next: desto besser schmeckt es."
+     }
+    }
+   }
+  },
+  {
+   "id": 60,
+   "key": "W10",
+   "set": "further",
+   "source": "Added",
+   "level": "C1",
+   "en": "The apple that fell off the table is red.",
+   "de": "Der vom Tisch gefallene Apfel ist rot.",
+   "tokens": [
+    {
+     "w": "Der",
+     "g": "the",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "vom",
+     "g": "from-the",
+     "c": "D",
+     "f": "VF"
+    },
+    {
+     "w": "Tisch",
+     "g": "table",
+     "c": "D",
+     "f": "VF"
+    },
+    {
+     "w": "gefallene",
+     "g": "fallen",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "Apfel",
+     "g": "apple",
+     "c": "N",
+     "f": "VF"
+    },
+    {
+     "w": "ist",
+     "g": "is",
+     "c": "v",
+     "f": "LK"
+    },
+    {
+     "w": "rot",
+     "g": "red",
+     "c": "-",
+     "f": "MF"
+    }
+   ],
+   "note": "An extended participle phrase: everything between der and Apfel describes the apple, like a relative clause folded in front of the noun. The same meaning, spoken style: Der Apfel, der vom Tisch gefallen ist, ist rot. Typical of written German.",
+   "hint": "Everything between the article and the noun describes it.",
+   "topics": [
+    "participle-phrases",
+    "adjective-endings"
+   ],
+   "alt": {
+    "f": {
+     "en": "The pear that fell off the table is red.",
+     "de": "Die vom Tisch gefallene Birne ist rot.",
+     "tokens": [
+      {
+       "w": "Die",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "vom",
+       "g": "from-the",
+       "c": "D",
+       "f": "VF"
+      },
+      {
+       "w": "Tisch",
+       "g": "table",
+       "c": "D",
+       "f": "VF"
+      },
+      {
+       "w": "gefallene",
+       "g": "fallen",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Birne",
+       "g": "pear",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "An extended participle phrase: everything between die and Birne describes the pear, like a relative clause folded in front of the noun. The same meaning, spoken style: Die Birne, die vom Tisch gefallen ist, ist rot. Typical of written German."
+    },
+    "n": {
+     "en": "The sweet that fell off the table is red.",
+     "de": "Das vom Tisch gefallene Bonbon ist rot.",
+     "tokens": [
+      {
+       "w": "Das",
+       "g": "the",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "vom",
+       "g": "from-the",
+       "c": "D",
+       "f": "VF"
+      },
+      {
+       "w": "Tisch",
+       "g": "table",
+       "c": "D",
+       "f": "VF"
+      },
+      {
+       "w": "gefallene",
+       "g": "fallen",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "Bonbon",
+       "g": "sweet",
+       "c": "N",
+       "f": "VF"
+      },
+      {
+       "w": "ist",
+       "g": "is",
+       "c": "v",
+       "f": "LK"
+      },
+      {
+       "w": "rot",
+       "g": "red",
+       "c": "-",
+       "f": "MF"
+      }
+     ],
+     "note": "An extended participle phrase: everything between das and Bonbon describes the sweet, like a relative clause folded in front of the noun. The same meaning, spoken style: Das Bonbon, das vom Tisch gefallen ist, ist rot. Typical of written German."
     }
    }
   }
