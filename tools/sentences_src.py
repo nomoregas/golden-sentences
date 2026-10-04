@@ -350,8 +350,8 @@ s("X15", "extra", "Added", "She gave it to her.", "Sie hat {ihn} ihr gegeben.",
   "Accusative pronoun before dative.",
   {"wrong": "Sie hat ihr {ihn} gegeben.", "why": "With two pronouns, the accusative comes first: {ihn} ihr."})
 
-# CEFR level of the grammar each sentence centres on. These sentences top out at B1:
-# B2 and C levels are about nuance and idiom rather than core sentence structure.
+# CEFR level of the grammar each sentence centres on. The set currently tops out at B1;
+# B2/C1 grammar (passive with modals, Konjunktiv I and past II, participle phrases) isn't covered yet.
 LEVELS = {
     "A1": "F1 F2 F7 F8 F12 F13 G1 G11 G16 G19 G38 X2 X4 X5 X6 X10",
     "A2": "F3 F4 F5 F6 F9 F10 F11 G5 G17 G20 G21 G24 G27 G29 G37 G39 G41 X3 X7 X8 X9 X14",

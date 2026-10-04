@@ -29,7 +29,7 @@ Sentences are templates (`tools/sentences_src.py`) with placeholders such as `{d
 
 **Table**: all 50 sentences at once, switchable between English, Deutsch and Both without losing your place. Tick the sentences you want to practise (or **All** / **None**); every drill uses only the ticked ones. Tap a sentence to peek at its translation, ▶ to hear it, or its number to open it in Learn.
 
-Every sentence is tagged with the CEFR level of the grammar it centres on: **A1** (16), **A2** (22) or **B1** (12). They stop at B1 because B2 and C levels are about nuance and idiom rather than core sentence structure. The Table can group **By story** or **By level**, and each group has a *practise only these* link.
+Every sentence is tagged with the CEFR level of the grammar it centres on: **A1** (16), **A2** (22) or **B1** (12). The set currently stops at B1, the core of everyday German; B2 and C1 add further grammar (passive with modals, past conditional, reported speech, extended participle phrases) that isn't covered yet. The Table can group **By story** or **By level**, and each group has a *practise only these* link.
 
 **Practice** opens a menu of drills. Each one is entered on its own, with its own progress, and shows what's due, new and solid:
 
